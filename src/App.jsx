@@ -15,6 +15,8 @@ import LoungeWomen from "./pages/Lounge/women/LoungeWomen";
 import BodySuitsMen from "./pages/BodySuits/men/BodySuitsMen";
 import LoungeMen from "./pages/Lounge/men/LoungeMen";
 import LoungeMenDetails from "./pages/Lounge/men/LoungeMenDetails";
+import { Checkout } from "./pages/checkout/Checkout";
+import Orders from "./pages/myOrders/Orders";
 
 const router = createBrowserRouter([
   {
@@ -79,6 +81,14 @@ const router = createBrowserRouter([
       {
         path: "/lounge-men-Details/:loungeId",
         element: <LoungeMenDetails />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
+      },
+      {
+        path: "/order",
+        element: <Orders />,
       },
     ],
   },

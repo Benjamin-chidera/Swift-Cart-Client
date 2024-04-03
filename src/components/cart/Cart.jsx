@@ -11,10 +11,12 @@ import { getTotalPrice, getTotalQtyItem } from "@/redux/features/cartSlice";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { useSelector } from "react-redux";
 import { CartItem } from "./CartItem";
+import { useNavigate } from "react-router-dom";
 
 export const Cart = () => {
   const totalQty = useSelector(getTotalQtyItem);
   const totalPrice = useSelector(getTotalPrice);
+  const navigate = useNavigate();
 
   const { cart } = useSelector((state) => state.cart);
 
@@ -42,14 +44,17 @@ export const Cart = () => {
                   </SheetDescription>
                 ))}
                 <div>
-                  <button className="bg-red-600 w-full py-1 font-black text-xs text-white rounded-full">
+                  <button
+                    className="bg-red-600 w-full py-1 font-black text-xs text-white rounded-full"
+                    onClick={() => navigate("/checkout")}
+                  >
                     CHECK OUT - {formatCurrency(totalPrice)}
                   </button>
                 </div>
               </section>
             ) : (
               <div className="grid place-items-center h-screen font-bold">
-                <p >CART IS EMPTY</p>
+                <p>CART IS EMPTY</p>
                 <p>🛒</p>
               </div>
             )}

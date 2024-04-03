@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from "@/components/ui/navigation-menu";
 
 import { Link } from "react-router-dom";
 import {
-  FaRegHeart,
   FaRegUser,
   FaFacebookF,
   FaInstagram,
@@ -21,18 +10,13 @@ import {
   FaTwitter,
   FaYoutube,
 } from "react-icons/fa";
-import { LiaShoppingBagSolid } from "react-icons/lia";
 import { RiMenu3Fill } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import {
-  getTotalQtyItem,
-  getTotalPrice,
-  getCurrentQtyItem,
-} from "@/redux/features/cartSlice";
 import { SearchBar } from "../searchBar/SearchBar";
 import { Cart } from "../cart/Cart";
 import { WishList } from "../wishList/WishList";
+import { Menubar } from "../headers/Menubar";
 
 export const Headers = () => {
   const [open, setOpen] = useState(false);
@@ -82,13 +66,7 @@ export const Headers = () => {
         </section>
 
         <section className="hidden lg:flex items-center gap-5 text-xs font-semibold">
-          <Link>NEW</Link>
-          <Link>RESTOCKED</Link>
-          <Link>BODYSUITS</Link>
-          <Link>TOPS</Link>
-          <Link>LOUNGE</Link>
-          <Link>MEN'S</Link>
-          <Link>MORE</Link>
+          <Menubar />
         </section>
 
         <section className="flex items-center gap-5">

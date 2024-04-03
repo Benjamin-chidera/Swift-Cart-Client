@@ -1,15 +1,16 @@
 import React from "react";
 import { Headers } from "../../headers/Headers";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { Footer } from "@/components/footer/Footer";
 export const User = () => {
+  const location = useLocation();
   return (
     <div className="">
-      <Headers />
-      <div className="pt-20">
+      {location.pathname === "/checkout" ? null : <Headers />}
+      <div className={location.pathname === "/checkout" ? "pt-5" : "pt-16"}>
         <Outlet />
       </div>
-      <Footer/>
+      {location.pathname === "/checkout" ? null : <Footer />}
     </div>
   );
 };
