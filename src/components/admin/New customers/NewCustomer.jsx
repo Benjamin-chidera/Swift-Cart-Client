@@ -33,13 +33,13 @@ export const NewCustomer = () => {
   return (
     <main className=" shadow p-3 rounded">
       <section className="flex items-center justify-between">
-        <h2>New Customers</h2>
+        <h2 className="text-sm font-bold mb-3">New Customers</h2>
         <button>
           <FaRotate />
         </button>
       </section>
 
-      <section className=" space-y-5 mt-5">
+      <section className=" space-y-5">
         {customers.map((c) => (
           <div
             key={c.id}

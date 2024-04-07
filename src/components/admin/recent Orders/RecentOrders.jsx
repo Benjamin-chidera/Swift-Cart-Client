@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/lib/FormatCurrency";
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
@@ -44,11 +45,11 @@ const recent = [
 export const RecentOrders = () => {
   return (
     <main className="my-10 shadow p-3 rounded w-full">
-      <h1 className="mb-5">Recent Order</h1>
+      <h1 className="text-sm font-bold mb-3">Recent Order</h1>
       <section className="grid grid-cols-7 place-items-start">
         <p>Order ID</p>
         <p>Product Name</p>
-        <p>Units</p>
+        <p className="ms-3">Units</p>
         <p>Order Date</p>
         <p>Order Costs</p>
         <p>Status</p>
@@ -59,9 +60,9 @@ export const RecentOrders = () => {
           <div key={r.id} className="grid grid-cols-7 place-items-start">
             <p>{r.orderId}</p>
             <p>{r.name}</p>
-            <p>{r.units}</p>
+            <p className="ms-5">{r.units}</p>
             <p>{r.date}</p>
-            <p>{r.totalPrice}</p>
+            <p>{formatCurrency(r.totalPrice)}</p>
             <p
               className={`${
                 r.status === "delivered" ? "bg-green-700" : "bg-blue-600"
@@ -71,7 +72,7 @@ export const RecentOrders = () => {
             </p>
 
             <button>
-              <BsThreeDotsVertical/>
+              <BsThreeDotsVertical />
             </button>
           </div>
         ))}

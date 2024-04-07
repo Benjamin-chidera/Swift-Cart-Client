@@ -35,14 +35,14 @@ const products = [
 export const TopProducts = () => {
   return (
     <main className="shadow rounded p-3">
-      <section className="flex items-center justify-between">
-        <h2>Top Products</h2>
+      <section className="flex items-center justify-between mb-3">
+        <h2 className="text-sm font-bold ">Top Products</h2>
         <button>
           <FaRotate />
         </button>
       </section>
 
-      <section className=" space-y-5 mt-3">
+      <section className=" space-y-5">
         {products.map((p) => (
           <div key={p.id} className="flex justify-between">
             <img src={p.img} alt="" className="w-20 h-20" />

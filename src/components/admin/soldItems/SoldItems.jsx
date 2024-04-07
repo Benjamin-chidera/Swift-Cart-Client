@@ -33,7 +33,7 @@ export const SoldItems = () => {
   return (
     <main className="my-10 w-[50%] shadow p-3 rounded-md">
       <section className="flex items-center justify-between">
-        <h2>Sold by Items</h2>
+        <h2 className="text-sm font-bold mb-3">Sold by Items</h2>
         <button>
           <FaRotate />
         </button>
@@ -44,11 +44,11 @@ export const SoldItems = () => {
         <p>Price</p>
       </div>
 
-      <section className="mt-2">
+      <section className="mt-2 text-sm">
         {sold.map((s) => (
           <div key={s.id} className="grid grid-cols-3">
             <h4>{s.name}</h4>
-            <p className="">{s.numItem}</p>
+            <p className="ms-5">{s.numItem}</p>
             <p>{formatCurrency(s.price)}</p>
           </div>
         ))}
