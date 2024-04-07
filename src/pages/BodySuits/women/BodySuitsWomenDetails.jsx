@@ -8,6 +8,7 @@ import { formatCurrency } from "@/lib/FormatCurrency";
 import { GetRating } from "@/lib/Rating";
 import { SimilarProducts } from "@/components/ProductDetails/SimilarProducts";
 import { CustomerDetailsReviews } from "@/components/reviews/CustomerDetailsReviews";
+import { CartBtn } from "@/components/cart/CartBtn";
 
 const BodySuitsWomenDetails = () => {
   const { bodysuitId } = useParams();
@@ -56,9 +57,7 @@ const BodySuitsWomenDetails = () => {
               </button>
             </div>
 
-            <button className="border-red-600 border-2 w-full py-2 text-sm">
-              Add To Cart
-            </button>
+            <CartBtn s={details} />
 
             <div>
               {/* this is for color select */}

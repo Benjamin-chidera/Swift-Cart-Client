@@ -40,7 +40,7 @@ export const CartItem = ({ c }) => {
       />
 
       <div className=" flex-1 text-xs max-w-[100px]">
-        <h1 className="font-bold">{title.substring(0, 10)}</h1>
+        <h1 className="font-bold">{title?.substring(0, 10)}</h1>
         <p className="font-bold">
           Color: <span className="font-medium">Red</span>
         </p>

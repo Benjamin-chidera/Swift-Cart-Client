@@ -36,9 +36,9 @@ export const Cart = () => {
         <SheetContent className=" overflow-y-scroll">
           <SheetHeader>
             <SheetTitle>Cart</SheetTitle>
-            {cart.length > 0 ? (
+            {cart?.length > 0 ? (
               <section className=" space-y-5 ">
-                {cart.map((c) => (
+                {cart?.map((c) => (
                   <SheetDescription key={c.id}>
                     <CartItem c={c} />
                   </SheetDescription>

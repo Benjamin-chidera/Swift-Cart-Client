@@ -14,6 +14,7 @@ import {
 import { GetRating } from "@/lib/Rating";
 import { formatCurrency } from "@/lib/FormatCurrency";
 import { WishBtn } from "@/components/wishList/wishListBtn/WishBtn";
+import { CartBtn } from "../cart/CartBtn";
 
 export const SimilarProducts = () => {
   const { products, status } = useSelector((state) => state.cart);
@@ -68,12 +69,7 @@ export const SimilarProducts = () => {
                     </div>
 
                     <div className=" mt-3">
-                      <button
-                        className="border-2 py-1 w-full border-red-600 text-xs rounded-md"
-                        onClick={() => handleAddToCart(s)}
-                      >
-                        ADD TO BAG
-                      </button>
+                      <CartBtn s={s} />
                     </div>
 
                     <div className=" absolute top-0">

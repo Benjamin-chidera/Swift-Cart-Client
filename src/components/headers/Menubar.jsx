@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 export const Menubar = () => {
-    const location = useLocation()
+  const location = useLocation();
   const [menu, setMenu] = useState(false);
 
   const handleMouseEnter = () => {
@@ -16,38 +16,64 @@ export const Menubar = () => {
 
   return (
     <main>
-      <section
-        className="flex justify-between items-center gap-10 relative"
-        onMouseEnter={handleMouseEnter}
-         onMouseOut={handleMouseLeave}
-      >
-        <section className="hover:text-gray-500 cursor-pointer">
+      <section className="flex justify-between items-center gap-10 relative">
+        <div className={`group`}>
           <Link>SKIN</Link>
-        </section>
-        <section>
+          <div className="h-8 absolute top-3  w-8"></div>
+          <section
+            className={`left-0  duration-150 group-hover:block  mx-auto mt-1 hidden rounded-md fixed bg-white shadow-md p-5 w-full  h-[200px] `}
+          >
+            <div className="flex justify-center items-center">Skin Content</div>
+          </section>
+        </div>
+        <div className="group">
           <Link>CLOTHES</Link>
-        </section>
-        <section>
+          <div className="h-8 absolute top-3  w-8"></div>
+          <section
+            className={`left-0  duration-150 group-hover:block  mx-auto mt-1 hidden rounded-md fixed bg-white shadow-md p-5 w-full  h-[200px] `}
+          >
+            <div className="flex justify-center items-center">
+              Clothes Content
+            </div>
+          </section>
+        </div>
+        <div className="group">
           <Link>SHOES</Link>
-        </section>
-        <section>
+          <div className="h-8 absolute top-3  w-8"></div>
+          <section
+            className={`left-0  duration-150 group-hover:block  mx-auto mt-1 hidden rounded-md fixed bg-white shadow-md p-5 w-full  h-[200px] `}
+          >
+            <div className="flex justify-center items-center">Shoe Content</div>
+          </section>
+        </div>
+        <div className="group">
           <Link>BODYSUITS</Link>
-        </section>
-        <section>
+          <div className="h-8 absolute top-3  w-8"></div>
+          <section
+            className={`left-0  duration-150 group-hover:block  mx-auto mt-1 hidden rounded-md fixed bg-white shadow-md p-5 w-full  h-[200px] `}
+          >
+            <div className="flex justify-center items-center">
+              Bodysuit Content
+            </div>
+          </section>
+        </div>
+        <div className="group">
           <Link>LOUNGE</Link>
-        </section>
+          <div className="h-8 absolute top-3  w-8"></div>
+          <section
+            className={`left-0  duration-150 group-hover:block  mx-auto mt-1 hidden rounded-md fixed bg-white shadow-md p-5 w-full  h-[200px] `}
+          >
+            <div className="flex justify-center items-center">
+              Lounge Content
+            </div>
+          </section>
+        </div>
       </section>
-
-      {menu && (
-        <section
-          className={`left-0 right-0 mx-auto mt-4 rounded-md absolute bg-white shadow-md p-5 w-full h-[200px] ${
-            menu ? " opacity-100 duration-700" : "opacity-0"
-          }`}
-          onMouseLeave={handleMouseLeave}
-        >
-          <div className="flex justify-center items-center">Menu Content</div>
-        </section>
-      )}
+      {/* <div
+        className="h-8 absolute left-0 w-full"
+        onMouseEnter={handleMouseEnter}
+        onMouseOut={handleMouseLeave}
+      ></div> */}
     </main>
   );
 };

@@ -26,8 +26,6 @@ export const Recent = () => {
 
   const myCart = products?.payload;
 
- 
-
   // change genders
   const handleMale = () => {
     setGender("male");
@@ -109,7 +107,7 @@ export const Recent = () => {
                       </div>
 
                       <div className=" mt-3">
-                        <CartBtn s={s}/>
+                        <CartBtn s={s} />
                       </div>
 
                       <div className=" absolute top-0">
@@ -159,12 +157,7 @@ export const Recent = () => {
                       </div>
 
                       <div className=" mt-3">
-                        <button
-                          className="border-2 py-1 w-full border-red-600 text-xs rounded-md"
-                          onClick={() => handleAddToCart(s)}
-                        >
-                          ADD TO BAG
-                        </button>
+                        <CartBtn s={s} />
                       </div>
 
                       <div className=" absolute top-0">

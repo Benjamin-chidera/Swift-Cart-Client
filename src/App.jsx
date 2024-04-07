@@ -17,6 +17,8 @@ import LoungeMen from "./pages/Lounge/men/LoungeMen";
 import LoungeMenDetails from "./pages/Lounge/men/LoungeMenDetails";
 import { Checkout } from "./pages/checkout/Checkout";
 import Orders from "./pages/myOrders/Orders";
+import { Admin } from "./components/Applayout/admin/Admin";
+import { Dashboard } from "./pages/admin/home/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +91,16 @@ const router = createBrowserRouter([
       {
         path: "/order",
         element: <Orders />,
+      },
+    ],
+  },
+  {
+    element: <Admin />,
+    path: "/admin",
+    children: [
+      {
+        index: "/",
+        element: <Dashboard />,
       },
     ],
   },

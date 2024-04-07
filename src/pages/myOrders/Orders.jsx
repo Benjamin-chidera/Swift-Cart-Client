@@ -21,6 +21,8 @@ const Orders = () => {
             <LazyLoadImage
               src={r.image}
               className="w-[70px] h-[70px] object-contain"
+              loading="lazy"
+              effect="blur"
             />
 
             <div>

@@ -1,5 +1,5 @@
 import { featchCategories } from "@/redux/features/categorySlice";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Card } from "@/components/ui/card";
@@ -7,26 +7,36 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { formatCurrency } from "@/lib/FormatCurrency";
 import { addItem } from "@/redux/features/cartSlice";
+import { CartBtn } from "@/components/cart/CartBtn";
+import { Filter } from "@/components/filters/Filter";
 
 const LoungeWomen = () => {
   const { category } = useParams();
   const dispatch = useDispatch();
+    const [min, setMin] = useState(0);
+    const [max, setMax] = useState(0);
 
-  const { categories } = useSelector((state) => state.categories);
+  const { categories, minPrice, maxPrice } = useSelector(
+    (state) => state.categories
+  );
 
   const skinCare = categories?.payload;
+
+  const filteredProducts = skinCare?.filter(
+    (product) => product.price >= minPrice && product.price <= maxPrice
+  );
+
+  const isFiltered = filteredProducts?.length < 1 ? skinCare : filteredProducts;
 
   useEffect(() => {
     dispatch(featchCategories(category));
   }, [dispatch]);
 
-  const handleAddCart = (s) => {
-    dispatch(addItem(s));
-  };
   return (
-    <main className=" my-5 mx-3 md:container md:mx-auto">
+    <main className=" my-5 mx-3 md:container md:mx-auto flex">
+      <Filter min={minPrice} max={maxPrice} setMax={setMax} setMin={setMin} />
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center w-[800px] mx-auto shadow-2xl px-10 py-5 gap-5 rounded-xl max-w-full">
-        {skinCare?.map((s) => (
+        {isFiltered?.map((s) => (
           <div key={s.id} className=" hover:scale-[1.1] duration-200">
             <Link to={`/lounge-women-Details/${s.id}`}>
               <LazyLoadImage
@@ -41,12 +51,7 @@ const LoungeWomen = () => {
             </h3>
             <p className="font-bold">{formatCurrency(s.price)}</p>
 
-            <button
-              className="border-2 py-1 w-full border-red-600 text-xs rounded-md"
-              onClick={() => handleAddCart(s)}
-            >
-              Add To Cart
-            </button>
+            <CartBtn s={s} />
           </div>
         ))}
       </section>

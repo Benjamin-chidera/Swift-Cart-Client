@@ -27,12 +27,21 @@ const initialState = {
   categories: [],
   categoriesDetails: {},
   status: "idle",
+  minPrice: 0,
+  maxPrice: Infinity,
 };
 
 const categorySlice = createSlice({
   name: "category",
   initialState,
-  reducers: {},
+  reducers: {
+    setMinPrice: (state, action) => {
+      state.minPrice = action.payload;
+    },
+    setMaxPrice: (state, action) => {
+      state.maxPrice = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(featchCategories.pending, (state) => {
@@ -42,7 +51,7 @@ const categorySlice = createSlice({
         state.status = "idle";
         state.categories = payload;
       })
-      .addCase(featchCategories.rejected, (state, payload) => {
+      .addCase(featchCategories.rejected, (state, ) => {
         state.status = "rejected";
       })
       .addCase(featchCategoriesDetails.pending, (state) => {
@@ -54,10 +63,10 @@ const categorySlice = createSlice({
       })
       .addCase(featchCategoriesDetails.rejected, (state, payload) => {
         state.status = "rejected";
-      })
+      });
   },
 });
 
-export const {} = categorySlice.actions;
+export const { setMaxPrice, setMinPrice } = categorySlice.actions;
 
 export default categorySlice.reducer;

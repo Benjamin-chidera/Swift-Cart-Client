@@ -8,6 +8,7 @@ import { formatCurrency } from "@/lib/FormatCurrency";
 import { GetRating } from "@/lib/Rating";
 import { SimilarProducts } from "@/components/ProductDetails/SimilarProducts";
 import { CustomerDetailsReviews } from "@/components/reviews/CustomerDetailsReviews";
+import { CartBtn } from "@/components/cart/CartBtn";
 
 export const SkinCareDetails = () => {
   const { productId } = useParams();
@@ -21,18 +22,23 @@ export const SkinCareDetails = () => {
 
   const details = categoriesDetails?.payload;
 
+  console.log(details);
+
   return (
     <main>
       <section className=" my-5 mx-3 md:container md:mx-auto md:flex justify-around">
-        <LazyLoadImage src={details?.image} className="w-[200px] md:w-[300px] md:h-[400px] mx-auto object-contain" />
+        <LazyLoadImage
+          src={details?.image}
+          className="w-[200px] md:w-[300px] md:h-[400px] mx-auto object-contain"
+        />
 
         <section>
           <h1 className="font-bold max-w-md">{details?.title}</h1>
           <div className="flex items-center gap-3">
             <p className="font-bold">{formatCurrency(details?.price)}</p>
             <p>
-              <GetRating rating={details?.rating.rate} /> ({details?.rating.count}
-              )
+              <GetRating rating={details?.rating.rate} /> (
+              {details?.rating.count})
             </p>
           </div>
 
@@ -53,9 +59,7 @@ export const SkinCareDetails = () => {
               </button>
             </div>
 
-            <button className="border-red-600 border-2 w-full py-2 text-sm">
-              Add To Cart
-            </button>
+            <CartBtn s={details} />
 
             <div>
               {/* this is for color select */}
@@ -67,7 +71,7 @@ export const SkinCareDetails = () => {
 
       <SimilarProducts />
 
-      <CustomerDetailsReviews/>
+      <CustomerDetailsReviews />
     </main>
   );
 };

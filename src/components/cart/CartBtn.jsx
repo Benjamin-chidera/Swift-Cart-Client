@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, fetchFeature, removeItem } from "@/redux/features/cartSlice";
+import { Button } from "../ui/button";
 
 export const CartBtn = ({ s }) => {
   const { cart } = useSelector((state) => state.cart);
   
-  const isInCart = cart.find((c) => c.id === s.id)
+  const isInCart = cart.find((c) => c?.id === s?.id)
 
-  console.log(isInCart);
   const dispatch = useDispatch();
 
   const handleAddToCart = (s) => {
@@ -20,18 +20,18 @@ export const CartBtn = ({ s }) => {
 
   return (
     <main>
-    {!isInCart ?  <button
+    {!isInCart ?  <Button
         className="border-2 py-1 w-full border-red-600 text-xs rounded-md"
         onClick={() => handleAddToCart(s)}
       >
         ADD TO BAG
-      </button> :
-      <button
+      </Button> :
+      <Button
         className="border-2 py-1 w-full border-red-600 text-xs rounded-md"
         onClick={() => handleRemoveFromCart(s.id)}
       >
         Remove FROM BAG
-      </button>}
+      </Button>}
     </main>
   );
 };
