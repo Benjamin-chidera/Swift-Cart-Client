@@ -1,5 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Sidebar = () => {
   return (
@@ -9,12 +15,58 @@ export const Sidebar = () => {
       </section>
 
       <section className="mt-7 flex  flex-col gap-7 uppercase text-sm font-semibold text-gray-600">
-        <Link>Dashboard</Link>
-        <Link>Users</Link>
-        <Link>Categories</Link>
-        <Link>products</Link>
-        <Link>orders</Link>
-        <Link>reviews</Link>
+        <Link to={"/admin"}>Dashboard</Link>
+        <div>
+          {/* user */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className=" outline-none uppercase">
+              User
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <Link to={"/admin/userList"}>User List</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to={"/admin/userProfile"}>User Profile</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        <div>
+          {/* Products */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className=" outline-none uppercase">
+              Products
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <Link to={"/admin/add-products"}>Add Product</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to={"/admin/product-list"}>Products List</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        <div>
+          {/* Orders */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className=" outline-none uppercase">
+              Orders
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>
+                <Link to={"/admin/new-order"}>New Order</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link to={"/admin/order-history"}>Order History</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <Link to={"/admin/reviews"}>reviews</Link>
       </section>
     </main>
   );

@@ -19,8 +19,16 @@ import { Checkout } from "./pages/checkout/Checkout";
 import Orders from "./pages/myOrders/Orders";
 import { Admin } from "./components/Applayout/admin/Admin";
 import { Dashboard } from "./pages/admin/home/Dashboard";
+import { UserList } from "./pages/admin/users/UserList";
+import { UserProfile } from "./pages/admin/users/UserProfile";
+import AddProducts from "./pages/admin/products/AddProducts";
+import ProductList from "./pages/admin/products/ProductList";
+import NewOrders from "./pages/admin/orders/NewOrders";
+import OrderHistory from "./pages/admin/orders/OrderHistory";
+import Reviews from "./pages/admin/reviews/Reviews";
 
 const router = createBrowserRouter([
+  // user
   {
     element: <User />,
     children: [
@@ -94,6 +102,8 @@ const router = createBrowserRouter([
       },
     ],
   },
+
+  // admin
   {
     element: <Admin />,
     path: "/admin",
@@ -101,6 +111,34 @@ const router = createBrowserRouter([
       {
         index: "/",
         element: <Dashboard />,
+      },
+      {
+        path: "userList",
+        element: <UserList />,
+      },
+      {
+        path: "userProfile",
+        element: <UserProfile />,
+      },
+      {
+        path: "add-products",
+        element: <AddProducts />,
+      },
+      {
+        path: "product-list",
+        element: <ProductList />,
+      },
+      {
+        path: "new-order",
+        element: <NewOrders />,
+      },
+      {
+        path: "order-history",
+        element: <OrderHistory />,
+      },
+      {
+        path: "reviews",
+        element: <Reviews />,
       },
     ],
   },
