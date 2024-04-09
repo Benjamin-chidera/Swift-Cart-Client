@@ -11,8 +11,8 @@ import { Button } from "../ui/button";
 
 export const Navbar = () => {
   return (
-    <main className="py-3 relative ">
-      <section className=" flex items-center justify-end border-b-2 w-full px-10 pb-1 fixed bg-white top-0 h-16 container mx-auto">
+    <main className="py-3 relative z-10">
+      <section className=" flex items-center justify-end border-b-2 w-full px-10 pb-1 fixed bg-white top-0 h-16 container mx-auto left-0">
         <DropdownMenu>
           <DropdownMenuTrigger className=" outline-none uppercase">
             <div className=" overflow-hidden rounded-full">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   DropdownMenu,
@@ -9,7 +9,7 @@ import {
 
 export const Sidebar = () => {
   return (
-    <main className="bg-gray-100 h-screen w-[200px] fixed top-0 left-0 mr-40 px-3">
+    <main className="bg-gray-100 h-screen w-[200px] fixed top-0 left-0 mr-40 px-3 z-10">
       <section className="pt-5">
         <Link className="font-bold text-3xl">SwiftCart</Link>
       </section>
@@ -22,12 +22,10 @@ export const Sidebar = () => {
             <DropdownMenuTrigger className=" outline-none uppercase">
               User
             </DropdownMenuTrigger>
+
             <DropdownMenuContent>
               <DropdownMenuItem>
                 <Link to={"/admin/userList"}>User List</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link to={"/admin/userProfile"}>User Profile</Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
