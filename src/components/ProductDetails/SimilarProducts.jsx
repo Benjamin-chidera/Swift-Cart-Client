@@ -1,5 +1,7 @@
 import React from "react";
-import { addItem, fetchFeature } from "@/redux/features/cartSlice";
+import { addItem, 
+  // fetchFeature 
+} from "@/redux/features/cartSlice";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useEffect, useState } from "react";
@@ -17,17 +19,17 @@ import { WishBtn } from "@/components/wishList/wishListBtn/WishBtn";
 import { CartBtn } from "../cart/CartBtn";
 
 export const SimilarProducts = () => {
-  const { products, status } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchFeature());
-  }, [dispatch]);
+  // const { products, status } = useSelector((state) => state.cart);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(fetchFeature());
+  // }, [dispatch]);
 
-  const myCart = products?.payload;
+  // const myCart = products?.payload;
 
-  const handleAddToCart = (s) => {
-    dispatch(addItem(s));
-  };
+  // const handleAddToCart = (s) => {
+  //   dispatch(addItem(s));
+  // };
 
   return (
     <main className=" mx-14 md:container md:mx-auto my-5  md:px-20 mt-20">
@@ -41,7 +43,7 @@ export const SimilarProducts = () => {
         <section>
           <Carousel>
             <CarouselContent>
-              {myCart?.map((s) => (
+              {/* {myCart?.map((s) => (
                 <CarouselItem
                   key={s.id}
                   className="basis-1/1 md:basis-1/3 lg:basis-1/5 cursor-grabbing relative"
@@ -77,7 +79,7 @@ export const SimilarProducts = () => {
                     </div>
                   </section>
                 </CarouselItem>
-              ))}
+              ))} */}
             </CarouselContent>
             <CarouselPrevious />
             <CarouselNext />

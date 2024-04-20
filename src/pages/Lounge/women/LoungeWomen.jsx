@@ -1,4 +1,4 @@
-import { featchCategories } from "@/redux/features/categorySlice";
+import { featchCategories, featchCategoriesAndGender } from "@/redux/features/categorySlice";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,16 +11,16 @@ import { CartBtn } from "@/components/cart/CartBtn";
 import { Filter } from "@/components/filters/Filter";
 
 const LoungeWomen = () => {
-  const { category } = useParams();
+  const { category, gender } = useParams();
   const dispatch = useDispatch();
     const [min, setMin] = useState(0);
     const [max, setMax] = useState(0);
 
-  const { categories, minPrice, maxPrice } = useSelector(
+  const { categoriesGender, minPrice, maxPrice } = useSelector(
     (state) => state.categories
   );
 
-  const skinCare = categories?.payload;
+  const skinCare = categoriesGender?.payload?.product;
 
   const filteredProducts = skinCare?.filter(
     (product) => product.price >= minPrice && product.price <= maxPrice
@@ -28,9 +28,9 @@ const LoungeWomen = () => {
 
   const isFiltered = filteredProducts?.length < 1 ? skinCare : filteredProducts;
 
-  useEffect(() => {
-    dispatch(featchCategories(category));
-  }, [dispatch]);
+   useEffect(() => {
+     dispatch(featchCategoriesAndGender({ category, gender }));
+   }, [dispatch, category, gender]);
 
   return (
     <main className=" my-5 mx-3 md:container md:mx-auto flex">

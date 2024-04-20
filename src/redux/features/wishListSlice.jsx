@@ -14,7 +14,7 @@ const wishList = createSlice({
       state.status = true;
     },
     removeWishList: (state, { payload }) => {
-      state.wishList = state.wishList.filter((wish) => wish.id !== payload);
+      state.wishList = state.wishList.filter((wish) => wish._id !== payload);
       state.status = false;
     },
     clearWishList: (state) => {

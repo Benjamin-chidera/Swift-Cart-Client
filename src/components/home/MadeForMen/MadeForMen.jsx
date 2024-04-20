@@ -10,7 +10,8 @@ const comfortimg = [
     id: crypto.randomUUID(),
     img: comfortman,
     // title: "men",
-    title: "men's clothing",
+    category: "bodysuits",
+    gender: "male",
   },
 ];
 
@@ -19,7 +20,8 @@ const joyimg = [
     id: crypto.randomUUID(),
     img: manjoy,
     // title: "men",
-    title: "men's clothing",
+    category: "lounge",
+    gender: "male",
   },
 ];
 
@@ -31,7 +33,7 @@ export const MadeForMen = () => {
           <Link
             className=" relative"
             key={s.id}
-            to={`/bodysuits/men/${s.title}`}
+            to={`/categories/${s.category}/${s.gender}`}
           >
             <LazyLoadImage
               src={comfortman}
@@ -53,7 +55,11 @@ export const MadeForMen = () => {
       </section>
       <section>
         {joyimg.map((s) => (
-          <Link className=" relative" key={s.id} to={`/lounge/men/${s.title}`}>
+          <Link
+            className=" relative"
+            key={s.id}
+            to={`/categories/${s.category}/${s.gender}`}
+          >
             <LazyLoadImage
               src={manjoy}
               loading="lazy"

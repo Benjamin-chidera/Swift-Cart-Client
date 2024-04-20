@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 export const WishBtn = ({ s }) => {
   const { wishList } = useSelector((state) => state.wishList);
 
-  const isAddedToWishList = wishList.find((wish) => wish.id === s.id);
+  const isAddedToWishList = wishList.find((wish) => wish._id === s._id);
 
   // console.log(wishList.length);
 
@@ -26,7 +26,7 @@ export const WishBtn = ({ s }) => {
           <FaRegHeart color="red" />
         </button>
       ) : (
-        <button onClick={() => handleRemoveFromWishList(s.id)}>
+        <button onClick={() => handleRemoveFromWishList(s._id)}>
           <FaHeart color="red" />
         </button>
       )}

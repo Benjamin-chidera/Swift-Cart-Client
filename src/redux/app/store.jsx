@@ -14,6 +14,9 @@ import cartReducer from "../features/cartSlice";
 import wishListReducer from "../features/wishListSlice";
 import categoryReducer from "../features/categorySlice";
 import orderReducer from "../features/orderSlice";
+import authReducer from "../features/authSlice";
+import Cookies from "js-cookie";
+import productReducer from "../features/productSlice";
 
 const persistConfig = {
   key: "root",
@@ -25,7 +28,9 @@ const reducers = combineReducers({
   cart: cartReducer,
   wishList: wishListReducer,
   categories: categoryReducer,
-  orders: orderReducer
+  orders: orderReducer,
+  auth: authReducer,
+  product: productReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

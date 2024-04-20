@@ -3,12 +3,31 @@ import axios from "axios";
 
 export const featchCategories = createAsyncThunk(
   "categories/featchCategories",
-  async (category) => {
-    const { data } = await axios(
-      `https://fakestoreapi.com/products/category/${category}`
-    );
+  async ({ category, tags }) => {
+    try {
+      const { data } = await axios(
+        `http://localhost:3000/api/v1/products/category/${category}/tags/${tags}`
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
-    return data;
+export const featchCategoriesAndGender = createAsyncThunk(
+  "categoriesGender/featchCategoriesAndGender",
+  async ({ category, gender }) => {
+    try {
+      const { data } = await axios(
+        `http://localhost:3000/api/v1/products/category/${category}/gender/${gender}`
+      );
+
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
 
@@ -25,6 +44,7 @@ export const featchCategoriesDetails = createAsyncThunk(
 
 const initialState = {
   categories: [],
+  categoriesGender: [],
   categoriesDetails: {},
   status: "idle",
   minPrice: 0,
@@ -44,6 +64,8 @@ const categorySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
+      //categories
       .addCase(featchCategories.pending, (state) => {
         state.status = "loading";
       })
@@ -51,9 +73,23 @@ const categorySlice = createSlice({
         state.status = "idle";
         state.categories = payload;
       })
-      .addCase(featchCategories.rejected, (state, ) => {
+      .addCase(featchCategories.rejected, (state) => {
         state.status = "rejected";
       })
+
+      //category by gender
+      .addCase(featchCategoriesAndGender.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(featchCategoriesAndGender.fulfilled, (state, payload) => {
+        state.status = "idle";
+        state.categoriesGender = payload;
+      })
+      .addCase(featchCategoriesAndGender.rejected, (state) => {
+        state.status = "rejected";
+      })
+
+      //cat details
       .addCase(featchCategoriesDetails.pending, (state) => {
         state.status = "loading";
       })

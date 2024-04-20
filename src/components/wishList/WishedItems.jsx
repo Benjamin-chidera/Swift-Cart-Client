@@ -11,8 +11,9 @@ import { removeWishList } from "@/redux/features/wishListSlice";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { useSelector, useDispatch } from "react-redux";
 
-export const WishedItems = ({c}) => {
-  const { id, image, title, price } = c;
+export const WishedItems = ({ c, id }) => {
+  const { image, name, price } = c;
+  console.log(id);
 
   const dispatch = useDispatch();
 
@@ -20,9 +21,7 @@ export const WishedItems = ({c}) => {
     dispatch(removeWishList(c));
   };
 
-
-
-  const qty = useSelector(getCurrentQtyItem(id));
+  // const qty = useSelector(getCurrentQtyItem(id));
 
   return (
     <section className="flex gap-5">
@@ -33,7 +32,7 @@ export const WishedItems = ({c}) => {
       />
 
       <div className=" flex-1 text-xs max-w-[100px]">
-        <h1 className="font-bold">{title.substring(0, 10)}</h1>
+        <h1 className="font-bold">{name.substring(0, 10)}</h1>
         <p className="font-bold">
           Color: <span className="font-medium">Red</span>
         </p>
@@ -43,7 +42,6 @@ export const WishedItems = ({c}) => {
         <p className="font-bold">{formatCurrency(price)}</p>
 
         <div className="flex items-center gap-3">
-    
           <button
             className="font-bold underline mt-2"
             onClick={() => removeCart(id)}

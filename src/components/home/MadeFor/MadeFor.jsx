@@ -9,8 +9,8 @@ const comfortimg = [
   {
     id: crypto.randomUUID(),
     img: comfort,
-    // title: "women",
-    title: "women's clothing",
+    category: "bodysuits",
+    gender: "female",
   },
 ];
 
@@ -18,8 +18,8 @@ const joyimg = [
   {
     id: crypto.randomUUID(),
     img: joy,
-    // title: "women",
-    title: "women's clothing",
+    category: "lounge",
+    gender: "female",
   },
 ];
 
@@ -31,7 +31,7 @@ export const MadeFor = () => {
           <Link
             className=" relative"
             key={s.id}
-            to={`/bodysuits/women/${s.title}`}
+            to={`/categories/${s.category}/${s.gender}`}
           >
             <LazyLoadImage
               src={s.img}
@@ -56,7 +56,7 @@ export const MadeFor = () => {
           <Link
             className=" relative"
             key={s.id}
-            to={`/lounge/women/${s.title}`}
+            to={`/categories/${s.category}/${s.gender}`}
           >
             <LazyLoadImage
               src={s.img}

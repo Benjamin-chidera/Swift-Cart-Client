@@ -26,6 +26,16 @@ import ProductList from "./pages/admin/products/ProductList";
 import NewOrders from "./pages/admin/orders/NewOrders";
 import OrderHistory from "./pages/admin/orders/OrderHistory";
 import Reviews from "./pages/admin/reviews/Reviews";
+import Signup from "./pages/auth/Signup";
+import Signin from "./pages/auth/Signin";
+import ForgottenPassword from "./pages/auth/ForgottenPassword";
+import ResetPassword from "./pages/auth/ResetPassword";
+import EditProducts from "./pages/admin/products/EditProducts";
+import { Men } from "./components/home/recent/Men";
+import { Women } from "./components/home/recent/Women";
+import AdminSignup from "./pages/admin/auth/Signup";
+import AdminSignin from "./pages/admin/auth/Signin";
+import UserError from "./pages/Error/user/UserError";
 
 const router = createBrowserRouter([
   // user
@@ -37,7 +47,15 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/skin/:category",
+        path: "/recent/:gender",
+        element: <Men />,
+      },
+      {
+        path: "/recent/:gender",
+        element: <Women />,
+      },
+      {
+        path: "/:category/:tags",
         element: <SkinCare />,
       },
       {
@@ -45,7 +63,7 @@ const router = createBrowserRouter([
         element: <SkinCareDetails />,
       },
       {
-        path: "/clothes/:category",
+        path: "/:category/:tags",
         element: <Clothes />,
       },
       {
@@ -53,7 +71,7 @@ const router = createBrowserRouter([
         element: <ClothesDetails />,
       },
       {
-        path: "/shoes/:category",
+        path: "/:category/:tags",
         element: <Shoe />,
       },
       {
@@ -61,7 +79,7 @@ const router = createBrowserRouter([
         element: <ShoesDetails />,
       },
       {
-        path: "/bodysuits/women/:category",
+        path: "/categories/:category/:gender",
         element: <BodySuitsWomen />,
       },
       {
@@ -69,7 +87,7 @@ const router = createBrowserRouter([
         element: <BodySuitsWomenDetails />,
       },
       {
-        path: "/bodysuits/men/:category",
+        path: "/categories/:category/:gender",
         element: <BodySuitsMen />,
       },
       {
@@ -77,7 +95,7 @@ const router = createBrowserRouter([
         element: <BodySuitsWomenDetails />,
       },
       {
-        path: "/lounge/women/:category",
+        path: "/categories/:category/:gender",
         element: <LoungeWomen />,
       },
       {
@@ -99,6 +117,26 @@ const router = createBrowserRouter([
       {
         path: "/order",
         element: <Orders />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
+      },
+      {
+        path: "/signin",
+        element: <Signin />,
+      },
+      {
+        path: "/forgotten-password",
+        element: <ForgottenPassword />,
+      },
+      {
+        path: "/reset-password/:token",
+        element: <ResetPassword />,
+      },
+      {
+        path: "*",
+        element: <UserError />,
       },
     ],
   },
@@ -126,6 +164,10 @@ const router = createBrowserRouter([
         element: <ProductList />,
       },
       {
+        path: "edit-product/:productId",
+        element: <EditProducts />,
+      },
+      {
         path: "new-order",
         element: <NewOrders />,
       },
@@ -136,6 +178,18 @@ const router = createBrowserRouter([
       {
         path: "reviews",
         element: <Reviews />,
+      },
+      {
+        path: "/admin/signup",
+        element: <AdminSignup />,
+      },
+      {
+        path: "/admin/signin",
+        element: <AdminSignin />,
+      },
+      {
+        path: "*",
+        element: <UserError />,
       },
     ],
   },

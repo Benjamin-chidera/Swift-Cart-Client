@@ -1,10 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchFeature = createAsyncThunk(
-  "products/fetchFeature",
+export const fetchRecentFemale = createAsyncThunk(
+  "products/fetchRecentFemale",
   async () => {
-    const res = await axios("https://fakestoreapi.com/products");
+    const res = await axios(
+    `  http://localhost:3000/api/v1/products/recent/female`
+    );
+    const data = res.data;
+    return data;
+  }
+);
+
+export const fetchRecentMale = createAsyncThunk(
+  "products/fetchRecentMale",
+  async () => {
+    const res = await axios(
+    `  http://localhost:3000/api/v1/products/recent/male`
+    );
     const data = res.data;
     return data;
   }
@@ -21,7 +34,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state, { payload }) => {
-      const item = state.cart?.find((s) => s?.id === payload?.id);
+      const item = state.cart?.find((s) => s?._id === payload?._id);
       if (item) {
         item.quantity++;
       } else {
@@ -30,18 +43,18 @@ const cartSlice = createSlice({
     },
 
     removeItem: (state, { payload }) => {
-      state.cart = state.cart?.filter((c) => c.id !== payload);
+      state.cart = state.cart?.filter((c) => c._id !== payload);
     },
 
     incItem: (state, { payload }) => {
-      const item = state.cart?.find((c) => c.id === payload);
+      const item = state.cart?.find((c) => c._id === payload);
 
       item.quantity++;
       item.totalPrice = item.quantity * item.price;
     },
 
     decItem: (state, { payload }) => {
-      const item = state.cart?.find((c) => c.id === payload);
+      const item = state.cart?.find((c) => c._id === payload);
 
       if (item.quantity === 1) {
         cartSlice.caseReducers.removeItem(state, { payload });
@@ -58,17 +71,28 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchFeature.pending, (state) => {
+      .addCase(fetchRecentFemale.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchFeature.fulfilled, (state, payload) => {
+      .addCase(fetchRecentFemale.fulfilled, (state, payload) => {
         state.status = "idle";
 
         state.products = payload;
       })
-      .addCase(fetchFeature.rejected, (state) => {
+      .addCase(fetchRecentFemale.rejected, (state) => {
         state.status = "rejected";
-      });
+      })
+      .addCase(fetchRecentMale.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchRecentMale.fulfilled, (state, payload) => {
+        state.status = "idle";
+
+        state.products = payload;
+      })
+      .addCase(fetchRecentMale.rejected, (state) => {
+        state.status = "rejected";
+      })
   },
 });
 
@@ -89,5 +113,5 @@ export const getTotalPrice = (state) => {
 };
 
 export const getCurrentQtyItem = (id) => (state) => {
-  return state.cart.cart?.find((c) => c.id === id)?.quantity ?? 0;
+  return state.cart.cart?.find((c) => c._id === id)?.quantity ?? 0;
 };

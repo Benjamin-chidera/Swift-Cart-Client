@@ -16,50 +16,58 @@ const skinCat = [
   {
     id: crypto.randomUUID(),
     img: skin1,
-    title: "jewelery",
-    // title: "skincare",
+    // title: "jewelery",
+    tags: "skincare",
+    category: "skin",
   },
   {
     id: crypto.randomUUID(),
     img: skin2,
-    title: "electronics",
-    // title: "haircare",
+    // title: "electronics",
+    tags: "haircare",
+    category: "skin",
   },
   {
     id: crypto.randomUUID(),
     img: skin3,
-    title: "men's clothing",
-    // title: "bodycare",
+    // title: "men's clothing",
+    tags: "bodycare",
+    category: "skin",
   },
   {
     id: crypto.randomUUID(),
     img: skin4,
-    title: "women's clothing",
-    // title: "sunprotection",
+    // title: "women's clothing",
+    tags: "sunprotection",
+    category: "skin",
   },
   {
     id: crypto.randomUUID(),
     img: skin5,
-    title: "electronics",
-    // title: "makeup",
+    // title: "electronics",
+    tags: "makeup",
+    category: "skin",
   },
   {
     id: crypto.randomUUID(),
     img: skin6,
-    title: "jewelery",
-    // title: "men's",
+    // title: "jewelery",
+    tags: "men's",
+    category: "skin",
   },
   {
     id: crypto.randomUUID(),
     img: skin7,
-    title: "men's clothing",
-    // title: "scentfree",
+    // title: "men's clothing",
+    tags: "scentfree",
+    category: "skin",
   },
   {
     id: crypto.randomUUID(),
     img: skin8,
-    title: "women's clothing",
-    // title: "toothpaste",
+    // title: "women's clothing",
+    tags: "toothpaste",
+    category: "skin",
   },
 ];
 
@@ -70,7 +78,7 @@ export const Skin = () => {
 
       <section className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
         {skinCat.map((s) => (
-          <Link key={s.id} to={`/skin/${s.title}`}>
+          <Link key={s.id} to={`/${s.category}/${s.tags}`}>
             <LazyLoadImage
               src={s.img}
               loading="lazy"
@@ -78,7 +86,7 @@ export const Skin = () => {
               className=" rounded-md"
             />
             <p className="text-xs font-semibold text-center uppercase">
-              {s.title.split("").join(" ")}
+              {s.tags}
             </p>
           </Link>
         ))}

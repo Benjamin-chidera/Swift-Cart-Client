@@ -44,8 +44,8 @@ export const WishList = () => {
               {wishList.length > 0 ? (
                 <section className=" space-y-5 ">
                   {wishList.map((c) => (
-                    <SheetDescription key={c.id}>
-                      <WishedItems c={c} />
+                    <SheetDescription key={c._id}>
+                      <WishedItems c={c} id={c._id} />
                     </SheetDescription>
                   ))}
                   <div>

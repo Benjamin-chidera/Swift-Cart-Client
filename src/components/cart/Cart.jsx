@@ -39,8 +39,8 @@ export const Cart = () => {
             {cart?.length > 0 ? (
               <section className=" space-y-5 ">
                 {cart?.map((c) => (
-                  <SheetDescription key={c.id}>
-                    <CartItem c={c} />
+                  <SheetDescription key={c._id}>
+                    <CartItem c={c} id={c._id}/>
                   </SheetDescription>
                 ))}
                 <div>

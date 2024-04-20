@@ -12,25 +12,29 @@ const clothCat = [
     id: crypto.randomUUID(),
     img: men,
     // title: "men",
-    title: "men's clothing",
+    tags: "men",
+    category: "clothes",
   },
   {
     id: crypto.randomUUID(),
     img: women,
     // title: "women",
-    title: "women's clothing",
+    tags: "womenMen",
+    category: "clothes",
   },
   {
     id: crypto.randomUUID(),
     img: boy,
     // title: "boy's",
-    title: "men's clothing",
+    tags: "men",
+    category: "clothes",
   },
   {
     id: crypto.randomUUID(),
     img: girl,
     // title: "girl's",
-    title: "women's clothing",
+    tags: "womenMen",
+    category: "clothes",
   },
 ];
 
@@ -43,7 +47,7 @@ export const Clothes = () => {
 
       <section className="grid grid-cols-2 w-full place-items-center gap-3 md:grid-cols-4">
         {clothCat.map((s) => (
-          <Link key={s.id} className="w-full" to={`/clothes/${s.title}`}>
+          <Link key={s.id} className="w-full" to={`/${s.category}/${s.tags}`}>
             <LazyLoadImage
               src={s.img}
               loading="lazy"

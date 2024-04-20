@@ -12,25 +12,29 @@ const shoeCat = [
     id: crypto.randomUUID(),
     img: men,
     // title: "men",
-    title: "men's clothing",
+    tags: "men",
+    category: "shoes",
   },
   {
     id: crypto.randomUUID(),
     img: women,
     // title: "women",
-    title: "women's clothing",
+    tags: "womenMen",
+    category: "shoes",
   },
   {
     id: crypto.randomUUID(),
     img: boy,
     // title: "boy's",
-    title: "men's clothing",
+    tags: "men",
+    category: "shoes",
   },
   {
     id: crypto.randomUUID(),
     img: girl,
     // title: "girl's",
-    title: "women's clothing",
+    tags: "womenMen",
+    category: "shoes",
   },
 ];
 
@@ -41,14 +45,16 @@ export const Shoes = () => {
 
       <section className="grid grid-cols-2 w-full place-items-center gap-3 md:grid-cols-4">
         {shoeCat.map((s) => (
-          <Link key={s.id} className="w-full" to={`/shoes/${s.title}`}>
+          <Link key={s.id} className="w-full" to={`/${s.category}/${s.tags}`}>
             <LazyLoadImage
               src={s.img}
               loading="lazy"
               effect="blur"
               className="rounded-md object-cover h-[120px] w-[400px] md:h-[200px] md:w-[230px] lg:w-[350px]"
             />
-            <p className="text-xs font-semibold text-center uppercase">{s.title}</p>
+            <p className="text-xs font-semibold text-center uppercase">
+              {s.title}
+            </p>
           </Link>
         ))}
       </section>
