@@ -19,7 +19,7 @@ import { Women } from "./Women";
 
 export const Recent = () => {
   const [gender, setGender] = useState("female");
-  
+
   // change genders
   const handleMale = () => {
     setGender("male");
@@ -27,19 +27,6 @@ export const Recent = () => {
   const handleWomen = () => {
     setGender("female");
   };
-
-  // if (status === "loading") {
-  //   return <p className="text-center font-bold my-10">Loading... 😁😁🛒</p>;
-  // }
-
-  // if (status === "rejected") {
-  //   return (
-  //     <p className="text-center font-bold my-10">
-  //       Failed to loading recent products please check your internet connection.
-  //       😢
-  //     </p>
-  //   );
-  // }
 
   return (
     <main className=" mx-14 md:container md:mx-auto my-5  md:px-20">

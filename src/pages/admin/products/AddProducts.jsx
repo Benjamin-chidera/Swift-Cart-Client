@@ -15,6 +15,7 @@ const AddProducts = () => {
   const [profileImage, setProfileImage] = useState("");
   const [images, setImages] = useState(null);
   const token = Cookies.get("user")
+  console.log(token);
 
 
   const handleImageChange = (e) => {

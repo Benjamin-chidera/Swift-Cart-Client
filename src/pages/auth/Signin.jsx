@@ -6,11 +6,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/redux/features/authSlice";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
+import { useState } from "react";
+import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 
 const Signin = () => {
   const dispatch = useDispatch();
   const { status, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+   const [show, setShow] = useState(false);
+
+   const handleShow = () => {
+     setShow((prevShowPassword) => !prevShowPassword);
+   };
 
   const {
     register,
@@ -63,12 +70,21 @@ const Signin = () => {
             {...register("email", { required: true })}
           />
           {errors.email && <p>Please Enter A Valid Email</p>}
-          <Input
-            type="Password"
-            placeholder="User Password"
-            className="my-2"
-            {...register("password", { required: true })}
-          />
+          <div className="relative">
+            <Input
+              type={!show ? "password" : "text"}
+              placeholder="User Password"
+              className="my-5"
+              {...register("password", { required: true })}
+            />
+
+            <div className=" absolute top-2 right-2">
+              <button onClick={handleShow} type="button">
+                {" "}
+                {!show ? <FaRegEyeSlash /> : <FaRegEye />}
+              </button>
+            </div>
+          </div>
           {errors.password && <p>Please Enter A Valid Password</p>}
 
           <div className="text-end">

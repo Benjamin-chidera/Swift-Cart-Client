@@ -7,8 +7,12 @@ import { SoldItems } from "@/components/admin/Home/soldItems/SoldItems";
 import { TopProducts } from "@/components/admin/Home/Top products/TopProducts";
 import { UserActivity } from "@/components/admin/Home/user Activity/UserActivity";
 import React from "react";
+import { useSelector } from "react-redux";
 
 export const Dashboard = () => {
+
+
+
   return (
     <main>
       <DailyReports />

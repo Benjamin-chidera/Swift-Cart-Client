@@ -1,15 +1,30 @@
 import { formatCurrency } from "@/lib/FormatCurrency";
-import React from "react";
+import { payMent } from "@/redux/features/payStackSlice";
+import React, { useEffect } from "react";
 import { FaUserPlus, FaUserClock, FaBox } from "react-icons/fa";
 import { TbCurrencyNaira } from "react-icons/tb";
+import { useDispatch, useSelector } from "react-redux";
 
 export const DailyReports = () => {
+  const dispatch = useDispatch();
+  const { payStack } = useSelector((state) => state.payStack);
+  const { product } = useSelector((state) => state.product);
+  const { user } = useSelector((state) => state.auth);
+
+  const pay = payStack?.data;
+
+  const checkAmount = pay?.reduce((sum, curr) => sum + curr?.amount, 0);
+
+  useEffect(() => {
+    dispatch(payMent());
+  }, [dispatch]);
+
   return (
     <main className=" flex items-center justify-between">
       <section className="flex items-center gap-3 shadow py-1 px-3 rounded">
         <div>
-          <h2 className="font-semibold text-2xl">1,503</h2>
-          <p className="text-xs">Daily Signups</p>
+          <h2 className="font-semibold text-2xl">{user?.user?.length}</h2>
+          <p className="text-xs">Total Registered Users</p>
         </div>
         <div className="bg-blue-300 py-2 w-[80px] h-[80px] mx-aut rounded-xl  flex justify-center items-center">
           <FaUserPlus color="white" size={50} />
@@ -18,8 +33,8 @@ export const DailyReports = () => {
 
       <section className="flex items-center gap-3 shadow py-1 px-3 rounded">
         <div>
-          <h2 className="font-semibold text-2xl">79,503</h2>
-          <p className="text-xs">Daily Visitors</p>
+          <h2 className="font-semibold text-2xl">{product.numOfProduct}</h2>
+          <p className="text-xs">Total Products</p>
         </div>
         <div className="bg-blue-300 py-2 w-[80px] h-[80px] mx-aut rounded-xl  flex justify-center items-center">
           <FaUserClock color="white" size={50} />
@@ -29,7 +44,7 @@ export const DailyReports = () => {
       <section className="flex items-center gap-3 shadow py-1 px-3 rounded">
         <div>
           <h2 className="font-semibold text-2xl">15,503</h2>
-          <p className="text-xs">Daily Order</p>
+          <p className="text-xs">Total Order</p>
         </div>
         <div className="bg-blue-300 py-2 w-[80px] h-[80px] mx-aut rounded-xl  flex justify-center items-center">
           <FaBox color="white" size={50} />
@@ -38,7 +53,9 @@ export const DailyReports = () => {
 
       <section className="flex items-center gap-3 shadow py-1 px-3 rounded">
         <div>
-          <h2 className="font-semibold text-2xl">{formatCurrency(98503)}</h2>
+          <h2 className="font-semibold text-2xl">
+            {formatCurrency(checkAmount)}
+          </h2>
           <p className="text-xs">Daily Revenue</p>
         </div>
         <div className="bg-blue-300 py-2 w-[80px] h-[80px] mx-aut rounded-xl  flex justify-center items-center">

@@ -1,16 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { registerUser } from "@/redux/features/authSlice";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 
 const Signup = () => {
   const [previewUrls, setPreviewUrls] = useState("");
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => {
+    setShow((prevShowPassword) => !prevShowPassword);
+  };
 
   const {
     register,
@@ -110,12 +116,21 @@ const Signup = () => {
           />
           {errors.email && <p>Please Enter A Valid Email</p>}
 
-          <Input
-            type="Password"
-            placeholder="User Password"
-            className="my-5"
-            {...register("password", { required: true })}
-          />
+          <div className="relative">
+            <Input
+              type={!show ? "password" : "text"}
+              placeholder="User Password"
+              className="my-5"
+              {...register("password", { required: true })}
+            />
+
+            <div className=" absolute top-2 right-2">
+              <button onClick={handleShow} type="button">
+                {" "}
+                {!show ? <FaRegEyeSlash /> : <FaRegEye />}
+              </button>
+            </div>
+          </div>
           {errors.password && <p>Please Enter A Valid Password</p>}
 
           <Button

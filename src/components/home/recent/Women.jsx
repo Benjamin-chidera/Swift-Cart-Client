@@ -26,11 +26,13 @@ export const Women = () => {
 
   const myCart = products?.payload?.RecentProduct
   console.log(myCart);
+  
   return (
     <section>
       <section>
         <Carousel>
-          <CarouselContent>s
+          <CarouselContent>
+            s
             {myCart?.map((s) => (
               <CarouselItem
                 key={s.id}
@@ -40,7 +42,7 @@ export const Women = () => {
                   src={s.image}
                   loading="lazy"
                   effect="blur"
-                  className="w-[120px] h-[120px] md:w-[150px] md:h-[180px] object-cover "
+                  className="w-[120px] h-[120px] md:w-[150px] md:h-[180px] object-cover lg:w-[300px]"
                 />
 
                 <p className=" text-sm">{s.name.substring(0, 20)}...</p>
@@ -58,11 +60,11 @@ export const Women = () => {
                     </span>
                   </div>
 
-                  <div className=" mt-3">
+                  <div className=" mt-3 w-[120px] h-[120px] md:w-[150px] md:h-[180px] lg:w-full">
                     <CartBtn s={s} />
                   </div>
 
-                  <div className=" absolute top-0">
+                  <div className=" absolute top-0 ">
                     <WishBtn s={s} />
                   </div>
                 </section>

@@ -19,18 +19,9 @@ import { WishBtn } from "@/components/wishList/wishListBtn/WishBtn";
 import { CartBtn } from "../cart/CartBtn";
 
 export const SimilarProducts = () => {
-  // const { products, status } = useSelector((state) => state.cart);
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(fetchFeature());
-  // }, [dispatch]);
-
-  // const myCart = products?.payload;
-
-  // const handleAddToCart = (s) => {
-  //   dispatch(addItem(s));
-  // };
-
+  const { singleProduct } = useSelector((state) => state.product);
+  const myCart = singleProduct?.similarProduct;
+  console.log(myCart);
   return (
     <main className=" mx-14 md:container md:mx-auto my-5  md:px-20 mt-20">
       <section className=" flex items-center justify-between flex-wrap mb-10">
@@ -43,7 +34,7 @@ export const SimilarProducts = () => {
         <section>
           <Carousel>
             <CarouselContent>
-              {/* {myCart?.map((s) => (
+              {myCart?.map((s) => (
                 <CarouselItem
                   key={s.id}
                   className="basis-1/1 md:basis-1/3 lg:basis-1/5 cursor-grabbing relative"
@@ -52,10 +43,10 @@ export const SimilarProducts = () => {
                     src={s.image}
                     loading="lazy"
                     effect="blur"
-                    className="w-[120px] h-[120px] md:w-[150px] md:h-[180px] object-cover object-left-top"
+                    className="w-[120px] h-[120px] md:w-[150px] md:h-[180px] object-cover lg:w-[300px]"
                   />
 
-                  <p className=" text-sm">{s.title.substring(0, 20)}...</p>
+                  <p className=" text-sm">{s.name.substring(0, 20)}...</p>
 
                   <p className=" text-sm mt-3">
                     {s.description.substring(0, 20)}
@@ -66,7 +57,7 @@ export const SimilarProducts = () => {
                       <p>{formatCurrency(Math.round(s.price))}</p>
 
                       <span className=" text-xs">
-                        <GetRating rating={s.rating.rate} />
+                        {/* <GetRating rating={s.rating.rate} /> */} rating
                       </span>
                     </div>
 
@@ -79,7 +70,7 @@ export const SimilarProducts = () => {
                     </div>
                   </section>
                 </CarouselItem>
-              ))} */}
+              ))}
             </CarouselContent>
             <CarouselPrevious />
             <CarouselNext />

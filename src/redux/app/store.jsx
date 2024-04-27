@@ -17,6 +17,7 @@ import orderReducer from "../features/orderSlice";
 import authReducer from "../features/authSlice";
 import Cookies from "js-cookie";
 import productReducer from "../features/productSlice";
+import payStackReducer from "../features/payStackSlice";
 
 const persistConfig = {
   key: "root",
@@ -31,6 +32,7 @@ const reducers = combineReducers({
   orders: orderReducer,
   auth: authReducer,
   product: productReducer,
+  payStack: payStackReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

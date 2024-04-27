@@ -15,8 +15,6 @@ export const ProductActivities = () => {
   const bodysuits = products?.filter((c) => c.category === "bodysuits");
   const lounge = products?.filter((c) => c.category === "lounge");
 
-  console.log(lounge);
-
   useEffect(() => {
     dispatch(getProduct());
   }, [dispatch]);

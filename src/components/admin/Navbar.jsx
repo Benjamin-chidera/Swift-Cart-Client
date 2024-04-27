@@ -16,7 +16,7 @@ export const Navbar = () => {
     <main className="py-3 relative z-10">
       {location.pathname !== "/admin/signup" &&
         location.pathname !== "/admin/signin" && (
-          <section className=" flex items-center justify-end border-b-2 w-full px-10 pb-1 fixed bg-white top-0 h-16 container mx-auto left-0">
+          <section className=" flex items-center justify-end border-b-2 w-full px-10 pb-1 fixed bg-white top-0 h-16 container mx-auto left-0 right-0">
             <DropdownMenu>
               <DropdownMenuTrigger className=" outline-none uppercase">
                 <div className=" overflow-hidden rounded-full">

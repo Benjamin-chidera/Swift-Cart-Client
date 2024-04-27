@@ -83,7 +83,7 @@ const ProductList = () => {
               effect="blur"
             />
 
-            <h1>{p.name}</h1>
+            <h1>{p.name.substring(0, 20)}</h1>
             <h2>{formatCurrency(p.price)}</h2>
             <h3>{p.purchased || 0}</h3>
             <h4>{p.quantity}</h4>
@@ -114,7 +114,10 @@ const ProductList = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Button className="w-full">
-                    <Link className="text-xs" to={`/admin/edit-product/${p._id}`}>
+                    <Link
+                      className="text-xs"
+                      to={`/admin/edit-product/${p._id}`}
+                    >
                       Edit Product
                     </Link>
                   </Button>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
+import { getTotalPrice, getTotalQtyItem } from "@/redux/features/cartSlice";
 import {
   CitySelect,
   CountrySelect,
@@ -9,24 +10,63 @@ import {
 } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { Button } from "@/components/ui/button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formatCurrency } from "@/lib/FormatCurrency";
-import { getTotalPrice, getTotalQtyItem } from "@/redux/features/cartSlice";
+
 import { CheckoutItem } from "./CheckoutItem";
+import { useForm } from "react-hook-form";
+import { handlePayMent } from "@/redux/features/payStackSlice";
+import localStorage from "redux-persist/es/storage";
 
 export const Checkout = () => {
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
+  const navigate = useNavigate();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const dispatch = useDispatch();
+  const { cart } = useSelector((state) => state.cart);
+  const { auth } = useSelector((state) => state.cart);
+  const { payStack } = useSelector((state) => state.cart);
+  const {
+    payment: { data },
+  } = useSelector((state) => state.payStack);
+
+  const isPaying = data?.authorization_url;
 
   const totalPrice = useSelector(getTotalPrice);
 
-  const { cart } = useSelector((state) => state.cart);
+  const amount = Math.floor(totalPrice * 0.4);
 
-  console.log(cart, totalPrice);
+  const grandTotal = amount + totalPrice;
+
+  const handlePayment = async (data) => {
+    try {
+      const formData = new FormData();
+
+      formData.append("email", data.email);
+      formData.append("price", data.price);
+
+      await dispatch(handlePayMent(formData));
+
+      console.log("Opening URL:", isPaying);
+      window.open(isPaying, "_blank");
+      navigate("/");
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
 
   return (
     <main className=" px-3 md:container md:mx-auto md:flex justify-between w-full">
-      <section className="md:w-[53%] w-full ">
+      <form
+        className="md:w-[53%] w-full "
+        onSubmit={handleSubmit(handlePayment)}
+      >
         <div>
           <Link to={"/"} className="font-bold text-3xl">
             SwiftCart
@@ -36,8 +76,17 @@ export const Checkout = () => {
         <div className="mt-10">
           {/* contact info*/}
           <h6 className="font-semibold mb-4">contact</h6>
-          <Input type="email" placeholder="Email" className={"border"} />
+          <Input
+            type="email"
+            placeholder="Email"
+            className={"border"}
+            {...register("email", { required: "Email is required" })}
+          />
+          {errors.email && (
+            <span className="text-red-500">{errors.email.message}</span>
+          )}
         </div>
+
         <div className="mt-10">
           {/* delivery info*/}
           <h6 className="font-semibold mb-4">delivery</h6>
@@ -79,22 +128,36 @@ export const Checkout = () => {
 
           <Input type="tel" placeholder="Phone" className={"border"} />
         </div>
+
+        <div className="mt-5">
+          {/* <h1>Total</h1> */}
+          {/* <p>{formatCurrency(grandTotal)}</p> */}
+          <Input
+            type={"number"}
+            value={grandTotal}
+            placeholder="Total Price"
+            className=""
+            readOnly
+            {...register("price", { required: "Price is required" })}
+          />
+          {errors.price && (
+            <span className="text-red-500">{errors.price.message}</span>
+          )}
+        </div>
+
         <div className="mt-4">
           {/* Payment Btn */}
 
-          <Button className="w-full mt-5">Pay Now</Button>
+          <Button className="w-full mt-5" type="submit">
+            Pay Now
+          </Button>
         </div>
-      </section>
+      </form>
       <section className="md:w-[47%] md:flex  flex-col space-y-3">
         {/* second div */}
         {cart.map((c) => (
-          <CheckoutItem key={c.id} c={c} />
+          <CheckoutItem key={c._id} c={c} />
         ))}
-
-        <div className="mx-10 mt-5 font-semibold flex justify-between text-lg">
-          <h1>Total</h1>
-          <p>{formatCurrency(totalPrice)}</p>
-        </div>
       </section>
     </main>
   );
