@@ -155,8 +155,8 @@ export const Checkout = () => {
       </form>
       <section className="md:w-[47%] md:flex  flex-col space-y-3">
         {/* second div */}
-        {cart.map((c) => (
-          <CheckoutItem key={c._id} c={c} />
+        {cart?.map((c) => (
+          <CheckoutItem key={c?._id} c={c} />
         ))}
       </section>
     </main>
