@@ -44,6 +44,23 @@ export const Checkout = () => {
 
   const grandTotal = amount + totalPrice;
 
+  // const handlePayment = async (data) => {
+  //   try {
+  //     const formData = new FormData();
+
+  //     formData.append("email", data.email);
+  //     formData.append("price", data.price);
+
+  //     await dispatch(handlePayMent(formData));
+
+  //     console.log("Opening URL:", isPaying);
+  //     window.open(isPaying, "_blank");
+  //     navigate("/");
+  //   } catch (error) {
+  //     console.log("Error:", error);
+  //   }
+  // };
+
   const handlePayment = async (data) => {
     try {
       const formData = new FormData();
@@ -53,9 +70,13 @@ export const Checkout = () => {
 
       await dispatch(handlePayMent(formData));
 
-      console.log("Opening URL:", isPaying);
-      window.open(isPaying, "_blank");
-      navigate("/");
+      if (data?.authorization_url) {
+        console.log("Opening URL:", data.authorization_url);
+        window.open(data.authorization_url, "_blank");
+        navigate("/");
+      } else {
+        console.log("Error: Authorization URL not found.");
+      }
     } catch (error) {
       console.log("Error:", error);
     }
