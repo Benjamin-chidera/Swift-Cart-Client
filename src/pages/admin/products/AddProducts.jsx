@@ -10,13 +10,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 
-
 const AddProducts = () => {
   const [profileImage, setProfileImage] = useState("");
   const [images, setImages] = useState(null);
-  const token = Cookies.get("user")
-  console.log(token);
-
+  const token = Cookies.get("user");
 
   const handleImageChange = (e) => {
     setProfileImage(e.target.files[0]);

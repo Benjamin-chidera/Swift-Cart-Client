@@ -13,19 +13,19 @@ export const AccordionDetails = ({ details }) => {
         <AccordionItem value="item-1">
           <AccordionTrigger>Product Details</AccordionTrigger>
           <AccordionContent>
-           {details.details}
+           {details?.details}
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
           <AccordionTrigger>Shipping</AccordionTrigger>
           <AccordionContent>
-            {details.shipping}
+            {details?.shipping}
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3">
           <AccordionTrigger>Returns</AccordionTrigger>
           <AccordionContent>
-           {details.returns}
+           {details?.returns}
           </AccordionContent>
         </AccordionItem>
       </Accordion>

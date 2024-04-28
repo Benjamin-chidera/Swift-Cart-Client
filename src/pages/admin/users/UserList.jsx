@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 
 export const UserList = () => {
   const { user } = useSelector((state) => state.auth);
-  console.log(user.user);
+  console.log(user);
   //Pagination
   const [pageNumber, setPageNumber] = useState(0);
   const postPerPage = 6;
@@ -24,7 +24,7 @@ export const UserList = () => {
 
   const displayUsers = user.user?.slice(pageVisited, pageVisited + postPerPage);
 
-  const pageCount = Math.ceil(user.user?.length / postPerPage);
+  const pageCount = Math?.ceil(user.user?.length / postPerPage);
 
   const ChangePage = ({ selected }) => {
     setPageNumber(selected);

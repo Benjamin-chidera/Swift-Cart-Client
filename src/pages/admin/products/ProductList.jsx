@@ -14,23 +14,22 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Paginate from "@/components/paginate/Paginate";
 import { useDispatch, useSelector } from "react-redux";
-import { deleted, deleteProduct, getProduct } from "@/redux/features/productSlice";
+import {
+  deleted,
+  deleteProduct,
+  getProduct,
+} from "@/redux/features/productSlice";
 import Cookies from "js-cookie";
 
 const ProductList = () => {
   const dispatch = useDispatch();
   const { product } = useSelector((state) => state.product);
-   const token = Cookies.get("user");
-   console.log(token);
-
- 
+  const token = Cookies.get("user");
 
   const products = product?.product;
-  console.log(products);
 
   useEffect(() => {
     dispatch(getProduct());
-   
   }, [dispatch]);
 
   //Pagination
@@ -49,14 +48,13 @@ const ProductList = () => {
   const ChangePage = ({ selected }) => {
     setPageNumber(selected);
   };
-  
+
   const handleDeleteProduct = (_id) => {
     //  dispatch(deleted(_id));
-     console.log("Deleting product with ID:", _id);
-     dispatch(deleteProduct({_id, token}));
-   };
+    console.log("Deleting product with ID:", _id);
+    dispatch(deleteProduct({ _id, token }));
+  };
 
- 
   return (
     <main>
       <section className="grid grid-cols-8 font-semibold text-sm text-center">
