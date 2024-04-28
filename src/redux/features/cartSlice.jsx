@@ -5,7 +5,7 @@ export const fetchRecentFemale = createAsyncThunk(
   "products/fetchRecentFemale",
   async () => {
     const res = await axios(
-    `  http://localhost:3000/api/v1/products/recent/female`
+    `  https://swift-cart-server.onrender.com/api/v1/products/recent/female`
     );
     const data = res.data;
     return data;
@@ -16,7 +16,7 @@ export const fetchRecentMale = createAsyncThunk(
   "products/fetchRecentMale",
   async () => {
     const res = await axios(
-    `  http://localhost:3000/api/v1/products/recent/male`
+    `  https://swift-cart-server.onrender.com/api/v1/products/recent/male`
     );
     const data = res.data;
     return data;

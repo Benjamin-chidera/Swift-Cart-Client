@@ -6,7 +6,7 @@ export const featchCategories = createAsyncThunk(
   async ({ category, tags }) => {
     try {
       const { data } = await axios(
-        `http://localhost:3000/api/v1/products/category/${category}/tags/${tags}`
+        `https://swift-cart-server.onrender.com/api/v1/products/category/${category}/tags/${tags}`
       );
       return data;
     } catch (error) {
@@ -20,7 +20,7 @@ export const featchCategoriesAndGender = createAsyncThunk(
   async ({ category, gender }) => {
     try {
       const { data } = await axios(
-        `http://localhost:3000/api/v1/products/category/${category}/gender/${gender}`
+        `https://swift-cart-server.onrender.com/api/v1/products/category/${category}/gender/${gender}`
       );
 
       console.log(data);

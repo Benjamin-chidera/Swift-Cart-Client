@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const createAProducts = "http://localhost:3000/api/v1/products";
-const getAllProduct = "http://localhost:3000/api/v1/products";
-const deleteAProduct = "http://localhost:3000/api/v1/products";
-const getAProduct = "http://localhost:3000/api/v1/products";
-const editAProduct = "http://localhost:3000/api/v1/products";
+const createAProducts = "https://swift-cart-server.onrender.com/api/v1/products";
+const getAllProduct = "https://swift-cart-server.onrender.com/api/v1/products";
+const deleteAProduct = "https://swift-cart-server.onrender.com/api/v1/products";
+const getAProduct = "https://swift-cart-server.onrender.com/api/v1/products";
+const editAProduct = "https://swift-cart-server.onrender.com/api/v1/products";
 
 export const createProducts = createAsyncThunk(
   "products/createProduct",

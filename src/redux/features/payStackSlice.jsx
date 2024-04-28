@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const payMent = createAsyncThunk("payment/fetchPayment", async () => {
-  const { data } = await axios("http://localhost:3000/api/v1/payStack");
+  const { data } = await axios("https://swift-cart-server.onrender.com/api/v1/payStack");
 
   return data;
 });
@@ -12,7 +12,7 @@ export const handlePayMent = createAsyncThunk(
   async (formData) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/api/v1/payStack",
+        "https://swift-cart-server.onrender.com/api/v1/payStack",
         formData
       );
 

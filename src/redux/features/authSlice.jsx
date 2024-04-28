@@ -3,11 +3,14 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import localStorage from "redux-persist/es/storage";
 
-const registerAUser = "http://localhost:3000/api/v1/auth/register";
-const loginAUser = "http://localhost:3000/api/v1/auth/login";
-const forgottenAUser = "http://localhost:3000/api/v1/auth/forgot-Password";
-const resetAUser = "http://localhost:3000/api/v1/auth/reset-Password";
-const allUsers = "http://localhost:3000/api/v1/auth";
+const registerAUser =
+  "https://swift-cart-server.onrender.com/api/v1/auth/register";
+const loginAUser = "https://swift-cart-server.onrender.com/api/v1/auth/login";
+const forgottenAUser =
+  "https://swift-cart-server.onrender.com/api/v1/auth/forgot-Password";
+const resetAUser =
+  "https://swift-cart-server.onrender.com/api/v1/auth/reset-Password";
+const allUsers = "https://swift-cart-server.onrender.com/api/v1/auth";
 
 // register a user
 export const registerUser = createAsyncThunk(

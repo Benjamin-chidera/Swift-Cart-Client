@@ -46,7 +46,7 @@ export const Men = () => {
                   src={s.image}
                   loading="lazy"
                   effect="blur"
-                  className="w-[120px] h-[120px] md:w-[150px] md:h-[180px] object-cover object-left-top"
+                  className="w-[120px] h-[120px] md:w-[150px] md:h-[180px] object-cover lg:w-[300px]"
                 />
 
                 <p className=" text-sm">{s.name.substring(0, 20)}...</p>
@@ -64,7 +64,7 @@ export const Men = () => {
                     </span>
                   </div>
 
-                  <div className=" mt-3">
+                  <div className="  mt-3 w-[120px] h-[120px] md:w-[150px] md:h-[180px] lg:w-full">
                     <CartBtn s={s} />
                   </div>
 
