@@ -35,7 +35,7 @@ export const SkinCareDetails = () => {
               src={details?.image}
               loading="lazy"
               effect="blur"
-              className="w-full h-[200px] md:w-[300px] md:h-[400px]  mx-auto lg:w-[600px] lg:h-[500px] object-cover"
+              className="w-screen h-[200px] md:w-[300px] md:h-[400px]  mx-auto lg:w-[600px] lg:h-[500px] object-cover"
             />
           </div>
 

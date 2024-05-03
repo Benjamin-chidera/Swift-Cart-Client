@@ -35,7 +35,7 @@ const BodySuitsMen = () => {
 
 
   return (
-    <main className=" my-5 mx-3 md:container md:mx-auto flex">
+    <main className=" my-5 mx-3 md:container md:mx-auto lg:flex">
       <Filter min={minPrice} max={maxPrice} setMax={setMax} setMin={setMin} />
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center w-[800px] mx-auto shadow-2xl px-10 py-5 gap-5 rounded-xl max-w-full">
         {isFiltered?.map((s) => (

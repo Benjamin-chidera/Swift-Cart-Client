@@ -46,7 +46,7 @@ export const SkinCare = () => {
       </section>
       <section className={`shadow-2xl w-[950px] max-w-full md:px-3 md:py-5 gap-5 rounded-xl ${status === "idle"&& "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"} `}>
         {isFiltered?.length < 1 ? (
-          <p className=" font-bold text-xl whitespace-nowrap">
+          <p className=" font-bold text-xl whitespace-nowrap p-2 text-center flex justify-center">
             No Product Found
           </p>
         ) : status === "loading" ? (
@@ -55,7 +55,7 @@ export const SkinCare = () => {
           isFiltered?.map((s) => (
             <div
               key={s._id}
-              className=" hover:scale-[1.1] duration-200 shadow w-[150px] p-2"
+              className=" md:hover:scale-[1.1] duration-200 shadow w-full p-2"
             >
               <Link to={`/${category}/${tags}/${s?._id}`}>
                 <LazyLoadImage

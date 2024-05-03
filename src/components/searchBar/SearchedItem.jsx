@@ -26,12 +26,12 @@ export const SearchedItem = ({
           src={image}
           effect="blur"
           loading="lazy"
-          className="w-28 h-28 object-cover"
+          className="w-24 h-24 md:w-28  md:h-28 object-cover"
         />
         <div>
-          <h1 className="text-xs">{name}</h1>
-          <p className="text-xs">{formatCurrency(price)}</p>
-          <p className="text-xs">{description.substring(0, 60)}</p>
+          <h1 className="text-[11px] md:text-xs">{name}</h1>
+          <p className="text-[11px] md:text-xs">{formatCurrency(price)}</p>
+          <p className="text-[11px] md:text-xs">{description.substring(0, 60)}</p>
         </div>
       </Link>
     </div>

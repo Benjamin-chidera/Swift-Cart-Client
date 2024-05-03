@@ -20,6 +20,7 @@ import { WishList } from "../wishList/WishList";
 // import { Menubar } from "../headers/Menubar";
 import { SearchedItem } from "../searchBar/SearchedItem";
 import axios from "axios";
+import "./header.css";
 
 import {
   Menubar,
@@ -48,7 +49,8 @@ export const Headers = () => {
 
   const handleClose = () => {
     setClose(!close);
-    setName("")
+    setName("");
+    document.body.classList.remove("no-scroll"); 
   };
 
   const handleSearch = async (e) => {
@@ -75,19 +77,20 @@ export const Headers = () => {
 
   // for search functionality
 
-  // const [searched, setSearched] = useState(false);
-
   const handleOpen = () => {
     setOpen(!open);
+     if (open) {
+       document.body.classList.remove("no-scroll"); // Enable scrolling when closing the mobile navbar
+     } else {
+       document.body.classList.add("no-scroll"); // Disable scrolling when opening the mobile navbar
+     }
   };
 
-  // const handleSearched = () => {
-  //   setSearched(!searched);
-  // };
-
-  // const handleClosedSearched = () => {
-  //   setSearched(false);
-  // };
+    useEffect(() => {
+      return () => {
+        document.body.classList.remove("no-scroll"); // Clean up: Enable scrolling when the component unmounts
+      };
+    }, []);
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -114,99 +117,94 @@ export const Headers = () => {
           <section>
             <div>
               <section
-                className={`fixed top-0 left-0 right-0  px-3 w-full flex justify-between gap-5 md:container md:mx-auto h-[60px] items-center bg-white text-black  z-10 transition-opacity ${
+                className={`fixed top-0 left-0 right-0  px-3  flex justify-between items-center gap-5 md:container md:mx-auto h-[60px] bg-white text-black  z-10 transition-opacity ${
                   scrolled ? "opacity-100 shadow-md" : "opacity-1"
                 }`}
               >
-                <section className="flex items-center w-full">
-                  <div>
-                    <Link className="font-bold md:text-2xl">SwiftCart</Link>{" "}
-                  </div>
-                  <section className="flex items-center gap-5 w-full ms-20">
-                    <form action="" onSubmit={(e) => e.preventDefault()}>
-                      <section>
-                        <input
-                          type="text"
-                          placeholder="Search"
-                          className="border-2  h-10 py-1 px-2  hidden md:block outline-none rounded"
-                          // onClick={handleSearched}
-                          value={name}
-                          onChange={handleSearch}
-                        />
-                      </section>
-                    </form>
-                    {/* // for search functionality */}
-                    {name &&  (
-                      <div className="bg-gray-50 p-5 fixed z-10 top-14 w-[920px] border border-red-400">
-                        {error && (
-                          <div className="text-red-500 text-center mt-5 font-bold text-2xl">
-                            {error}
-                          </div>
-                        )}
-                        <section className="grid grid-cols-4 place-items-center mt-5 gap-5">
-                          {/* {loading && <SkeletonLoadingSearchBar/>} */}
-                          {name && loading ? (
-                            <SkeletonLoadingSearchBar num={saved.length} />
-                          ) : (
-                            saved.map((s) => (
-                              <SearchedItem
-                                {...s}
-                                key={s._id}
-                                handleClose={handleClose}
-                                close={close}
-                              />
-                            ))
-                          )}
-                        </section>
-                      </div>
-                    )}
-                    {/* // for search functionality */}
-                    <div className=" relative mt-2">
-                      <WishList />
-                    </div>
-                    <section className=" hidden md:block">
-                      {/* user - Authenticate */}
-
-                      <Menubar>
-                        <MenubarMenu>
-                          <MenubarTrigger>
-                            {" "}
-                            <FaRegUser size={18} />{" "}
-                            <span className=" text-xs whitespace-nowrap ms-1">
-                              Hi, Benjamin
-                            </span>
-                          </MenubarTrigger>
-                          <MenubarContent>
-                            <MenubarItem>
-                              <Link
-                                to={"/signup"}
-                                className="flex items-center"
-                              >
-                                <FaRegUser size={18} />
-                                <span className=" text-xs whitespace-nowrap ms-1">
-                                  My Account
-                                </span>
-                              </Link>
-                            </MenubarItem>{" "}
-                            <MenubarSeparator />
-                            <MenubarItem>
-                              <FaBox size={18} />
-                              <Link className="ms-2">My Orders</Link>
-                            </MenubarItem>
-                            <MenubarSeparator />
-                            <MenubarItem>
-                              <Button className={"text-xs w-full"}>
-                                LOGOUT
-                              </Button>
-                            </MenubarItem>
-                          </MenubarContent>
-                        </MenubarMenu>
-                      </Menubar>
+                {/* <section className=" "> */}
+                <div>
+                  <Link className="font-bold md:text-2xl">SwiftCart</Link>{" "}
+                </div>
+                <section className="flex items-center gap-5 ms-5">
+                  <form action="" onSubmit={(e) => e.preventDefault()}>
+                    <section>
+                      <input
+                        type="text"
+                        placeholder="Search"
+                        className="border-2 md:w-[300px] lg:w-[600px] xl:w-[980px] h-10 py-1 px-2  hidden md:block outline-none rounded"
+                        // onClick={handleSearched}
+                        value={name}
+                        onChange={handleSearch}
+                      />
                     </section>
-                    <div className="mt-2">
-                      <Cart />
+                  </form>
+                  {/* // for search functionality */}
+                  {name && (
+                    <div className="bg-gray-50 p-5 fixed z-10 top-14 md:w-[300px] lg:w-[600px] xl:w-[980px] border border-red-400">
+                      {error && (
+                        <div className="text-red-500 text-center mt-5 font-bold text-2xl">
+                          {error}
+                        </div>
+                      )}
+                      <section className="grid grid-cols-4 place-items-center mt-5 gap-5">
+                        {/* {loading && <SkeletonLoadingSearchBar/>} */}
+                        {name && loading ? (
+                          <SkeletonLoadingSearchBar num={saved.length} />
+                        ) : (
+                          saved.map((s) => (
+                            <SearchedItem
+                              {...s}
+                              key={s._id}
+                              handleClose={handleClose}
+                              close={close}
+                            />
+                          ))
+                        )}
+                      </section>
                     </div>
+                  )}
+                  {/* // for search functionality */}
+                  <div className=" relative mt-2">
+                    <WishList />
+                  </div>
+                  <section className=" hidden md:block">
+                    {/* user - Authenticate */}
+
+                    <Menubar>
+                      <MenubarMenu>
+                        <MenubarTrigger>
+                          {" "}
+                          <FaRegUser size={18} />{" "}
+                          <span className=" text-xs whitespace-nowrap ms-1">
+                            Hi, Benjamin
+                          </span>
+                        </MenubarTrigger>
+                        <MenubarContent>
+                          <MenubarItem>
+                            <Link to={"/signup"} className="flex items-center">
+                              <FaRegUser size={18} />
+                              <span className=" text-xs whitespace-nowrap ms-1">
+                                My Account
+                              </span>
+                            </Link>
+                          </MenubarItem>{" "}
+                          <MenubarSeparator />
+                          <MenubarItem>
+                            <FaBox size={18} />
+                            <Link className="ms-2">My Orders</Link>
+                          </MenubarItem>
+                          <MenubarSeparator />
+                          <MenubarItem>
+                            <Button className={"text-xs w-full"}>LOGOUT</Button>
+                          </MenubarItem>
+                        </MenubarContent>
+                      </MenubarMenu>
+                    </Menubar>
                   </section>
+                  <div className="mt-2">
+                    <Cart />
+                  </div>
+                  {/* </section> */}
                 </section>
 
                 <section className="hidden lg:flex items-center gap-5 text-xs font-semibold">
@@ -232,19 +230,54 @@ export const Headers = () => {
 
             {open && (
               <section className="flex items-start flex-col gap-4 lg:hidden fixed bg-white w-full z-10 h-screen mt-12 pt-10">
-                <Link className="px-3">NEW</Link>
-                <div className="w-full h-0.5 bg-gray-100" />
-                <Link className="px-3">RESTOCKED</Link>
-                <div className="w-full h-0.5 bg-gray-100" />
-                <Link className="px-3">BODYSUITS</Link>
-                <div className="w-full h-0.5 bg-gray-100" />
-                <Link className="px-3">TOPS</Link>
-                <div className="w-full h-0.5 bg-gray-100" />
-                <Link className="px-3">LOUNGE</Link>
-                <div className="w-full h-0.5 bg-gray-100" />
-                <Link className="px-3">MEN'S</Link>
-                <div className="w-full h-0.5 bg-gray-100" />
-                <Link className="px-3">MORE</Link>
+                {/* <div className="px-2"> */}
+                <div className="mb-2 w-full px-2">
+                  <form action="" onSubmit={(e) => e.preventDefault()}>
+                    <section>
+                      <input
+                        type="text"
+                        placeholder="Search"
+                        className="border-2 w-full h-10 py-1 px-2  md:hidden outline-none rounded"
+                        // onClick={handleSearched}
+                        value={name}
+                        onChange={handleSearch}
+                      />
+                    </section>
+                  </form>
+
+                  {/* // for search functionality */}
+                  {name && (
+                    <div className="bg-gray-50 p-2 fixed z-10 top-34 w-full border border-red-400">
+                      {error && (
+                        <div className="text-red-500 text-center mt-5 font-bold text-2xl">
+                          {error}
+                        </div>
+                      )}
+                      <section className="grid grid-cols-2 place-items-center mt-3 gap-2 pe-2">
+                        {/* {loading && <SkeletonLoadingSearchBar/>} */}
+                        {name && loading ? (
+                          // <SkeletonLoadingSearchBar num={saved.length} />
+                          <p>Loading</p>
+                        ) : (
+                          saved.map((s) => (
+                            <SearchedItem
+                              {...s}
+                              key={s._id}
+                              handleClose={handleClose}
+                              close={close}
+                            />
+                          ))
+                        )}
+                      </section>
+                    </div>
+                  )}
+                  {/* // for search functionality */}
+                </div>
+
+                <div className="px-2 w-full">
+                  <Button className={"text-xs w-full"}>LOGOUT</Button>
+                </div>
+                {/* </div> */}
 
                 <section className=" bg-gray-100 w-full py-5 fixed bottom-0 h-[180px] px-3">
                   <div className="flex items-center gap-3">
