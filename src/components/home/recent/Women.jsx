@@ -1,4 +1,8 @@
-import { addItem, fetchRecentFemale, removeItem } from "@/redux/features/cartSlice";
+import {
+  addItem,
+  fetchRecentFemale,
+  removeItem,
+} from "@/redux/features/cartSlice";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useEffect, useState } from "react";
@@ -15,6 +19,7 @@ import { formatCurrency } from "@/lib/FormatCurrency";
 import { WishBtn } from "@/components/wishList/wishListBtn/WishBtn";
 import { CartBtn } from "@/components/cart/CartBtn";
 import { useParams } from "react-router-dom";
+import { SkeletonLoadingRecentProduct } from "@/components/Loader-Skeleton/SkeletonLoadingSearchBar";
 
 export const Women = () => {
   const { products, status } = useSelector((state) => state.cart);
@@ -24,16 +29,15 @@ export const Women = () => {
     dispatch(fetchRecentFemale());
   }, [dispatch]);
 
-  const myCart = products?.payload?.RecentProduct
-  console.log(myCart);
-  
+  const myCart = products?.payload?.RecentProduct;
+
   return (
     <section>
+      {/* {status === "loading" && <SkeletonLoadingRecentProduct />} */}
       <section>
         <Carousel>
           <CarouselContent>
-            s
-            {myCart?.map((s) => (
+            {status === "loading" ? <SkeletonLoadingRecentProduct num={4}/> : myCart?.map((s) => (
               <CarouselItem
                 key={s.id}
                 className="basis-1/1 md:basis-1/3 lg:basis-1/5 cursor-grabbing relative"

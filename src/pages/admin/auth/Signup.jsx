@@ -53,7 +53,7 @@ const AdminSignup = () => {
     <main className=" flex w-full h-screen absolute left-0 top-0">
       <section className="w-[50%] bg-green-400 hidden md:block">
         <div className=" flex justify-center items-center h-screen flex-col font-bold md:text-5xl lg:text-7xl">
-          <h1>SWIFTCART</h1>
+          <Link to={-1}>SWIFTCART</Link>
           <p>🛒</p>
         </div>
       </section>

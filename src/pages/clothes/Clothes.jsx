@@ -11,7 +11,7 @@ import { CartBtn } from "@/components/cart/CartBtn";
 import { Filter } from "@/components/filters/Filter";
 
 export const Clothes = () => {
-  const { category } = useParams();
+  const { ClothCategory, tags } = useParams();
   const dispatch = useDispatch();
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
@@ -23,7 +23,7 @@ export const Clothes = () => {
   const skinCare = categories?.payload;
 
   useEffect(() => {
-    dispatch(featchCategories(category));
+    dispatch(featchCategories(ClothCategory, tags));
   }, [dispatch]);
 
   const filteredProducts = skinCare?.filter(
@@ -33,12 +33,13 @@ export const Clothes = () => {
   const isFiltered = filteredProducts?.length < 1 ? skinCare : filteredProducts;
 
   return (
+
     <main className=" my-5 mx-3 md:container md:mx-auto flex">
       <Filter min={minPrice} max={maxPrice} setMax={setMax} setMin={setMin} />
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center w-[800px] mx-auto shadow-2xl px-10 py-5 gap-5 rounded-xl max-w-full">
         {isFiltered?.map((s) => (
           <div key={s.id} className=" hover:scale-[1.1] duration-200">
-            <Link to={`/clothesDetails/${s.id}`}>
+            <Link to={`/clothes/${s._id}`}>
               <LazyLoadImage
                 src={s.image}
                 className="w-[70px] mx-auto h-[70px] lg:w-[120px] lg:h-[110px]

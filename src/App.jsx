@@ -59,11 +59,11 @@ const router = createBrowserRouter([
         element: <SkinCare />,
       },
       {
-        path: "/skinCare/:productId",
+        path: "/:category/:tags/:productId",
         element: <SkinCareDetails />,
       },
       {
-        path: "/:category/:tags",
+        path: "/:ClothCategory/:tags",
         element: <Clothes />,
       },
       {

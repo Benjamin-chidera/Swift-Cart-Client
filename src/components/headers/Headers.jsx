@@ -9,6 +9,7 @@ import {
   FaTiktok,
   FaTwitter,
   FaYoutube,
+  FaBox,
 } from "react-icons/fa";
 import { RiMenu3Fill } from "react-icons/ri";
 import { IoClose } from "react-icons/io5";
@@ -16,28 +17,77 @@ import { useSelector } from "react-redux";
 import { SearchBar } from "../searchBar/SearchBar";
 import { Cart } from "../cart/Cart";
 import { WishList } from "../wishList/WishList";
-import { Menubar } from "../headers/Menubar";
+// import { Menubar } from "../headers/Menubar";
+import { SearchedItem } from "../searchBar/SearchedItem";
+import axios from "axios";
+
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
+import { Button } from "../ui/button";
+import { SkeletonLoadingSearchBar } from "../Loader-Skeleton/SkeletonLoadingSearchBar";
 
 export const Headers = () => {
   const [open, setOpen] = useState(false);
-  const location = useLocation()
+  const location = useLocation();
   const { token } = useParams();
 
-  const [searched, setSearched] = useState(false);
+  // for search functionality
 
-  const { cart } = useSelector((state) => state.cart);
+  const [name, setName] = useState("");
+  const [saved, setSaved] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [close, setClose] = useState(true);
+
+  const handleClose = () => {
+    setClose(!close);
+    setName("")
+  };
+
+  const handleSearch = async (e) => {
+    const searchName = e.target.value;
+    setName(searchName);
+
+    setLoading(true);
+    try {
+      const { data } = await axios.get(
+        `https://swift-cart-server.onrender.com/api/v1/products/q/productName?name=${searchName}`
+      );
+      setSaved(data.search);
+      setLoading(false);
+      setError("");
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data);
+        setLoading(false);
+        setSaved([]);
+        setError(error.response.data.msg);
+      }
+    }
+  };
+
+  // for search functionality
+
+  // const [searched, setSearched] = useState(false);
 
   const handleOpen = () => {
     setOpen(!open);
   };
 
-  const handleSearched = () => {
-    setSearched(!searched);
-  };
+  // const handleSearched = () => {
+  //   setSearched(!searched);
+  // };
 
-  const handleClosedSearched = () => {
-    setSearched(false);
-  };
+  // const handleClosedSearched = () => {
+  //   setSearched(false);
+  // };
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -62,57 +112,121 @@ export const Headers = () => {
         location.pathname !== "/forgotten-password" &&
         location.pathname !== `/reset-password/${token}` && (
           <section>
-            <section
-              className={`fixed top-0 left-0 right-0  px-3 w-full flex justify-between gap-5 md:container md:mx-auto h-[60px] items-center bg-white text-black  z-10 transition-opacity ${
-                scrolled ? "opacity-100 shadow-md" : "opacity-1"
-              }`}
-            >
-              <section>
-                <Link className="font-bold md:text-2xl">SwiftCart</Link>
+            <div>
+              <section
+                className={`fixed top-0 left-0 right-0  px-3 w-full flex justify-between gap-5 md:container md:mx-auto h-[60px] items-center bg-white text-black  z-10 transition-opacity ${
+                  scrolled ? "opacity-100 shadow-md" : "opacity-1"
+                }`}
+              >
+                <section className="flex items-center w-full">
+                  <div>
+                    <Link className="font-bold md:text-2xl">SwiftCart</Link>{" "}
+                  </div>
+                  <section className="flex items-center gap-5 w-full ms-20">
+                    <form action="" onSubmit={(e) => e.preventDefault()}>
+                      <section>
+                        <input
+                          type="text"
+                          placeholder="Search"
+                          className="border-2  h-10 py-1 px-2  hidden md:block outline-none rounded"
+                          // onClick={handleSearched}
+                          value={name}
+                          onChange={handleSearch}
+                        />
+                      </section>
+                    </form>
+                    {/* // for search functionality */}
+                    {name &&  (
+                      <div className="bg-gray-50 p-5 fixed z-10 top-14 w-[920px] border border-red-400">
+                        {error && (
+                          <div className="text-red-500 text-center mt-5 font-bold text-2xl">
+                            {error}
+                          </div>
+                        )}
+                        <section className="grid grid-cols-4 place-items-center mt-5 gap-5">
+                          {/* {loading && <SkeletonLoadingSearchBar/>} */}
+                          {name && loading ? (
+                            <SkeletonLoadingSearchBar num={saved.length} />
+                          ) : (
+                            saved.map((s) => (
+                              <SearchedItem
+                                {...s}
+                                key={s._id}
+                                handleClose={handleClose}
+                                close={close}
+                              />
+                            ))
+                          )}
+                        </section>
+                      </div>
+                    )}
+                    {/* // for search functionality */}
+                    <div className=" relative mt-2">
+                      <WishList />
+                    </div>
+                    <section className=" hidden md:block">
+                      {/* user - Authenticate */}
+
+                      <Menubar>
+                        <MenubarMenu>
+                          <MenubarTrigger>
+                            {" "}
+                            <FaRegUser size={18} />{" "}
+                            <span className=" text-xs whitespace-nowrap ms-1">
+                              Hi, Benjamin
+                            </span>
+                          </MenubarTrigger>
+                          <MenubarContent>
+                            <MenubarItem>
+                              <Link
+                                to={"/signup"}
+                                className="flex items-center"
+                              >
+                                <FaRegUser size={18} />
+                                <span className=" text-xs whitespace-nowrap ms-1">
+                                  My Account
+                                </span>
+                              </Link>
+                            </MenubarItem>{" "}
+                            <MenubarSeparator />
+                            <MenubarItem>
+                              <FaBox size={18} />
+                              <Link className="ms-2">My Orders</Link>
+                            </MenubarItem>
+                            <MenubarSeparator />
+                            <MenubarItem>
+                              <Button className={"text-xs w-full"}>
+                                LOGOUT
+                              </Button>
+                            </MenubarItem>
+                          </MenubarContent>
+                        </MenubarMenu>
+                      </Menubar>
+                    </section>
+                    <div className="mt-2">
+                      <Cart />
+                    </div>
+                  </section>
+                </section>
+
+                <section className="hidden lg:flex items-center gap-5 text-xs font-semibold">
+                  {/* <Menubar /> */}
+                </section>
+
+                <section className="mt-1 lg:hidden">
+                  {/* mobile device menu */}
+                  {!open ? (
+                    <button onClick={handleOpen}>
+                      <RiMenu3Fill size={23} />
+                    </button>
+                  ) : (
+                    <button onClick={handleOpen}>
+                      <IoClose size={23} />
+                    </button>
+                  )}
+                </section>
               </section>
-
-              <section className="hidden lg:flex items-center gap-5 text-xs font-semibold">
-                <Menubar />
-              </section>
-
-              <section className="flex items-center gap-5">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="bg-gray-300 w-24 py-1 px-2 rounded-full hidden md:block outline-none"
-                  onClick={handleSearched}
-                />
-
-                {searched && (
-                  <SearchBar handleClosedSearched={handleClosedSearched} />
-                )}
-
-                <div className=" relative mt-2">
-                  <WishList />
-                </div>
-
-                <Link to={"/signup"}>
-                  <FaRegUser size={18} />
-                </Link>
-
-                <div className="mt-2">
-                  <Cart />
-                </div>
-              </section>
-
-              <section className="mt-1 lg:hidden">
-                {/* mobile device menu */}
-                {!open ? (
-                  <button onClick={handleOpen}>
-                    <RiMenu3Fill size={23} />
-                  </button>
-                ) : (
-                  <button onClick={handleOpen}>
-                    <IoClose size={23} />
-                  </button>
-                )}
-              </section>
-            </section>
+            </div>
 
             {/*  mobile device Navbar  */}
 

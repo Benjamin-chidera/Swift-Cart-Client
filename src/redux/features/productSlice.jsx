@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const createAProducts = "https://swift-cart-server.onrender.com/api/v1/products";
+const createAProducts =
+  "https://swift-cart-server.onrender.com/api/v1/products";
 const getAllProduct = "https://swift-cart-server.onrender.com/api/v1/products";
 const deleteAProduct = "https://swift-cart-server.onrender.com/api/v1/products";
 const getAProduct = "https://swift-cart-server.onrender.com/api/v1/products";
 const editAProduct = "https://swift-cart-server.onrender.com/api/v1/products";
+// const search = "http://localhost:3000/api/v1/products/q/productName?name";
 
 export const createProducts = createAsyncThunk(
   "products/createProduct",
@@ -25,7 +27,7 @@ export const createProducts = createAsyncThunk(
 export const getProduct = createAsyncThunk("products/getProduct", async () => {
   try {
     const { data } = await axios(getAllProduct);
-   
+
     return data;
   } catch (error) {
     console.log(error);
@@ -79,10 +81,21 @@ export const editAProducts = createAsyncThunk(
   }
 );
 
+// export const getSearch = createAsyncThunk("search/getSearch", async (name) => {
+//   try {
+//     const { data } = await axios(`${search}=${name}`);
+
+//     return data;
+//   } catch (error) {
+//     console.log(error?.response?.data?.msg);
+//   }
+// });
+
 const initialState = {
   product: [],
   singleProduct: null,
   status: "idle",
+  search: [],
 };
 
 const productSlice = createSlice({
@@ -156,7 +169,19 @@ const productSlice = createSlice({
       })
       .addCase(editAProducts.rejected, (state) => {
         state.status = "error";
-      });
+      })
+
+      // Search for products
+      // .addCase(getSearch.pending, (state) => {
+      //   state.status = "loading";
+      // })
+      // .addCase(getSearch.fulfilled, (state, { payload }) => {
+      //   state.status = "idle";
+      //   state.search = payload;
+      // })
+      // .addCase(getSearch.rejected, (state) => {
+      //   state.status = "error";
+      // });
   },
 });
 

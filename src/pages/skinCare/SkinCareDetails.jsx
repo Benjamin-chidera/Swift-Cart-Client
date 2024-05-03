@@ -11,12 +11,12 @@ import { CustomerDetailsReviews } from "@/components/reviews/CustomerDetailsRevi
 import { CartBtn } from "@/components/cart/CartBtn";
 import { getSingleProduct } from "@/redux/features/productSlice";
 import { AccordionDetails } from "./AccordionDetails";
+import { SkeletonLoadingSingleProduct } from "@/components/Loader-Skeleton/SkeletonLoadingSearchBar";
 
 export const SkinCareDetails = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
-  const { singleProduct } = useSelector((state) => state.product);
-
+  const { singleProduct, status } = useSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(getSingleProduct(productId));
@@ -26,58 +26,62 @@ export const SkinCareDetails = () => {
 
   return (
     <main>
-      <section className=" my-5 mx-3 md:container md:mx-auto md:flex justify-between w-full">
-        <div className="w-[50%]">
-          <LazyLoadImage
-            src={details?.image}
-            loading="lazy"
-            effect="blur"
-            className="w-[200px] md:w-[300px] md:h-[400px]  mx-auto lg:w-[600px] lg:h-[500px] object-cover"
-          />
-        </div>
+      {status === "loading" ? (
+        <SkeletonLoadingSingleProduct num={1} />
+      ) : (
+        <section className=" my-5 px-3 md:container md:mx-auto md:flex justify-between w-full gap-5">
+          <div className="md:w-[50%]">
+            <LazyLoadImage
+              src={details?.image}
+              loading="lazy"
+              effect="blur"
+              className="w-full h-[200px] md:w-[300px] md:h-[400px]  mx-auto lg:w-[600px] lg:h-[500px] object-cover"
+            />
+          </div>
 
-        <section className="w-[50%]">
-          <h1 className="font-bold max-w-md">{details?.name}</h1>
-          <div className="flex items-center gap-3">
-            <p className="font-bold">{formatCurrency(details?.price)}</p>
-            {/* <p>
+          <section className="md:w-[50%]">
+            <h1 className="font-bold max-w-md">{details?.name}</h1>
+            <div className="flex items-center gap-3">
+              <p className="font-bold">{formatCurrency(details?.price)}</p>
+              {/* <p>
               <GetRating rating={details?.rating.rate} /> (
               {details?.rating.count})
             </p> */}
-          </div>
-
-          <p className="max-w-md text-sm">{details?.description}</p>
-
-          <section className="text-xs mt-5">
-            <div>
-              {/* this is for color select */}
-              <p className="uppercase font-bold">Color: {details?.color} </p>
             </div>
 
-            <div className="my-10">
-              {/* this is for size select */}
-              <p className=" font-bold uppercase">Size: {details?.size} </p>
+            <p className="max-w-md text-sm">{details?.description}</p>
 
-              <button className="border-red-600 border-2 font-semibold mt-5 px-10 text-sm py-1 rounded-full">
-                SELECT A SIZE
-              </button>
-            </div>
+            <section className="text-xs mt-5">
+              <div>
+                {/* this is for color select */}
+                <p className="uppercase font-bold">Color: {details?.color} </p>
+              </div>
 
-            <CartBtn s={details} />
+              <div className="my-10">
+                {/* this is for size select */}
+                <p className=" font-bold uppercase">Size: {details?.size} </p>
 
-            <div>
-              {/* this is for color select */}
-              <p className="uppercase font-bold mt-5">
-                Product details: {details?.description}
-              </p>
-            </div>
+                <button className="border-red-600 border-2 font-semibold mt-5 px-10 text-sm py-1 rounded-full">
+                  SELECT A SIZE
+                </button>
+              </div>
+
+              <CartBtn s={details} />
+
+              <div>
+                {/* this is for color select */}
+                <p className="uppercase font-bold mt-5">
+                  Product details: {details?.description}
+                </p>
+              </div>
+            </section>
+
+            <AccordionDetails details={details} />
           </section>
-
-          <AccordionDetails details={details} />
         </section>
-      </section>
+      )}
 
-      <SimilarProducts/>
+      <SimilarProducts />
 
       <CustomerDetailsReviews />
     </main>

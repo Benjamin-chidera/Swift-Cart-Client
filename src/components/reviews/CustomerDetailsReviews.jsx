@@ -42,7 +42,6 @@ export const CustomerDetailsReviews = () => {
     <main className="mb-5 mt-20 mx-5 pb-7 md:container md:mx-auto shadow-xl shadow-slate-200">
       <div className="flex justify-between items-center px-3">
         <h1 className="font-bold text-lg">Verified Customer Feedback</h1>
-        <Link className="text-xs whitespace-nowrap">SEE ALL &gt; </Link>
       </div>
 
       <section className="md:flex gap-20 mt-3 px-3">

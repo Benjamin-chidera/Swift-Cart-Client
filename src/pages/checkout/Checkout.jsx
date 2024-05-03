@@ -68,8 +68,9 @@ export const Checkout = () => {
         console.log("error opening URL:");
       } else {
         console.log("Opening URL:", isPaying);
-        window.open(isPaying, "_blank");
-        navigate("/");
+        // window.open(isPaying, "_blank");
+        window.location.href = isPaying
+        // navigate("/");
       }
     } catch (error) {
       console.log("Error:", error);

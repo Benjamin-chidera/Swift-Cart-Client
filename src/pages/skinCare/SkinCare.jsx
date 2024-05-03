@@ -9,6 +9,7 @@ import { formatCurrency } from "@/lib/FormatCurrency";
 import { addItem } from "@/redux/features/cartSlice";
 import { CartBtn } from "@/components/cart/CartBtn";
 import { Filter } from "@/components/filters/Filter";
+import { SkeletonLoadingProducts } from "@/components/Loader-Skeleton/SkeletonLoadingSearchBar";
 
 export const SkinCare = () => {
   const { category, tags } = useParams();
@@ -18,7 +19,7 @@ export const SkinCare = () => {
 
   // const {} = useSelector((state) => state.filters);
 
-  const { categories, minPrice, maxPrice } = useSelector(
+  const { categories, minPrice, maxPrice, status } = useSelector(
     (state) => state.categories
   );
 
@@ -39,26 +40,34 @@ export const SkinCare = () => {
   // }
 
   return (
-    <main className=" my-5 mx-3 md:container md:mx-auto flex gap-3">
-      <Filter min={minPrice} max={maxPrice} setMax={setMax} setMin={setMin} />
-      <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center w-[800px] mx-auto shadow-2xl px-10 py-5 gap-5 rounded-xl max-w-full">
+    <main className=" md:my-5  md:container md:mx-auto lg:flex gap-3">
+      <section className="mx-3">
+        <Filter min={minPrice} max={maxPrice} setMax={setMax} setMin={setMin} />
+      </section>
+      <section className={`shadow-2xl w-[950px] max-w-full md:px-3 md:py-5 gap-5 rounded-xl ${status === "idle"&& "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"} `}>
         {isFiltered?.length < 1 ? (
           <p className=" font-bold text-xl whitespace-nowrap">
             No Product Found
           </p>
+        ) : status === "loading" ? (
+          <SkeletonLoadingProducts num={isFiltered?.length} />
         ) : (
           isFiltered?.map((s) => (
-            <div key={s._id} className=" hover:scale-[1.1] duration-200 shadow w-[150px] p-2">
-              <Link to={`/skincare/${s?._id}`}>
+            <div
+              key={s._id}
+              className=" hover:scale-[1.1] duration-200 shadow w-[150px] p-2"
+            >
+              <Link to={`/${category}/${tags}/${s?._id}`}>
                 <LazyLoadImage
                   src={s.image}
-                  className="w-[70px] mx-auto h-[70px] lg:w-full lg:h-[120px] object-cover"
+                  className="w-full mx-auto h-[100px] lg:w-full lg:h-[120px] object-cover"
                 />
               </Link>
-              <h3 className="my-2 text-xs md:text-sm text-center font-semibold">
+              <h3 className="my-1 text-xs md:text-sm  ">
                 {s.name.substring(0, 20)}
               </h3>
-              <p className="font-bold">{formatCurrency(s.price)}</p>
+              <p className="text-xs mb-1">{s.description.substring(0, 30)}</p>
+              <p className="font-bold text-sm">{formatCurrency(s.price)}</p>
 
               <CartBtn s={s} />
             </div>
