@@ -11,7 +11,7 @@ const Signup = () => {
   const [previewUrls, setPreviewUrls] = useState("");
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
+
   const [show, setShow] = useState(false);
 
   const handleShow = () => {

@@ -11,9 +11,14 @@ export const DailyReports = () => {
   const { product } = useSelector((state) => state.product);
   const { user } = useSelector((state) => state.auth);
 
-  const pay = payStack?.data;
+  // const pay = payStack?.data;
+  // const pay = payStack?.data.filter((s) => s.status === "abandoned");
 
-  const checkAmount = pay?.reduce((sum, curr) => sum + curr?.amount, 0);
+  // console.log(pay);
+
+  const checkAmount = Math.round(payStack?.meta?.total_volume);
+
+  console.log(product);
 
   useEffect(() => {
     dispatch(payMent());
@@ -33,7 +38,7 @@ export const DailyReports = () => {
 
       <section className="flex items-center gap-3 shadow py-1 px-3 rounded">
         <div>
-          <h2 className="font-semibold text-2xl">{product.numOfProduct}</h2>
+          <h2 className="font-semibold text-2xl">{product?.numOfProduct}</h2>
           <p className="text-xs">Total Products</p>
         </div>
         <div className="bg-blue-300 py-2 w-[80px] h-[80px] mx-aut rounded-xl  flex justify-center items-center">

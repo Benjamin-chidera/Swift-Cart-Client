@@ -9,30 +9,64 @@ import { createProducts } from "@/redux/features/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const AddProducts = () => {
   const [profileImage, setProfileImage] = useState("");
   const [images, setImages] = useState(null);
-  const token = Cookies.get("user");
+  const [description, setDescription] = useState("");
+  const token = Cookies.get("userToken");
+
+  console.log(description, token);
 
   const handleImageChange = (e) => {
     setProfileImage(e.target.files[0]);
     setImages(URL.createObjectURL(e.target.files[0]));
   };
 
+  // RICH TEXT
+
+  const toolbarOptions = [
+    ["bold", "italic", "underline", "strike"], // toggled buttons
+    ["blockquote", "code-block"],
+    ["link", "image", "video", "formula"],
+
+    [{ header: 1 }, { header: 2 }], // custom button values
+    [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+    [{ script: "sub" }, { script: "super" }], // superscript/subscript
+    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+    [{ direction: "rtl" }], // text direction
+
+    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+    // [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+    [{ font: [] }],
+    // [{ align: [] }],
+
+    ["clean"], // remove formatting button
+  ];
+
+  const module = {
+    toolbar: toolbarOptions,
+  };
+
+  // RICH TEXT
+
   const {
     register,
     handleSubmit,
-    reset,
-
-    formState: { errors, isSubmitted },
+    setValue,
+    formState: { errors },
   } = useForm();
+
   const dispatch = useDispatch();
 
-  if (isSubmitted) {
-    reset();
-    setImages(null);
-  }
+  // if (isSubmitted) {
+  //   reset();
+  //   setImages(null);
+  // }
 
   const handleCreateProduct = (data) => {
     const formData = new FormData();
@@ -51,10 +85,12 @@ const AddProducts = () => {
       formData.append("details", data.details);
       formData.append("shipping", data.shipping);
       formData.append("returns", data.returns);
-      formData.append("description", data.description);
+      formData.append("description", description);
       // formData.append("status", data.status);
 
       dispatch(createProducts({ formData, token }));
+
+      console.log("done");
     } catch (error) {
       console.log(error);
     }
@@ -318,16 +354,25 @@ const AddProducts = () => {
 
         <section>
           <Label className="text-xs mb-2">Description</Label>
-          <Textarea
+          {/* <Textarea
             placeholder="Description..."
             className="h-[300px] resize-none mb-10"
             {...register("description", { required: true })}
+          /> */}
+          <ReactQuill
+            theme="snow"
+            value={description} // Not needed with setValue/
+            onChange={setDescription} // Not needed with setValue
+            // {...register("description", { required: true })} // Include setValue prop
+            // setValue={setValue}
+            className="h-[300px] resize-none"
+            modules={module}
           />
-          {errors.description && <p>Please select the product description</p>}
         </section>
-
-        <section>
-          <Button className="w-full" type="submit">
+        {errors.description && <p>Please select the product description</p>}
+     
+        <section className="">
+          <Button className="w-full mt-14" type="submit">
             Create Product
           </Button>
         </section>

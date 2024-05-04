@@ -13,13 +13,14 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
+import ReactQuill from "react-quill";
 
 const EditProducts = () => {
   const [profileImage, setProfileImage] = useState("");
   const [images, setImages] = useState(null);
   const { productId } = useParams();
-   const token = Cookies.get("user");
-   console.log(token);
+  const token = Cookies.get("userToken");
+  const [description, setDescription] = useState("");
 
   const { singleProduct, status } = useSelector((state) => state.product);
 
@@ -29,6 +30,35 @@ const EditProducts = () => {
     formState: { errors },
   } = useForm();
   const dispatch = useDispatch();
+
+  // RICH TEXT
+
+  const toolbarOptions = [
+    ["bold", "italic", "underline", "strike"], // toggled buttons
+    ["blockquote", "code-block"],
+    ["link", "image", "video", "formula"],
+
+    [{ header: 1 }, { header: 2 }], // custom button values
+    [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+    [{ script: "sub" }, { script: "super" }], // superscript/subscript
+    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+    [{ direction: "rtl" }], // text direction
+
+    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+    // [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+    [{ font: [] }],
+    // [{ align: [] }],
+
+    ["clean"], // remove formatting button
+  ];
+
+  const module = {
+    toolbar: toolbarOptions,
+  };
+
+  // RICH TEXT
 
   useEffect(() => {
     dispatch(getSingleProduct(productId));
@@ -59,7 +89,8 @@ const EditProducts = () => {
     formData.append("details", data.details);
     formData.append("shipping", data.shipping);
     formData.append("returns", data.returns);
-    formData.append("description", data.description);
+    // formData.append("description", data.description);
+    formData.append("description", description);
     formData.append("status", data.status);
 
     dispatch(editAProducts({ formData, productId, token }));
@@ -364,8 +395,9 @@ const EditProducts = () => {
           </div>
         </section>
 
-        <section>
+        {/* <section>
           <Label className="text-xs mb-2">Description</Label>
+
           <Textarea
             placeholder="Description..."
             className="h-[300px] resize-none mb-10"
@@ -373,11 +405,34 @@ const EditProducts = () => {
             defaultValue={singleProduct.product.description}
           />
           {errors.description && <p>Please select the product description</p>}
+        </section> */}
+
+        <section>
+          <Label className="text-xs mb-2">Description</Label>
+          {/* <Textarea
+            placeholder="Description..."
+            className="h-[300px] resize-none mb-10"
+            {...register("description", { required: true })}
+          /> */}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: singleProduct.product.description,
+            }}
+          ></div>
+
+          <ReactQuill
+            theme="snow"
+            value={description}
+            onChange={setDescription}
+            defaultValue={singleProduct.product.description}
+            className="h-[300px] resize-none"
+            modules={module}
+          />
         </section>
 
         <section>
-          <Button className="w-full" type="submit">
-            Create Product
+          <Button className="w-full mt-16" type="submit">
+            Edit Product
           </Button>
         </section>
       </form>

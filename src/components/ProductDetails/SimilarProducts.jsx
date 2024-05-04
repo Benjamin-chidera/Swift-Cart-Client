@@ -23,6 +23,8 @@ export const SimilarProducts = () => {
   const { singleProduct, status } = useSelector((state) => state.product);
   const myCart = singleProduct?.similarProduct;
 
+  console.log(myCart);
+
   return (
     <main className=" mx-14 md:container md:mx-auto my-5  md:px-20 mt-20">
       <section className=" flex items-center justify-between flex-wrap mb-10">

@@ -3,8 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 
-const registerAUser =
-  "https://swift-cart-server.onrender.com/api/v1/auth/register";
+const registerAUser = "http://localhost:3000/api/v1/auth/register";
 
 const loginAUser = "https://swift-cart-server.onrender.com/api/v1/auth/login";
 
@@ -102,7 +101,7 @@ export const resetUser = createAsyncThunk(
 );
 
 const initialState = {
-  user: {},
+  user: null,
 
   status: "idle",
 };

@@ -44,7 +44,11 @@ export const SkinCare = () => {
       <section className="mx-3">
         <Filter min={minPrice} max={maxPrice} setMax={setMax} setMin={setMin} />
       </section>
-      <section className={`shadow-2xl w-[950px] max-w-full md:px-3 md:py-5 gap-5 rounded-xl ${status === "idle"&& "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"} `}>
+      <section
+        className={`shadow-2xl w-[950px] max-w-full md:px-3 md:py-5 gap-5 rounded-xl ${
+          status === "idle" && "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+        } `}
+      >
         {isFiltered?.length < 1 ? (
           <p className=" font-bold text-xl whitespace-nowrap p-2 text-center flex justify-center">
             No Product Found
@@ -66,7 +70,7 @@ export const SkinCare = () => {
               <h3 className="my-1 text-xs md:text-sm  ">
                 {s.name.substring(0, 20)}
               </h3>
-              <p className="text-xs mb-1">{s.description.substring(0, 30)}</p>
+              <p className="text-xs mb-1">{s.details.substring(0, 30)}</p>
               <p className="font-bold text-sm">{formatCurrency(s.price)}</p>
 
               <CartBtn s={s} />

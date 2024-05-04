@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 export const NewCustomer = () => {
   const { user } = useSelector((state) => state.auth);
 
-  const customers = user?.user?.slice(0, 3);
+  const customers = user?.user?.slice(0, 3) || null;
 
   return (
     <main className=" shadow p-3 rounded">

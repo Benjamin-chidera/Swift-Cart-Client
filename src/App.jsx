@@ -83,33 +83,33 @@ const router = createBrowserRouter([
         element: <BodySuitsWomen />,
       },
       {
-        path: "/bodysuits-women-Details/:bodysuitId",
+        path: "/:category/:gender/:bodysuitId",
         element: <BodySuitsWomenDetails />,
       },
-      {
-        path: "/categories/:category/:gender",
-        element: <BodySuitsMen />,
-      },
-      {
-        path: "/bodysuits-men-Details/:bodysuitId",
-        element: <BodySuitsWomenDetails />,
-      },
-      {
-        path: "/categories/:category/:gender",
-        element: <LoungeWomen />,
-      },
-      {
-        path: "/lounge-women-Details/:loungeId",
-        element: <LoungeWomenDetails />,
-      },
-      {
-        path: "/lounge/men/:category",
-        element: <LoungeMen />,
-      },
-      {
-        path: "/lounge-men-Details/:loungeId",
-        element: <LoungeMenDetails />,
-      },
+      // {
+      //   path: "/categories/:category/:gender",
+      //   element: <BodySuitsMen />,
+      // },
+      // {
+      //   path: "/bodysuits-men-Details/:bodysuitId",
+      //   element: <BodySuitsWomenDetails />,
+      // },
+      // {
+      //   path: "/categories/:category/:gender",
+      //   element: <LoungeWomen />,
+      // },
+      // {
+      //   path: "/lounge-women-Details/:loungeId",
+      //   element: <LoungeWomenDetails />,
+      // },
+      // {
+      //   path: "/lounge/men/:category",
+      //   element: <LoungeMen />,
+      // },
+      // {
+      //   path: "/lounge-men-Details/:loungeId",
+      //   element: <LoungeMenDetails />,
+      // },
       {
         path: "/checkout",
         element: <Checkout />,

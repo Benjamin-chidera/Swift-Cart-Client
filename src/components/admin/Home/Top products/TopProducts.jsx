@@ -6,7 +6,9 @@ import { useSelector } from "react-redux";
 export const TopProducts = () => {
   const { product } = useSelector((state) => state.product);
 
-  const products = product?.product?.slice(0, 3);
+  const products = product?.product?.slice(0, 3) || null;
+
+  console.log(products);
 
   return (
     <main className="shadow rounded p-3">

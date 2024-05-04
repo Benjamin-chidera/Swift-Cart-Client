@@ -49,7 +49,7 @@ export const SkinCareDetails = () => {
             </p> */}
             </div>
 
-            <p className="max-w-md text-sm">{details?.description}</p>
+            <p className="max-w-md text-sm">{details?.details}</p>
 
             <section className="text-xs mt-5">
               <div>
@@ -71,7 +71,7 @@ export const SkinCareDetails = () => {
               <div>
                 {/* this is for color select */}
                 <p className="uppercase font-bold mt-5">
-                  Product details: {details?.description}
+                  Product Description: {details?.description}
                 </p>
               </div>
             </section>

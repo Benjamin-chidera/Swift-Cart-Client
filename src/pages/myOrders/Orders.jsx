@@ -1,9 +1,10 @@
 import { fetchOrders } from "@/redux/features/orderSlice";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { FaDotCircle } from "react-icons/fa";
+import "react-quill/dist/quill.snow.css";
 
 const Orders = () => {
   const dispatch = useDispatch();

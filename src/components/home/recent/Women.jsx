@@ -37,43 +37,47 @@ export const Women = () => {
       <section>
         <Carousel>
           <CarouselContent>
-            {status === "loading" ? <SkeletonLoadingRecentProduct num={4}/> : myCart?.map((s) => (
-              <CarouselItem
-                key={s.id}
-                className="basis-1/1 md:basis-1/3 lg:basis-1/5 cursor-grabbing relative"
-              >
-                <LazyLoadImage
-                  src={s.image}
-                  loading="lazy"
-                  effect="blur"
-                  className="w-[120px] h-[120px] md:w-[150px] md:h-[180px] object-cover lg:w-[300px]"
-                />
+            {status === "loading" ? (
+              <SkeletonLoadingRecentProduct num={4} />
+            ) : (
+              myCart?.map((s) => (
+                <CarouselItem
+                  key={s.id}
+                  className="basis-1/1 md:basis-1/3 lg:basis-1/5 cursor-grabbing relative"
+                >
+                  <LazyLoadImage
+                    src={s.image}
+                    loading="lazy"
+                    effect="blur"
+                    className="w-[120px] h-[120px] md:w-[150px] md:h-[180px] object-cover lg:w-[300px]"
+                  />
 
-                <p className=" text-sm">{s.name.substring(0, 20)}...</p>
+                  <p className=" text-sm">{s.name.substring(0, 20)}...</p>
 
-                <p className=" text-sm mt-3">
-                  {s.description.substring(0, 20)}
-                </p>
+                  <p className=" text-sm mt-3">
+                    {s.description.substring(0, 20)}
+                  </p>
 
-                <section className="">
-                  <div className="flex justify-between items-center">
-                    <p>{formatCurrency(Math.round(s.price))}</p>
+                  <section className="">
+                    <div className="flex justify-between items-center">
+                      <p>{formatCurrency(Math.round(s.price))}</p>
 
-                    <span className=" text-xs">
-                      {/* <GetRating rating={s.rating.rate} /> */}
-                    </span>
-                  </div>
+                      <span className=" text-xs">
+                        {/* <GetRating rating={s.rating.rate} /> */}
+                      </span>
+                    </div>
 
-                  <div className=" mt-3 w-[120px] h-[120px] md:w-[150px] md:h-[180px] lg:w-full">
-                    <CartBtn s={s} />
-                  </div>
+                    <div className=" mt-3 w-[120px] h-[120px] md:w-[150px] md:h-[180px] lg:w-full">
+                      <CartBtn s={s} />
+                    </div>
 
-                  <div className=" absolute top-0 ">
-                    <WishBtn s={s} />
-                  </div>
-                </section>
-              </CarouselItem>
-            ))}
+                    <div className=" absolute top-0 ">
+                      <WishBtn s={s} />
+                    </div>
+                  </section>
+                </CarouselItem>
+              ))
+            )}
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />

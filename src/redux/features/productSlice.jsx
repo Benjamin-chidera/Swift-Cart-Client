@@ -113,8 +113,8 @@ const productSlice = createSlice({
       })
       .addCase(createProducts.fulfilled, (state, { payload }) => {
         state.status = "idle";
-        // state.product = payload;
-        state.product.push(payload);
+        state.product = payload;
+        // state.product.push(payload);
       })
       .addCase(createProducts.rejected, (state) => {
         state.status = "error";

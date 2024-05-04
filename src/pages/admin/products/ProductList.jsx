@@ -24,7 +24,7 @@ import Cookies from "js-cookie";
 const ProductList = () => {
   const dispatch = useDispatch();
   const { product } = useSelector((state) => state.product);
-  const token = Cookies.get("user");
+  const token = Cookies.get("userToken");
 
   const products = product?.product;
 
@@ -38,10 +38,13 @@ const ProductList = () => {
 
   const pageVisited = pageNumber * postPerPage;
 
-  const displayProducts = products?.slice(
-    pageVisited,
-    pageVisited + postPerPage
-  );
+  // const displayProducts = products?.slice(
+  //   pageVisited,
+  //   pageVisited + postPerPage
+  // );
+  const displayProducts = Array.isArray(products)
+    ? products.slice(pageVisited, pageVisited + postPerPage)
+    : [];
 
   const pageCount = Math.ceil(products?.length / postPerPage);
 

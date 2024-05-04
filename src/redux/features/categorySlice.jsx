@@ -23,7 +23,6 @@ export const featchCategoriesAndGender = createAsyncThunk(
         `https://swift-cart-server.onrender.com/api/v1/products/category/${category}/gender/${gender}`
       );
 
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -35,7 +34,7 @@ export const featchCategoriesDetails = createAsyncThunk(
   "categories/featchCategoriesDetails",
   async (productId) => {
     const { data } = await axios(
-      `https://fakestoreapi.com/products/${productId}`
+      `https://swift-cart-server.onrender.com/api/v1/products/${productId}`
     );
 
     return data;
