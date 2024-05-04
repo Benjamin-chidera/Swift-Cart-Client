@@ -1,24 +1,47 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
-import localStorage from "redux-persist/es/storage";
+import { jwtDecode } from "jwt-decode";
 
 const registerAUser =
   "https://swift-cart-server.onrender.com/api/v1/auth/register";
+
 const loginAUser = "https://swift-cart-server.onrender.com/api/v1/auth/login";
+
 const forgottenAUser =
   "https://swift-cart-server.onrender.com/api/v1/auth/forgot-Password";
+
 const resetAUser =
   "https://swift-cart-server.onrender.com/api/v1/auth/reset-Password";
+
 const allUsers = "https://swift-cart-server.onrender.com/api/v1/auth";
 
 // register a user
 export const registerUser = createAsyncThunk(
   "user/registerUser",
-  async (formData) => {
-    const { data } = await axios.post(registerAUser, formData);
+  async (formData, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(registerAUser, formData);
 
-    return data;
+      if (data) {
+        Cookies.set("userToken", data.user.token);
+
+        const decode = jwtDecode(data.user.token);
+        console.log(decode.role);
+        if (decode.role === "user") {
+          window.location.href = "/";
+        } else {
+          window.location.href = "/admin";
+        }
+
+        return data;
+      } else {
+        return rejectWithValue("Invalid credentials");
+      }
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue("Login failed");
+    }
   }
 );
 
@@ -32,10 +55,29 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
 // login a user
 export const loginUser = createAsyncThunk(
   "user/loginUser",
-  async (formData) => {
-    const { data } = await axios.post(loginAUser, formData);
+  async (formData, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.post(loginAUser, formData);
 
-    return data;
+      if (data) {
+        Cookies.set("userToken", data.user.token);
+
+        const decode = jwtDecode(data.user.token);
+        console.log(decode.role);
+        if (decode.role === "user") {
+          window.location.href = "/";
+        } else {
+          window.location.href = "/admin";
+        }
+
+        return data;
+      } else {
+        return rejectWithValue("Invalid credentials");
+      }
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue("Login failed");
+    }
   }
 );
 

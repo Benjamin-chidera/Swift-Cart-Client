@@ -11,13 +11,13 @@ import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 
 const Signin = () => {
   const dispatch = useDispatch();
-  const { status, user } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
-   const [show, setShow] = useState(false);
+  const { status } = useSelector((state) => state.auth);
 
-   const handleShow = () => {
-     setShow((prevShowPassword) => !prevShowPassword);
-   };
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => {
+    setShow((prevShowPassword) => !prevShowPassword);
+  };
 
   const {
     register,
@@ -34,16 +34,7 @@ const Signin = () => {
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
-
     dispatch(loginUser(formData));
-    const decode = jwtDecode(user.user.token);
-    
-    if (decode.role === "user") {
-      Cookies.set("user", user.user.token);
-      navigate("/");
-    } else {
-      navigate("/signin");
-    }
   };
 
   return (

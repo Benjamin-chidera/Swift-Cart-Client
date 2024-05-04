@@ -9,15 +9,15 @@ export const SkeletonLoadingSearchBar = ({ num }) => {
   }
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 justify-center  p-5 fixed z-10 top-14 w-[920px] bg-white">
+    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 justify-center  p-5 fixed z-10 top-14 md:w-[500px] lg:w-[600px] xl:w-[980px] bg-white">
       {l.map((i, index) => {
         return (
           <div className="grid grid-cols-5 gap-[115px]" key={index}>
             <Skeleton className="rounded-lg  w-28 h-28" />
             <div className="w-40">
-              <Skeleton height={"20px"} width={"80px"} highlightColor="#444" />
-              <Skeleton height={"20px"} width={"80px"} highlightColor="#444" />
-              <Skeleton height={"20px"} width={"80px"} highlightColor="#444" />
+              <Skeleton height={"20px"} width={"60px"} highlightColor="#444" />
+              <Skeleton height={"20px"} width={"60px"} highlightColor="#444" />
+              <Skeleton height={"20px"} width={"60px"} highlightColor="#444" />
             </div>
           </div>
         );

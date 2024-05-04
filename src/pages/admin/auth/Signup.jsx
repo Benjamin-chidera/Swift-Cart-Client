@@ -10,7 +10,6 @@ const AdminSignup = () => {
   const [previewUrls, setPreviewUrls] = useState("");
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
 
   const {
     register,
@@ -46,7 +45,6 @@ const AdminSignup = () => {
     formData.append("image", data.image[0]);
 
     dispatch(registerUser(formData));
-    navigate("/admin")
   };
 
   return (

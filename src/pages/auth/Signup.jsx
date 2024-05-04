@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { registerUser } from "@/redux/features/authSlice";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,11 +48,9 @@ const Signup = () => {
     formData.append("name", data.name);
     formData.append("email", data.email);
     formData.append("password", data.password);
-    // formData.append("role", "admin");
     formData.append("image", data.image[0]);
 
     dispatch(registerUser(formData));
-    navigate("/");
   };
 
   return (

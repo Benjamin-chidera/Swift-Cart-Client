@@ -7,12 +7,9 @@ import { loginUser } from "@/redux/features/authSlice";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 
-
 const AdminSignin = () => {
   const dispatch = useDispatch();
-  const { status, user } = useSelector((state) => state.auth);
-
-  const navigate = useNavigate();
+  const { status } = useSelector((state) => state.auth);
 
   const {
     register,
@@ -32,16 +29,6 @@ const AdminSignin = () => {
     formData.append("password", data.password);
 
     dispatch(loginUser(formData));
-
-    const decode = jwtDecode(user.user.token);
-
-
-    if (decode.role === "admin") {
-      Cookies.set("user", user.user.token);
-      navigate("/admin");
-    } else {
-      navigate("/signin");
-    }
   };
 
   return (

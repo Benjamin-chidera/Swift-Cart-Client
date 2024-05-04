@@ -50,7 +50,7 @@ export const Headers = () => {
   const handleClose = () => {
     setClose(!close);
     setName("");
-    document.body.classList.remove("no-scroll"); 
+    document.body.classList.remove("no-scroll");
   };
 
   const handleSearch = async (e) => {
@@ -79,18 +79,18 @@ export const Headers = () => {
 
   const handleOpen = () => {
     setOpen(!open);
-     if (open) {
-       document.body.classList.remove("no-scroll"); // Enable scrolling when closing the mobile navbar
-     } else {
-       document.body.classList.add("no-scroll"); // Disable scrolling when opening the mobile navbar
-     }
+    if (open) {
+      document.body.classList.remove("no-scroll"); // Enable scrolling when closing the mobile navbar
+    } else {
+      document.body.classList.add("no-scroll"); // Disable scrolling when opening the mobile navbar
+    }
   };
 
-    useEffect(() => {
-      return () => {
-        document.body.classList.remove("no-scroll"); // Clean up: Enable scrolling when the component unmounts
-      };
-    }, []);
+  useEffect(() => {
+    return () => {
+      document.body.classList.remove("no-scroll"); // Clean up: Enable scrolling when the component unmounts
+    };
+  }, []);
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -140,13 +140,13 @@ export const Headers = () => {
                   </form>
                   {/* // for search functionality */}
                   {name && (
-                    <div className="bg-gray-50 p-5 fixed z-10 top-14 md:w-[300px] lg:w-[600px] xl:w-[980px] border border-red-400">
+                    <div className="bg-gray-50 p-5 fixed z-10 top-12 md:w-[500px] lg:w-[600px] xl:w-[980px] border hidden md:block">
                       {error && (
                         <div className="text-red-500 text-center mt-5 font-bold text-2xl">
                           {error}
                         </div>
                       )}
-                      <section className="grid grid-cols-4 place-items-center mt-5 gap-5">
+                      <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center mt-5 gap-5">
                         {/* {loading && <SkeletonLoadingSearchBar/>} */}
                         {name && loading ? (
                           <SkeletonLoadingSearchBar num={saved.length} />
@@ -191,7 +191,9 @@ export const Headers = () => {
                           <MenubarSeparator />
                           <MenubarItem>
                             <FaBox size={18} />
-                            <Link className="ms-2">My Orders</Link>
+                            <Link className="ms-2" to={"/order"}>
+                              My Orders
+                            </Link>
                           </MenubarItem>
                           <MenubarSeparator />
                           <MenubarItem>
@@ -211,7 +213,7 @@ export const Headers = () => {
                   {/* <Menubar /> */}
                 </section>
 
-                <section className="mt-1 lg:hidden">
+                <section className="mt-1 md:hidden">
                   {/* mobile device menu */}
                   {!open ? (
                     <button onClick={handleOpen}>
@@ -229,7 +231,7 @@ export const Headers = () => {
             {/*  mobile device Navbar  */}
 
             {open && (
-              <section className="flex items-start flex-col gap-4 lg:hidden fixed bg-white w-full z-10 h-screen mt-12 pt-10">
+              <section className="flex items-start flex-col gap-4 lg:hidden fixed bg-white w-full z-10 h-screen mt-12 pt-10 md:hidden">
                 {/* <div className="px-2"> */}
                 <div className="mb-2 w-full px-2">
                   <form action="" onSubmit={(e) => e.preventDefault()}>
@@ -247,7 +249,7 @@ export const Headers = () => {
 
                   {/* // for search functionality */}
                   {name && (
-                    <div className="bg-gray-50 p-2 fixed z-10 top-34 w-full border border-red-400">
+                    <div className="bg-gray-50 p-2 fixed z-10 top-34 w-full border">
                       {error && (
                         <div className="text-red-500 text-center mt-5 font-bold text-2xl">
                           {error}
@@ -256,8 +258,8 @@ export const Headers = () => {
                       <section className="grid grid-cols-2 place-items-center mt-3 gap-2 pe-2">
                         {/* {loading && <SkeletonLoadingSearchBar/>} */}
                         {name && loading ? (
-                          // <SkeletonLoadingSearchBar num={saved.length} />
-                          <p>Loading</p>
+                          <SkeletonLoadingSearchBar num={saved.length} />
+                          // <p>Loading</p>
                         ) : (
                           saved.map((s) => (
                             <SearchedItem
