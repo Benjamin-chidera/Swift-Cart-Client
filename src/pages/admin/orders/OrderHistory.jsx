@@ -1,4 +1,3 @@
-
 import { formatCurrency } from "@/lib/FormatCurrency";
 import React, { useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -13,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { orderhistory } from "@/components/data/orderHistorys";
 import Paginate from "@/components/paginate/Paginate";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 const OrderHistory = () => {
   //Pagination
@@ -21,12 +22,70 @@ const OrderHistory = () => {
 
   const pageVisited = pageNumber * postPerPage;
 
-  const displayOrderHistory = orderhistory?.slice(pageVisited, pageVisited + postPerPage);
+  const displayOrderHistory = orderhistory?.slice(
+    pageVisited,
+    pageVisited + postPerPage
+  );
 
   const pageCount = Math.ceil(orderhistory?.length / postPerPage);
 
   const ChangePage = ({ selected }) => {
     setPageNumber(selected);
+  };
+
+  const handleDownloadPdf = () => {
+    const doc = new jsPDF();
+    const title = "All Orders";
+    const padding = 10;
+    const titleWidth = doc.getTextWidth(title);
+    const center = doc.internal.pageSize.width / 2 - titleWidth / 2;
+
+    doc.text(title, center, padding);
+
+    // add table header
+    const tableHeader = [
+      "Number",
+      "Customer Name",
+      "Name",
+      "Email",
+      "Items",
+      "Price",
+      "Payment",
+      "Status",
+      "Date Created",
+    ];
+
+    // add table data
+    const tableData = orderhistory.map((datas, i) => [
+      i + 1,
+      datas.customerName,
+      datas.name,
+      datas.customerEmail,
+      datas.items,
+      datas.price,
+      datas.payment || "Paid",
+      datas.status || "Delivered",
+      new Date(datas.createdAt).toLocaleDateString(),
+    ]);
+
+    doc.autoTable({
+      head: [tableHeader],
+      body: tableData,
+
+      columnStyles: {
+        0: { cellWidth: 20 },
+        1: { cellWidth: 20 }, // Adjust cell widths based on content width
+        2: { cellWidth: 20 },
+        3: { cellWidth: 30 },
+        4: { cellWidth: 20 },
+        5: { cellWidth: 20 },
+        6: { cellWidth: 20 },
+        7: { cellWidth: 20 },
+        8: { cellWidth: 20 },
+      },
+    });
+
+    doc.save(`invoice.pdf`);
   };
 
   return (
@@ -83,6 +142,10 @@ const OrderHistory = () => {
 
       {/* pagination */}
       <Paginate pageCount={pageCount} ChangePage={ChangePage} />
+
+      <div>
+        <Button onClick={handleDownloadPdf}>Download PDF</Button>
+      </div>
     </main>
   );
 };

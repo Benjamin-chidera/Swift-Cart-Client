@@ -12,10 +12,12 @@ import { Button } from "@/components/ui/button";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Paginate from "@/components/paginate/Paginate";
 import { useSelector } from "react-redux";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 export const UserList = () => {
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
+
   //Pagination
   const [pageNumber, setPageNumber] = useState(0);
   const postPerPage = 6;
@@ -28,6 +30,58 @@ export const UserList = () => {
 
   const ChangePage = ({ selected }) => {
     setPageNumber(selected);
+  };
+
+  const handleDownloadPdf = () => {
+    const doc = new jsPDF();
+    const title = "All Users";
+    const padding = 10;
+    const titleWidth = doc.getTextWidth(title);
+    const center = doc.internal.pageSize.width / 2 - titleWidth / 2;
+
+    doc.text(title, center, padding);
+
+    // add table header
+    const tableHeader = [
+      "Number",
+      "Profile",
+      "Name",
+      "Email",
+      "Total Buy",
+      "Status",
+      "Role",
+      "Date Joined",
+    ];
+
+    // add table data
+    const tableData = user?.user.map((datas, i) => [
+      i + 1,
+      datas.image,
+      datas.name,
+      datas.email,
+      datas.purchased || 0,
+      datas.status || "Active",
+      datas.role,
+      new Date(datas.createdAt).toLocaleDateString(),
+    ]);
+
+    doc.autoTable({
+      head: [tableHeader],
+      body: tableData,
+
+      columnStyles: {
+        0: { cellWidth: 20 },
+        1: { cellWidth: 20 }, // Adjust cell widths based on content width
+        2: { cellWidth: 20 },
+        3: { cellWidth: 30 },
+        4: { cellWidth: 30 },
+        5: { cellWidth: 20 },
+        6: { cellWidth: 30 },
+        7: { cellWidth: 20 },
+      },
+    });
+
+    doc.save(`invoice.pdf`);
   };
 
   return (
@@ -82,6 +136,8 @@ export const UserList = () => {
 
       {/* pagination */}
       <Paginate pageCount={pageCount} ChangePage={ChangePage} />
+
+      <Button onClick={handleDownloadPdf}>Download PDF</Button>
     </main>
   );
 };
