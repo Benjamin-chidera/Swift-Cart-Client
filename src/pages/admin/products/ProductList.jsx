@@ -22,6 +22,7 @@ import {
 import Cookies from "js-cookie";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { MdPictureAsPdf } from "react-icons/md";
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -115,80 +116,90 @@ const ProductList = () => {
   return (
     <main>
       <section>
-        <section className="grid grid-cols-8 font-semibold text-sm text-center">
-          <p>Product</p>
-          <p>Name</p>
-          <p>Price</p>
-          <p>Purchased</p>
-          <p>Stock</p>
-          <p>Status</p>
-          <p>Date</p>
-          <p>Action</p>
-        </section>
+        <table className="w-full">
+          <thead className="w-full text-left table-auto">
+            <tr>
+              <th className="w-32">Product</th>
+              <th className="">Name</th>
+              <th className="w-32">Price</th>
+              <th>Purchased</th>
+              <th className="">Stock</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
 
-        <section className=" space-y-3 mt-3">
-          {displayProducts?.map((p) => (
-            <div
-              key={p._id}
-              className="grid grid-cols-8 font-semibold text-sm place-items-center"
-            >
-              <LazyLoadImage
-                src={p.image}
-                className="w-14 h-14"
-                loading="lazy"
-                effect="blur"
-              />
+          <tbody className=" space-y-3 mt-3">
+            {displayProducts?.map((p) => (
+              <tr key={p._id} className="">
+                <td className="w-32">
+                  <LazyLoadImage
+                    src={p.image}
+                    className="w-14 h-14"
+                    loading="lazy"
+                    effect="blur"
+                  />
+                </td>
 
-              <h1>{p.name.substring(0, 20)}</h1>
-              <h2>{formatCurrency(p.price)}</h2>
-              <h3>{p.purchased || 0}</h3>
-              <h4>{p.quantity}</h4>
-              <h5 className=" uppercase text-xs">{p.status}</h5>
-              <h6>
-                {`${new Date(p.updatedAt).getFullYear()}-${(
-                  new Date(p.updatedAt).getMonth() + 1
-                )
-                  .toString()
-                  .padStart(2, "0")}-${new Date(p.updatedAt)
-                  .getDate()
-                  .toString()
-                  .padStart(2, "0")}`}
-              </h6>
+                <td className="w-48"> {p.name.substring(0, 20)}</td>
+                <td className="w-48">{formatCurrency(p.price)}</td>
+                <td className="w-48">{p.purchased || 0}</td>
+                <td className="w-48">{p.quantity}</td>
+                <td className="w-40 uppercase text-xs">{p.status}</td>
+                <td className="w-48">
+                  {`${new Date(p.updatedAt).getFullYear()}-${(
+                    new Date(p.updatedAt).getMonth() + 1
+                  )
+                    .toString()
+                    .padStart(2, "0")}-${new Date(p.updatedAt)
+                    .getDate()
+                    .toString()
+                    .padStart(2, "0")}`}
+                </td>
 
-              <DropdownMenu>
-                <DropdownMenuTrigger className=" outline-none uppercase">
-                  <BsThreeDotsVertical />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem>
-                    <Button
-                      className="text-xs"
-                      onClick={() => handleDeleteProduct(p._id)}
-                    >
-                      Delete Product
-                    </Button>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Button className="w-full">
-                      <Link
-                        className="text-xs"
-                        to={`/admin/edit-product/${p._id}`}
-                      >
-                        Edit Product
-                      </Link>
-                    </Button>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          ))}
-        </section>
+                <td>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className=" outline-none uppercase">
+                      <BsThreeDotsVertical />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem>
+                        <Button
+                          className="text-xs"
+                          onClick={() => handleDeleteProduct(p._id)}
+                        >
+                          Delete Product
+                        </Button>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Button className="w-full">
+                          <Link
+                            className="text-xs"
+                            to={`/admin/edit-product/${p._id}`}
+                          >
+                            Edit Product
+                          </Link>
+                        </Button>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
       {/* pagination */}
       <Paginate pageCount={pageCount} ChangePage={ChangePage} />
 
       <div>
-        <Button onClick={handleDownloadPdf}>Download PDF</Button>
+        <Button onClick={handleDownloadPdf}>
+          Download
+          <span className="ms-2">
+            <MdPictureAsPdf size={25} />
+          </span>
+        </Button>
       </div>
     </main>
   );

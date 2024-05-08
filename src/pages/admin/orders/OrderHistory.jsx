@@ -14,6 +14,7 @@ import { orderhistory } from "@/components/data/orderHistorys";
 import Paginate from "@/components/paginate/Paginate";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { MdPictureAsPdf } from "react-icons/md";
 
 const OrderHistory = () => {
   //Pagination
@@ -46,7 +47,7 @@ const OrderHistory = () => {
     const tableHeader = [
       "Number",
       "Customer Name",
-      "Name",
+      "Product Name",
       "Email",
       "Items",
       "Price",
@@ -85,66 +86,76 @@ const OrderHistory = () => {
       },
     });
 
-    doc.save(`invoice.pdf`);
+    doc.save(`orders-Invoice.pdf`);
   };
 
   return (
     <main>
       <div>
-        <h1 className="font-bold text-sm">New Orders</h1>
+        <h1 className="font-bold text-xl mb-5 underline">New Orders</h1>
       </div>
 
-      <section className="my-5 grid grid-cols-9 place-items-center text-sm">
-        <p>Customer</p>
-        <p>Email</p>
-        <p>Items</p>
-        <p>Price</p>
-        <p>Payment</p>
-        <p>Status</p>
-        <p>Date</p>
-        <p>Action</p>
-      </section>
+      <table className="w-full">
+        <thead className="w-full text-left table-auto">
+          <tr>
+            <th className="w-32">Customer</th>
+            <th className="w-32">Email</th>
+            <th className="w-32">Items</th>
+            <th className="w-32">Price</th>
+            <th className="w-32">Payment</th>
+            <th className="w-32">Status</th>
+            <th className="w-32">Date</th>
+            <th className="w-32">Action</th>
+          </tr>
+        </thead>
 
-      <section className="my-5">
-        {displayOrderHistory.map((o) => (
-          <div
-            key={o.id}
-            className="my-5 grid grid-cols-9 place-items-center text-sm"
-          >
-            <h2>{o.customerName}</h2>
-            <h3>{o.customerEmail}</h3>
+        <tbody>
+          {displayOrderHistory.map((o) => (
+            <tr key={o.id} className="">
+              <td className="py-2">{o.customerName}</td>
+              <td className="py-2 w-48">{o.customerEmail}</td>
 
-            <h4>{o.items}</h4>
-            <h5>{formatCurrency(o.price)}</h5>
-            <h6 className="font-bold">Paid</h6>
-            <p
-              className={`capitalize text-xs ${
-                o.status === "In Progress" ? "bg-blue-500" : "bg-green-600"
-              } py-0.5 px-2 rounded-full text-white`}
-            >
-              {o.status}
-            </p>
-            <p>{o.Date}</p>
+              <td>{o.items}</td>
+              <td className="w-40">{formatCurrency(o.price)}</td>
+              <td className="font-bold">Paid</td>
+              <td className="w-32">
+                <div></div>
+                <p
+                  className={`capitalize text-xs w-20 text-center ${
+                    o.status === "In Progress" ? "bg-blue-500" : "bg-green-600"
+                  } py-0.5 px-2 rounded-full text-white`}
+                >
+                  {o.status}
+                </p>
+              </td>
+              <td>{o.Date}</td>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger className=" outline-none uppercase">
-                <BsThreeDotsVertical />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <Button>Delete Order</Button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        ))}
-      </section>
-
+              <td className="w-32">
+                <DropdownMenu>
+                  <DropdownMenuTrigger className=" outline-none uppercase">
+                    <BsThreeDotsVertical />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>
+                      <Button>Delete Order</Button>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
       {/* pagination */}
       <Paginate pageCount={pageCount} ChangePage={ChangePage} />
 
       <div>
-        <Button onClick={handleDownloadPdf}>Download PDF</Button>
+        <Button onClick={handleDownloadPdf}>
+          Download
+          <span className="ms-2">
+            <MdPictureAsPdf size={25} />
+          </span>
+        </Button>
       </div>
     </main>
   );

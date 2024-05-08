@@ -1,27 +1,23 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
-import { getTotalPrice, getTotalQtyItem } from "@/redux/features/cartSlice";
-import {
-  CitySelect,
-  CountrySelect,
-  StateSelect,
-  LanguageSelect,
-} from "react-country-state-city";
+import { clearCart, getTotalPrice } from "@/redux/features/cartSlice";
+import { CountrySelect, StateSelect } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { formatCurrency } from "@/lib/FormatCurrency";
 
 import { CheckoutItem } from "./CheckoutItem";
 import { useForm } from "react-hook-form";
 import { handlePayMent } from "@/redux/features/payStackSlice";
-import localStorage from "redux-persist/es/storage";
+import Cookies from "js-cookie";
+import { createOrders } from "@/redux/features/orderSlice";
+import "./checkout.css";
 
 export const Checkout = () => {
   const [countryid, setCountryid] = useState(0);
   const [stateid, setstateid] = useState(0);
-  const navigate = useNavigate();
+
   const {
     handleSubmit,
     register,
@@ -30,28 +26,28 @@ export const Checkout = () => {
 
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
-  const {
-    payment
-  } = useSelector((state) => state.payStack);
+
+  const userToken = Cookies.get("userToken");
+
+  const { payment } = useSelector((state) => state.payStack);
 
   const isPaying = payment?.data?.authorization_url;
 
   if (!isPaying) {
     console.log("Not found");
-  }else {
+  } else {
     console.log("found authorization");
   }
-  // if (!isPaying) {
-  //   console.log("error opening URL:");
-  // } else {
-  //   console.log("Opening URL:", isPaying);
-  //   window.open(isPaying, "_blank");
-  //   navigate("/");
-  // }
+
+  // orders
+
+  const myOrder = localStorage.getItem("orders");
+
+  const order = JSON.parse(myOrder);
 
   const totalPrice = useSelector(getTotalPrice);
 
-  const amount = Math.floor(totalPrice * 0.4);
+  const amount = Math.floor(totalPrice * 0.1);
 
   const grandTotal = amount + totalPrice;
 
@@ -61,42 +57,36 @@ export const Checkout = () => {
 
       formData.append("email", data.email);
       formData.append("price", data.price);
+      formData.append("countryid", countryid);
+      formData.append("address", data.address);
+      formData.append("city", data.city);
+      formData.append("phone", data.city);
 
       await dispatch(handlePayMent(formData));
+      await dispatch(createOrders(order));
 
       if (!isPaying) {
         console.log("error opening URL:");
       } else {
         console.log("Opening URL:", isPaying);
-        // window.open(isPaying, "_blank");
-        window.location.href = isPaying
-        // navigate("/");
+
+        const orderData = {
+          cart,
+          shippingAddress: data,
+          user: userToken,
+          totalPrice: grandTotal,
+        };
+
+        console.log(orderData);
+
+        localStorage.setItem("orders", JSON.stringify(orderData));
+        dispatch(clearCart());
+        window.location.href = isPaying;
       }
     } catch (error) {
       console.log("Error:", error);
     }
   };
-
-  // const handlePayment = async (data) => {
-  //   try {
-  //     const formData = new FormData();
-
-  //     formData.append("email", data.email);
-  //     formData.append("price", data.price);
-
-  //     await dispatch(handlePayMent(formData));
-
-  //     if (data?.authorization_url) {
-  //       console.log("Opening URL:", data.authorization_url);
-  //       window.open(data.authorization_url, "_blank");
-  //       navigate("/");
-  //     } else {
-  //       console.log("Error: Authorization URL not found.");
-  //     }
-  //   } catch (error) {
-  //     console.log("Error:", error);
-  //   }
-  // };
 
   return (
     <main className=" px-3 md:container md:mx-auto md:flex justify-between w-full">
@@ -127,18 +117,25 @@ export const Checkout = () => {
         <div className="mt-10">
           {/* delivery info*/}
           <h6 className="font-semibold mb-4">delivery</h6>
-          <CountrySelect
-            onChange={(e) => {
-              setCountryid(e.id);
-            }}
-            placeHolder="Select Country"
-          />
+          <div>
+            <CountrySelect
+              onChange={(e) => {
+                setCountryid(e.id);
+              }}
+              placeHolder="Select Country"
+            />
+          </div>
         </div>
 
         <div className="mt-4">
           {/* address info*/}
 
-          <Input type="text" placeholder="Address" className={"border"} />
+          <Input
+            type="text"
+            placeholder="Address"
+            className={"border"}
+            {...register("address", { required: "Email is required" })}
+          />
         </div>
 
         <div className="flex gap-5 w-full">
@@ -146,7 +143,12 @@ export const Checkout = () => {
           <div className="mt-4 w-[50%]">
             {/* city info*/}
 
-            <Input type="text" placeholder="City" className={"border"} />
+            <Input
+              type="text"
+              placeholder="City"
+              className={"border"}
+              {...register("city", { required: "Email is required" })}
+            />
           </div>
           <div className="mt-4 w-[50%]">
             {/* address info*/}
@@ -163,7 +165,12 @@ export const Checkout = () => {
         <div className="mt-4">
           {/* address info*/}
 
-          <Input type="tel" placeholder="Phone" className={"border"} />
+          <Input
+            type="tel"
+            placeholder="Phone"
+            className={"border"}
+            {...register("phone", { required: "Email is required" })}
+          />
         </div>
 
         <div className="mt-5">

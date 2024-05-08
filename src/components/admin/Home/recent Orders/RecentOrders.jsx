@@ -1,7 +1,10 @@
+import {
+  SkeletonLoadingRecentOrder,
+  SkeletonLoadingSoldItem,
+} from "@/components/Loader-Skeleton/SkeletonLoadingAdmin";
 import { formatCurrency } from "@/lib/FormatCurrency";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-
 
 const recent = [
   {
@@ -43,10 +46,20 @@ const recent = [
 ];
 
 export const RecentOrders = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = setInterval(() => {
+      setLoading(false);
+    }, 3000);
+
+    return () => clearInterval(load);
+  }, []);
+
   return (
     <main className="my-10 shadow p-3 rounded w-full">
       <h1 className="text-sm font-bold mb-3">Recent Order</h1>
-      <section className="grid grid-cols-7 place-items-start">
+      <section className="grid grid-cols-6 place-items-start w-full">
         <p>Order ID</p>
         <p>Product Name</p>
         <p className="ms-3">Units</p>
@@ -56,26 +69,26 @@ export const RecentOrders = () => {
       </section>
 
       <section className=" space-y-4 mt-5 text-sm">
-        {recent.map((r) => (
-          <div key={r.id} className="grid grid-cols-7 place-items-start">
-            <p>{r.orderId}</p>
-            <p>{r.name}</p>
-            <p className="ms-5">{r.units}</p>
-            <p>{r.date}</p>
-            <p>{formatCurrency(r.totalPrice)}</p>
-            <p
-              className={`${
-                r.status === "delivered" ? "bg-green-700" : "bg-blue-600"
-              } text-white px-3 rounded-full text-xs capitalize`}
-            >
-              {r.status}
-            </p>
-
-            <button>
-              <BsThreeDotsVertical />
-            </button>
-          </div>
-        ))}
+        {loading ? (
+          <SkeletonLoadingRecentOrder num={6} />
+        ) : (
+          recent.map((r) => (
+            <div key={r.id} className="grid grid-cols-6 place-items-start">
+              <p>{r.orderId}</p>
+              <p>{r.name}</p>
+              <p className="ms-5">{r.units}</p>
+              <p>{r.date}</p>
+              <p>{formatCurrency(r.totalPrice)}</p>
+              <p
+                className={`${
+                  r.status === "delivered" ? "bg-green-700" : "bg-blue-600"
+                } text-white px-3 rounded-full text-xs capitalize`}
+              >
+                {r.status}
+              </p>
+            </div>
+          ))
+        )}
       </section>
     </main>
   );

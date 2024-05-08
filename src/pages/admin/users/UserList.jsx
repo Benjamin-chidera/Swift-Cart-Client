@@ -14,6 +14,7 @@ import Paginate from "@/components/paginate/Paginate";
 import { useSelector } from "react-redux";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import { MdPictureAsPdf } from "react-icons/md";
 
 export const UserList = () => {
   const { user } = useSelector((state) => state.auth);
@@ -81,63 +82,79 @@ export const UserList = () => {
       },
     });
 
-    doc.save(`invoice.pdf`);
+    doc.save(`userInvoice.pdf`);
   };
 
   return (
     <main className=" text-xs">
-      <section className="grid grid-cols-8 font-bold gap-20">
-        <p>Profile</p>
-        <p>Name</p>
-        <p>Email</p>
+      <section>
+        {/* table */}
 
-        <p className=" whitespace-nowrap">Total Buy</p>
-        <p>Status</p>
-        <p>Join On</p>
-        <p>Action</p>
-      </section>
+        <table className="w-full">
+          <thead className="w-full text-left table-auto">
+            <tr>
+              <th className="w-32 pb-2">Profile</th>
+              <th className="w-32">Name</th>
+              <th className="w-52">Email</th>
+              <th className="w-32">Total Buy</th>
+              <th className="w-32">Status</th>
+              <th className="w-32">Join On</th>
+              <th className="w-32">Action</th>
+            </tr>
+          </thead>
 
-      <section className=" space-y-5 mt-5">
-        {displayUsers?.map((u) => (
-          <div
-            key={u._id}
-            className="grid grid-cols-8 text-sm items-center gap-20"
-          >
-            <LazyLoadImage src={u.image} className="h-10" />
-            <h1 className=" whitespace-nowrap capitalize">{u.name}</h1>
-            <h2 className="">{u.email}</h2>
+          <tbody>
+            {displayUsers?.map((u) => (
+              <tr
+                key={u._id}
+                // className=""
+              >
+                <td className="pt-2">
+                  <LazyLoadImage src={u.image} className="h-10" />
+                </td>
+                <td className=" whitespace-nowrap capitalize">{u.name}</td>
+                <td className="">{u.email}</td>
 
-            <h4 className="">{u.totalBuy || "200"}</h4>
-            <h4 className=" uppercase">{u.status || "Active"}</h4>
-            <h4 className=" uppercase whitespace-nowrap">
-              {" "}
-              {`${new Date(u.updatedAt).getFullYear()}-${(
-                new Date(u.updatedAt).getMonth() + 1
-              )
-                .toString()
-                .padStart(2, "0")}-${new Date(u.updatedAt)
-                .getDate()
-                .toString()
-                .padStart(2, "0")}`}
-            </h4>
-            <DropdownMenu>
-              <DropdownMenuTrigger className=" outline-none uppercase">
-                <BsThreeDotsVertical />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <Button>Delete User</Button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        ))}
+                <td className="">{u.totalBuy || "200"}</td>
+                <td className=" uppercase">{u.status || "Active"}</td>
+                <td className=" uppercase whitespace-nowrap">
+                  {" "}
+                  {`${new Date(u.updatedAt).getFullYear()}-${(
+                    new Date(u.updatedAt).getMonth() + 1
+                  )
+                    .toString()
+                    .padStart(2, "0")}-${new Date(u.updatedAt)
+                    .getDate()
+                    .toString()
+                    .padStart(2, "0")}`}
+                </td>
+                <td>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className=" outline-none uppercase">
+                      <BsThreeDotsVertical />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem>
+                        <Button>Delete User</Button>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </section>
 
       {/* pagination */}
       <Paginate pageCount={pageCount} ChangePage={ChangePage} />
 
-      <Button onClick={handleDownloadPdf}>Download PDF</Button>
+      <Button onClick={handleDownloadPdf}>
+        Download
+        <span className="ms-2">
+          <MdPictureAsPdf size={25} />
+        </span>
+      </Button>
     </main>
   );
 };

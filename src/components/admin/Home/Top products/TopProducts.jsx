@@ -29,7 +29,7 @@ export const TopProducts = () => {
                 {p.name.substring(0, 20)}
               </h2>
               <p className="text-xs max-w-[230px]">
-                {p.description.substring(0, 20)}
+                {p.details.substring(0, 20)}
               </p>
               <p className=" text-xs">{formatCurrency(p.price)}</p>
             </div>

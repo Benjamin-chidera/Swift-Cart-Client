@@ -10,7 +10,10 @@ export const CheckoutItem = ({ c }) => {
   const { image, name, price, quantity, size, shipping } = c;
   const totalPrice = useSelector(getTotalPrice);
 
-  const amount = Math.floor(totalPrice * 0.4);
+  const amount = Math.floor(totalPrice * 0.1);
+
+  
+
 
   const grandTotal = amount + totalPrice;
 
