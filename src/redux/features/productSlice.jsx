@@ -81,16 +81,6 @@ export const editAProducts = createAsyncThunk(
   }
 );
 
-// export const getSearch = createAsyncThunk("search/getSearch", async (name) => {
-//   try {
-//     const { data } = await axios(`${search}=${name}`);
-
-//     return data;
-//   } catch (error) {
-//     console.log(error?.response?.data?.msg);
-//   }
-// });
-
 const initialState = {
   product: [],
   singleProduct: null,
@@ -169,19 +159,7 @@ const productSlice = createSlice({
       })
       .addCase(editAProducts.rejected, (state) => {
         state.status = "error";
-      })
-
-      // Search for products
-      // .addCase(getSearch.pending, (state) => {
-      //   state.status = "loading";
-      // })
-      // .addCase(getSearch.fulfilled, (state, { payload }) => {
-      //   state.status = "idle";
-      //   state.search = payload;
-      // })
-      // .addCase(getSearch.rejected, (state) => {
-      //   state.status = "error";
-      // });
+      });
   },
 });
 

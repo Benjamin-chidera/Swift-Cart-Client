@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const orderUrl = "http://localhost:3000/api/v1/orders/createOrder";
-const order = "http://localhost:3000/api/v1/orders";
+const orderUrl =
+  "https://swift-cart-server.onrender.com/api/v1/orders/createOrder";
+const order = "https://swift-cart-server.onrender.com/api/v1/orders";
 
 export const fetchOrders = createAsyncThunk("orders/fetchOrders", async () => {
   const { data } = await axios(order);

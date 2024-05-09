@@ -15,8 +15,6 @@ const Orders = () => {
 
   const order = JSON.parse(myOrder);
 
-  console.log(orders);
-
   useEffect(() => {
     dispatch(fetchOrders(order));
   }, [dispatch]);
@@ -31,7 +29,7 @@ const Orders = () => {
         {/* small devices */}
 
         <section className="w-full lg:hidden space-y-5  border p-2">
-          {orders.order.map((o) => (
+          {orders?.order?.map((o) => (
             <section key={o._id} className=" space-y-5">
               {o.cart.map((c) => (
                 <section key={c._id} className="">
@@ -55,7 +53,9 @@ const Orders = () => {
                           <FaDotCircle size={5} />
                         </span>
                       </div>
-                      <p className="text-xs font-bold mt-1">On {o.deliveryDate || "02-04-24"}</p>
+                      <p className="text-xs font-bold mt-1">
+                        On {o.deliveryDate || "02-04-24"}
+                      </p>
                     </div>
                   </div>
                 </section>
@@ -79,7 +79,7 @@ const Orders = () => {
             <th className="w-32">Status</th>
           </div>
 
-          {orders.order.map((o) => (
+          {orders?.order?.map((o) => (
             <section key={o._id} className="">
               {o.cart.map((c) => (
                 <section

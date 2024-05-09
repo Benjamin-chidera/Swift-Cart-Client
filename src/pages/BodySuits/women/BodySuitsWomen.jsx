@@ -14,8 +14,9 @@ import { SkeletonLoadingProducts } from "@/components/Loader-Skeleton/SkeletonLo
 const BodySuitsWomen = () => {
   const { category, gender } = useParams();
   const dispatch = useDispatch();
-  const [min, setMin] = useState(0);
-  const [max, setMax] = useState(0);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
 
   const { categoriesGender, minPrice, maxPrice, status } = useSelector(
     (state) => state.categories
@@ -29,28 +30,107 @@ const BodySuitsWomen = () => {
 
   const isFiltered = filteredProducts?.length < 1 ? skinCare : filteredProducts;
 
+    const sortedProducts = skinCare?.slice().sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.price - b.price;
+      } else if (sortOrder === "all") {
+        return skinCare;
+      } else {
+        return b.price - a.price;
+      }
+    });
+
   useEffect(() => {
     dispatch(featchCategoriesAndGender({ category, gender }));
   }, [dispatch, category, gender]);
 
+   const handleSortChange = (e) => {
+     setSortOrder(e.target.value);
+   };
+
+   const handleColorChange = (color) => {
+     setSelectedColor(color);
+   };
+
+   const filteredByColor = selectedColor
+     ? sortedProducts?.filter((product) => product.color === selectedColor)
+     : sortedProducts;
+
+   const colorOptions = ["Red", "Blue", "Green", "Yellow", "qwdqwdqwdqwd"];
+
+   const handleSizeChange = (size) => {
+     setSelectedSize(size);
+   };
+
+   const filteredBySize = selectedSize
+     ? filteredByColor?.filter((product) => product.size === selectedSize)
+     : filteredByColor;
+
+   const sizeOptions = ["s", "md", "l", "xl", "xxl", "2xl"];
+
   return (
     <main className=" md:my-5  md:container md:mx-auto lg:flex gap-3">
-      <section className="mx-3">
-        <Filter min={minPrice} max={maxPrice} setMax={setMax} setMin={setMin} />
-      </section>
+      <div>
+        <section className="my-3">
+          <select
+            name=""
+            id=""
+            onClick={handleSortChange}
+            className=" outline-none"
+          >
+            <option value="all">Default</option>
+            <option value="asc">Lowest Price</option>
+            <option value="desc">Height Price</option>
+          </select>
+        </section>
+        <section className="mx-3">
+          <section className="my-3">
+            <p>Filter by Color:</p>
+            {colorOptions.map((color) => (
+              <label key={color} className="flex gap-2 text-sm">
+                <input
+                  type="radio"
+                  name="colorFilter"
+                  value={color}
+                  checked={selectedColor === color}
+                  onChange={() => handleColorChange(color)}
+                />
+                {color}
+              </label>
+            ))}
+          </section>
+
+          {/* filter by size */}
+          <section className="my-3">
+            <p>Filter by Size:</p>
+            {sizeOptions.map((size) => (
+              <label key={size} className="flex gap-2 text-sm">
+                <input
+                  type="radio"
+                  name="sizeFilter"
+                  value={size}
+                  checked={selectedSize === size}
+                  onChange={() => handleSizeChange(size)}
+                />
+                {size}
+              </label>
+            ))}
+          </section>
+        </section>
+      </div>
       <section
         className={`shadow-2xl w-[950px] max-w-full md:px-3 md:py-5 gap-5 rounded-xl ${
           status === "idle" && "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
         } `}
       >
-        {isFiltered?.length < 1 ? (
+        {filteredBySize?.length < 1 ? (
           <p className=" font-bold text-xl whitespace-nowrap p-2 text-center flex justify-center">
             No Product Found
           </p>
         ) : status === "loading" ? (
-          <SkeletonLoadingProducts num={isFiltered?.length} />
+          <SkeletonLoadingProducts num={filteredBySize?.length} />
         ) : (
-          isFiltered?.map((s) => (
+          filteredBySize?.map((s) => (
             <div
               key={s._id}
               className=" md:hover:scale-[1.1] duration-200 shadow w-full p-2"
