@@ -13,7 +13,6 @@ import { useSelector, useDispatch } from "react-redux";
 
 export const CartItem = ({ c, id }) => {
   const { image, name, price } = c;
-  console.log(id);
 
   const dispatch = useDispatch();
 

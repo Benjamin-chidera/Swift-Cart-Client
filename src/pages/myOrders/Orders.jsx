@@ -15,11 +15,7 @@ const Orders = () => {
 
   const order = JSON.parse(myOrder);
 
-  // const check = localStorage.getItem("persist:root");
-
-  // const final = JSON.parse(check);
-
-  // console.log(final.cart);
+  console.log(orders);
 
   useEffect(() => {
     dispatch(fetchOrders(order));
@@ -34,136 +30,104 @@ const Orders = () => {
 
         {/* small devices */}
 
-        <section className="w-full lg:hidden overflow-x-scroll whitespace-nowrap">
-          <div className="w-full text-left grid grid-cols-7 gap-28 ">
-            <p className="">Order</p>
-            <p className="">Quantity</p>
-            <p className="">Price</p>
-            <p className="">Order number</p>
-            <p className="">Order date</p>
-            <p className="">Delivery date</p>
-            <p className="">Status</p>
-          </div>
+        <section className="w-full lg:hidden space-y-5  border p-2">
+          {orders.order.map((o) => (
+            <section key={o._id} className=" space-y-5">
+              {o.cart.map((c) => (
+                <section key={c._id} className="">
+                  <div className="flex gap-5">
+                    <LazyLoadImage
+                      effect="blur"
+                      loading="lazy"
+                      src={c.image}
+                      alt=""
+                      className="w-20 h-20"
+                    />
+                    <div>
+                      <p className="text-xs underline">{c.name}</p>
+                      <p className="text-xs text-gray-600">
+                        {o.orderNumber || 12748939}
+                      </p>
 
-          <div className="w-full text-left">
-            {orders?.order?.map((o) => (
-              <div
-                key={o._id}
-                className=" grid grid-cols-7 gap-28 items-center "
-              >
-                {o.cart.map((c) => (
-                  <>
-                    <section className="flex items-center gap-3">
-                      <LazyLoadImage
-                        effect="blur"
-                        loading="lazy"
-                        src={c.image}
-                        alt=""
-                        className="w-20 h-20"
-                      />
-                      <div>
-                        <p className="text-xs underline">{c.name}</p>
-                        <p className="text-xs">Size: {c.size}</p>
-                        <p className="text-xs">Color: {c.color}</p>
+                      <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
+                        <p>{o.status} </p>
+                        <span>
+                          <FaDotCircle size={5} />
+                        </span>
                       </div>
-                    </section>
-                    <p>{c.quantity}</p>
-                    <p>{formatCurrency(c.price)}</p>
-                  </>
-                ))}
-
-                <p>{o.orderNumber || 0}</p>
-                <p>
-                  {" "}
-                  {`${new Date(o.updatedAt).getFullYear()}-${(
-                    new Date(o.updatedAt).getMonth() + 1
-                  )
-                    .toString()
-                    .padStart(2, "0")}-${new Date(o.updatedAt)
-                    .getDate()
-                    .toString()
-                    .padStart(2, "0")}`}
-                </p>
-                <p>{o.deliveryDate || 0}</p>
-                <p>
-                  <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
-                    <p>{o.status} </p>
-                    <span>
-                      <FaDotCircle size={5} />
-                    </span>
+                      <p className="text-xs font-bold mt-1">On {o.deliveryDate || "02-04-24"}</p>
+                    </div>
                   </div>
-                </p>
-              </div>
-            ))}
-          </div>
+                </section>
+              ))}
+            </section>
+          ))}
         </section>
 
         {/* small devices */}
 
         {/* large devices */}
-        <table className="lg:w-full  hidden lg:block">
-          <thead className="lg:w-full text-left table-auto">
-            <tr>
-              <th className="w-36 pb-2">Order</th>
-              <th className="w-32">Quantity</th>
-              <th className="w-32">Price</th>
-              <th className="w-32">Order number</th>
-              <th className="w-32">Order date</th>
-              <th className="w-32">Delivery date</th>
-              <th className="w-32">Status</th>
-            </tr>
-          </thead>
 
-          <tbody>
-            {orders?.order?.map((o) => (
-              <tr key={o._id}>
-                {o.cart.map((c) => (
-                  <>
-                    <td>
-                      <section className="flex items-center gap-3">
-                        <LazyLoadImage
-                          effect="blur"
-                          loading="lazy"
-                          src={c.image}
-                          alt=""
-                          className="w-20"
-                        />
-                        <div>
-                          <p className="text-xs underline">{c.name}</p>
-                          <p className="text-xs">Size: {c.size}</p>
-                          <p className="text-xs">Color: {c.color}</p>
-                        </div>
-                      </section>
-                    </td>
-                    <td>{c.quantity}</td>
-                    <td>{formatCurrency(c.price)}</td>
-                  </>
-                ))}
-                <td>{o.orderNumber || 0}</td>
-                <td>
-                  {" "}
-                  {`${new Date(o.updatedAt).getFullYear()}-${(
-                    new Date(o.updatedAt).getMonth() + 1
-                  )
-                    .toString()
-                    .padStart(2, "0")}-${new Date(o.updatedAt)
-                    .getDate()
-                    .toString()
-                    .padStart(2, "0")}`}
-                </td>
-                <td>{o.deliveryDate || 0}</td>
-                <td>
+        <section className=" hidden lg:block">
+          <div className="grid grid-cols-7 place-items-center">
+            <th className="w-36 pb-2">Order</th>
+            <th className="w-32">Quantity</th>
+            <th className="w-32">Price</th>
+            <th className="w-32">Order number</th>
+            <th className="w-32">Order date</th>
+            <th className="w-32">Delivery date</th>
+            <th className="w-32">Status</th>
+          </div>
+
+          {orders.order.map((o) => (
+            <section key={o._id} className="">
+              {o.cart.map((c) => (
+                <section
+                  key={c._id}
+                  className="grid grid-cols-7 place-items-center"
+                >
+                  <div className="flex gap-2 items-center space-y-4">
+                    <LazyLoadImage
+                      effect="blur"
+                      loading="lazy"
+                      src={c.image}
+                      alt=""
+                      className="w-20"
+                    />
+                    <div>
+                      <p className="text-xs underline">{c.name}</p>
+                      <p className="text-xs">Size: {c.size}</p>
+                      <p className="text-xs whitespace-nowrap">
+                        Color: {c.color}
+                      </p>
+                    </div>
+                  </div>
+                  <p>{c.quantity}</p>
+                  <p>{formatCurrency(c.price)}</p>
+                  <p>{o.orderNumber || 0}</p>
+                  <p>
+                    {" "}
+                    {`${new Date(o.updatedAt).getFullYear()}-${(
+                      new Date(o.updatedAt).getMonth() + 1
+                    )
+                      .toString()
+                      .padStart(2, "0")}-${new Date(o.updatedAt)
+                      .getDate()
+                      .toString()
+                      .padStart(2, "0")}`}
+                  </p>
+                  <p>{o.deliveryDate || 0}</p>
                   <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
                     <p>{o.status} </p>
                     <span>
                       <FaDotCircle size={5} />
                     </span>
                   </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                </section>
+              ))}
+            </section>
+          ))}
+        </section>
       </section>
     </main>
   );

@@ -27,7 +27,7 @@ const joyimg = [
 
 export const MadeForMen = () => {
   return (
-    <main className="md:flex gap-3  mx-3 md:container md:mx-auto">
+    <main className="md:flex gap-3  mx-3 md:container md:mx-auto overflow-x-hidden">
       <section>
         {comfortimg.map((s) => (
           <Link

@@ -1,6 +1,6 @@
-import { orders } from "@/components/data/orders";
+// import { orders } from "@/components/data/orders";
 import { formatCurrency } from "@/lib/FormatCurrency";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import {
@@ -12,22 +12,44 @@ import {
 import { Button } from "@/components/ui/button";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Paginate from "@/components/paginate/Paginate";
+import { useSelector } from "react-redux";
+import { FaDotCircle } from "react-icons/fa";
+import { jwtDecode } from "jwt-decode";
 
 const NewOrders = () => {
   //Pagination
   const [pageNumber, setPageNumber] = useState(0);
   const postPerPage = 6;
+  const { orders } = useSelector((state) => state.orders);
+  const [storeToken, setStoreToken] = useState("");
 
   const pageVisited = pageNumber * postPerPage;
 
-  const displayOrders = orders?.slice(pageVisited, pageVisited + postPerPage);
+  const displayOrders = orders?.order?.slice(
+    pageVisited,
+    pageVisited + postPerPage
+  );
 
-  const pageCount = Math.ceil(orders?.length / postPerPage);
+  const pageCount = Math.ceil(orders?.order?.length / postPerPage);
 
   const ChangePage = ({ selected }) => {
     setPageNumber(selected);
   };
 
+  // console.log(displayOrders);
+
+  useEffect(() => {
+    displayOrders.forEach((order) => {
+      setStoreToken(order.user);
+    });
+  }, [displayOrders]);
+
+  console.log(storeToken);
+
+  // let decode
+
+  //  decode = jwtDecode(storeToken);
+  // console.log(decode);
 
   return (
     <main>
@@ -37,7 +59,7 @@ const NewOrders = () => {
 
       <section className="my-5 grid grid-cols-9 place-items-center text-sm">
         <p>Item</p>
-        <p>Name</p>
+        <p>Name / Size / Color</p>
         <p>Customer</p>
         <p>Items</p>
         <p>Price</p>
@@ -49,45 +71,63 @@ const NewOrders = () => {
 
       <section className="my-5">
         {displayOrders.map((o) => (
-          <div
-            key={o.id}
-            className="my-5 grid grid-cols-9 place-items-center text-sm"
-          >
-            <LazyLoadImage
-              src={o.img}
-              loading="lazy"
-              effect="blur"
-              className="w-20 h-20"
-            />
-
-            <h1>{o.name}</h1>
-            <div>
-              <h2>{o.customerName}</h2>
-              <h3>{o.customerEmail}</h3>
-            </div>
-            <h4>{o.items}</h4>
-            <h5>{formatCurrency(o.price)}</h5>
-            <h6 className="font-bold">Paid</h6>
-            <p
-              className={`capitalize text-xs ${
-                o.status === "In progress" ? "bg-blue-500" : "bg-green-600"
-              } py-0.5 px-2 rounded-full text-white`}
-            >
-              {o.status}
-            </p>
-            <p>{o.Date}</p>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger className=" outline-none uppercase">
-                <BsThreeDotsVertical />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <Button>Delete Order</Button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          <section key={o.id}>
+            {o.cart.map((c) => (
+              <section
+                key={c._id}
+                className="grid grid-cols-9 place-items-center"
+              >
+                <div>
+                  <LazyLoadImage
+                    effect="blur"
+                    loading="lazy"
+                    src={c.image}
+                    alt=""
+                    className="w-20"
+                  />
+                </div>
+                <div>
+                  <p className="text-xs underline">{c.name}</p>
+                  <p className="text-xs">Size: {c.size}</p>
+                  <p className="text-xs whitespace-nowrap">Color: {c.color}</p>
+                </div>
+                <div className="text-xs">
+                  {/* <p>{decode.name}</p>
+                  <p>{decode.email}</p> */}
+                </div>
+                <p>{c.quantity}</p>
+                <p>{formatCurrency(c.price)}</p>
+                <p className="font-bold">Paid</p>
+                <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
+                  <p>{o.status} </p>
+                  <span>
+                    <FaDotCircle size={5} />
+                  </span>
+                </div>
+                <p>
+                  {" "}
+                  {`${new Date(o.updatedAt).getFullYear()}-${(
+                    new Date(o.updatedAt).getMonth() + 1
+                  )
+                    .toString()
+                    .padStart(2, "0")}-${new Date(o.updatedAt)
+                    .getDate()
+                    .toString()
+                    .padStart(2, "0")}`}
+                </p>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className=" outline-none uppercase">
+                    <BsThreeDotsVertical />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>
+                      <Button>Delete Order</Button>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </section>
+            ))}
+          </section>
         ))}
       </section>
 

@@ -29,17 +29,9 @@ export const Checkout = () => {
 
   const userToken = Cookies.get("userToken");
 
-  const { payment } = useSelector((state) => state.payStack);
+  const { payment, status } = useSelector((state) => state.payStack);
 
   const isPaying = payment?.data?.authorization_url;
-
-  if (!isPaying) {
-    console.log("Not found");
-  } else {
-    console.log("found authorization");
-  }
-
-  // orders
 
   const myOrder = localStorage.getItem("orders");
 
@@ -192,8 +184,12 @@ export const Checkout = () => {
         <div className="mt-4">
           {/* Payment Btn */}
 
-          <Button className="w-full mt-5" type="submit">
-            Pay Now
+          <Button
+            className={`w-full mt-5 ${status === "loading" && " opacity-90"}`}
+            type="submit"
+            disable={status === "loading"}
+          >
+            {status === "loading" ? "loading..." : "Pay Now"}
           </Button>
         </div>
       </form>

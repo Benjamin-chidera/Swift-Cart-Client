@@ -40,7 +40,7 @@ const shoeCat = [
 
 export const Shoes = () => {
   return (
-    <main className=" my-8 mx-3 md:container md:mx-auto">
+    <main className=" my-8 mx-3 md:container md:mx-auto overflow-x-hidden">
       <h3 className="text-center my-5 text-xl font-semibold">SHOP BY SHOES</h3>
 
       <section className="grid grid-cols-2 w-full place-items-center gap-3 md:grid-cols-4">
