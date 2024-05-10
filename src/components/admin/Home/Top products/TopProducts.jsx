@@ -8,8 +8,6 @@ export const TopProducts = () => {
 
   const products = product?.product?.slice(0, 3) || null;
 
-  console.log(products);
-
   return (
     <main className="shadow rounded p-3">
       <section className="flex items-center justify-between mb-3">

@@ -1,37 +1,12 @@
 import { SkeletonLoadingSoldItem } from "@/components/Loader-Skeleton/SkeletonLoadingAdmin";
 import { formatCurrency } from "@/lib/FormatCurrency";
 import React, { useEffect, useState } from "react";
-import { FaRotate } from "react-icons/fa6";
-
-const sold = [
-  {
-    id: crypto.randomUUID(),
-    name: "backpack",
-    numItem: 6,
-    price: 2000,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "T-Shirt",
-    numItem: 6,
-    price: 2000,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "coat",
-    numItem: 6,
-    price: 2000,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Shoes",
-    numItem: 6,
-    price: 2000,
-  },
-];
+import { useSelector } from "react-redux";
 
 export const SoldItems = () => {
   const [loading, setLoading] = useState(true);
+  const { orders } = useSelector((state) => state.orders);
+  const soldItem = orders.order.slice(0, 4);
 
   useEffect(() => {
     const load = setInterval(() => {
@@ -56,12 +31,16 @@ export const SoldItems = () => {
         {loading ? (
           <SkeletonLoadingSoldItem num={3} />
         ) : (
-          sold.map((s) => (
-            <div key={s.id} className="grid grid-cols-3">
-              <h4>{s.name}</h4>
-              <p className="ms-5">{s.numItem}</p>
-              <p>{formatCurrency(s.price)}</p>
-            </div>
+          soldItem?.map((s) => (
+            <section key={s._id}>
+              {s.cart.map((c) => (
+                <section key={c.id} className="grid grid-cols-3 space-y-2">
+                  <h4>{c.name}</h4>
+                  <p className="ms-5">{c.quantity}</p>
+                  <p>{formatCurrency(c.price)}</p>
+                </section>
+              ))}
+            </section>
           ))
         )}
       </section>

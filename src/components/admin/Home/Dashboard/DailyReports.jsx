@@ -10,6 +10,7 @@ export const DailyReports = () => {
   const { payStack } = useSelector((state) => state.payStack);
   const { product } = useSelector((state) => state.product);
   const { user } = useSelector((state) => state.auth);
+  const { orders } = useSelector((state) => state.orders);
 
   // const pay = payStack?.data;
   // const pay = payStack?.data.filter((s) => s.status === "abandoned");
@@ -18,7 +19,7 @@ export const DailyReports = () => {
 
   const checkAmount = Math.round(payStack?.meta?.total_volume);
 
-  console.log(product);
+  const TotalOrders = orders.order.length;
 
   useEffect(() => {
     dispatch(payMent());
@@ -48,7 +49,7 @@ export const DailyReports = () => {
 
       <section className="flex items-center gap-3 shadow py-1 px-3 rounded">
         <div>
-          <h2 className="font-semibold text-2xl">15,503</h2>
+          <h2 className="font-semibold text-2xl">{TotalOrders}</h2>
           <p className="text-xs">Total Order</p>
         </div>
         <div className="bg-blue-300 py-2 w-[80px] h-[80px] mx-aut rounded-xl  flex justify-center items-center">

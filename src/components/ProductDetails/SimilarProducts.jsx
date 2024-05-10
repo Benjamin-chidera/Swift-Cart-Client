@@ -51,8 +51,8 @@ export const SimilarProducts = () => {
 
                   <p className=" text-sm">{s.name.substring(0, 20)}...</p>
 
-                  <p className=" text-sm mt-3">
-                    {s.description.substring(0, 20)}
+                  <p className=" text-sm mt-3 font-bold">
+                    {s.details.substring(0, 20)}
                   </p>
 
                   <section className="">

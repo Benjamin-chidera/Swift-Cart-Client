@@ -71,8 +71,11 @@ export const SkinCareDetails = () => {
               <div>
                 {/* this is for color select */}
                 <p className="uppercase font-bold mt-5">
-                  Product Description: {details?.description}
+                  Product Description: 
                 </p>
+                <div
+                  dangerouslySetInnerHTML={{ __html: details?.description }}
+                ></div>
               </div>
             </section>
 

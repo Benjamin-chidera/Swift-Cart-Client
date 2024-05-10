@@ -7,9 +7,7 @@ import { useSelector } from "react-redux";
 export const NewCustomer = () => {
   const { user, status } = useSelector((state) => state.auth);
 
-  // const customers = user?.user?.slice(0, 3) || null;
-
-  // console.log(status);
+  const customers = user?.user?.slice(0, 3) || null;
 
   return (
     <main className=" shadow p-3 rounded">
@@ -17,7 +15,7 @@ export const NewCustomer = () => {
         <h2 className="text-sm font-bold mb-3">New Customers</h2>
       </section>
 
-      {/* <section className=" space-y-5">
+      <section className=" space-y-5">
         {status === "loading" ? (
           <SkeletonLoadingNewUsers num={customers.length} />
         ) : (
@@ -37,7 +35,7 @@ export const NewCustomer = () => {
             </div>
           ))
         )}
-      </section> */}
+      </section>
     </main>
   );
 };

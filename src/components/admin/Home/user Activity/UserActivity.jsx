@@ -13,14 +13,13 @@ export const UserActivity = () => {
 
   const { user } = useSelector((state) => state.auth);
 
+  const myChart = [
+    {
+      label: "Registered Users",
+      value: user?.user?.length,
+    },
+  ];
 
-const myChart = [
-  {
-    label: "Registered Users",
-    value: user?.user?.length,
-  },
-];
-  
   return (
     <main className="my-10">
       <section>

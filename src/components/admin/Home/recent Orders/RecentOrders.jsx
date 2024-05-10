@@ -5,6 +5,9 @@ import {
 import { formatCurrency } from "@/lib/FormatCurrency";
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { FaDotCircle } from "react-icons/fa";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useSelector } from "react-redux";
 
 const recent = [
   {
@@ -47,6 +50,11 @@ const recent = [
 
 export const RecentOrders = () => {
   const [loading, setLoading] = useState(true);
+  const { orders } = useSelector((state) => state.orders);
+  //  console.log(orders.order);
+
+  const recentOrder = orders.order.slice(0, 5);
+  
 
   useEffect(() => {
     const load = setInterval(() => {
@@ -62,7 +70,7 @@ export const RecentOrders = () => {
       <section className="grid grid-cols-6 place-items-start w-full">
         <p>Order ID</p>
         <p>Product Name</p>
-        <p className="ms-3">Units</p>
+        <p>Units</p>
         <p>Order Date</p>
         <p>Order Costs</p>
         <p>Status</p>
@@ -72,21 +80,39 @@ export const RecentOrders = () => {
         {loading ? (
           <SkeletonLoadingRecentOrder num={6} />
         ) : (
-          recent.map((r) => (
-            <div key={r.id} className="grid grid-cols-6 place-items-start">
-              <p>{r.orderId}</p>
-              <p>{r.name}</p>
-              <p className="ms-5">{r.units}</p>
-              <p>{r.date}</p>
-              <p>{formatCurrency(r.totalPrice)}</p>
-              <p
-                className={`${
-                  r.status === "delivered" ? "bg-green-700" : "bg-blue-600"
-                } text-white px-3 rounded-full text-xs capitalize`}
-              >
-                {r.status}
-              </p>
-            </div>
+          recentOrder?.map((o) => (
+            <section key={o.id} className=" space-y-4">
+              {o?.cart?.map((c) => (
+                <section key={c._id} className="grid grid-cols-6">
+                  <div>
+                    <p>{o.orderId || 14387476363}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs underline">{c.name}</p>
+                  </div>
+
+                  <p>{c.quantity}</p>
+                  <p>
+                    {" "}
+                    {`${new Date(o.updatedAt).getFullYear()}-${(
+                      new Date(o.updatedAt).getMonth() + 1
+                    )
+                      .toString()
+                      .padStart(2, "0")}-${new Date(o.updatedAt)
+                      .getDate()
+                      .toString()
+                      .padStart(2, "0")}`}
+                  </p>
+                  <p>{formatCurrency(c.price)}</p>
+                  <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
+                    <p>{o.status} </p>
+                    <span>
+                      <FaDotCircle size={5} />
+                    </span>
+                  </div>
+                </section>
+              ))}
+            </section>
           ))
         )}
       </section>

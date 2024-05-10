@@ -12,6 +12,7 @@ const Orders = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
   const myOrder = localStorage.getItem("orders");
+  const TotalOrders = orders.order.length;
 
   const order = JSON.parse(myOrder);
 
@@ -23,7 +24,7 @@ const Orders = () => {
     <main className=" my-5 mx-3 md:container md:mx-auto">
       <section className="w-full p-3 mx-auto shadow-xl space-y-4 max-w-full">
         <h1 className="text-2xl font-bold uppercase underline text-gray-600">
-          Orders
+          Orders {TotalOrders}
         </h1>
 
         {/* small devices */}
