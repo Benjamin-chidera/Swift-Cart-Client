@@ -7,12 +7,13 @@ import { FaDotCircle } from "react-icons/fa";
 import "react-quill/dist/quill.snow.css";
 import { formatCurrency } from "@/lib/FormatCurrency";
 import "../myOrders/order.css";
+import { Link } from "react-router-dom";
 
 const Orders = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
   const myOrder = localStorage.getItem("orders");
-  const TotalOrders = orders.order.length;
+  // const TotalOrders = orders.order.length;
 
   const order = JSON.parse(myOrder);
 
@@ -23,9 +24,9 @@ const Orders = () => {
   return (
     <main className=" my-5 mx-3 md:container md:mx-auto">
       <section className="w-full p-3 mx-auto shadow-xl space-y-4 max-w-full">
-        <h1 className="text-2xl font-bold uppercase underline text-gray-600">
+        {/* <h1 className="text-2xl font-bold uppercase underline text-gray-600">
           Orders {TotalOrders}
-        </h1>
+        </h1> */}
 
         {/* small devices */}
 
@@ -49,7 +50,7 @@ const Orders = () => {
                       </p>
 
                       <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
-                        <p>{o.status} </p>
+                        <p>{o.OrderStatus} </p>
                         <span>
                           <FaDotCircle size={5} />
                         </span>
@@ -73,7 +74,7 @@ const Orders = () => {
           <div className="grid grid-cols-7 place-items-center">
             <th className="w-36 pb-2">Order</th>
             <th className="w-32">Quantity</th>
-            <th className="w-32">Price</th>
+            <th className="w-32">Total Price</th>
             <th className="w-32">Order number</th>
             <th className="w-32">Order date</th>
             <th className="w-32">Delivery date</th>
@@ -87,15 +88,18 @@ const Orders = () => {
                   key={c._id}
                   className="grid grid-cols-7 place-items-center"
                 >
-                  <div className="flex gap-2 items-center space-y-4">
-                    <LazyLoadImage
-                      effect="blur"
-                      loading="lazy"
-                      src={c.image}
-                      alt=""
-                      className="w-20"
-                    />
+                  <div className=" grid grid-cols-2 place-items-center gap-5 space-y-4">
                     <div>
+                      <LazyLoadImage
+                        effect="blur"
+                        loading="lazy"
+                        src={c.image}
+                        alt=""
+                        className="w-20"
+                      />
+                    </div>
+
+                    <div className="">
                       <p className="text-xs underline">{c.name}</p>
                       <p className="text-xs">Size: {c.size}</p>
                       <p className="text-xs whitespace-nowrap">
@@ -104,7 +108,7 @@ const Orders = () => {
                     </div>
                   </div>
                   <p>{c.quantity}</p>
-                  <p>{formatCurrency(c.price)}</p>
+                  <p>{formatCurrency(o.totalPrice)}</p>
                   <p>{o.orderNumber || 0}</p>
                   <p>
                     {" "}
@@ -118,11 +122,16 @@ const Orders = () => {
                       .padStart(2, "0")}`}
                   </p>
                   <p>{o.deliveryDate || 0}</p>
-                  <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
-                    <p>{o.status} </p>
-                    <span>
-                      <FaDotCircle size={5} />
-                    </span>
+
+                  <div>
+                    <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
+                      <p>{o.OrderStatus} </p>
+                      <span>
+                        <FaDotCircle size={5} />
+                      </span>
+                    </div>
+
+                    <Link className="text-[11px]" to={`/order/${o._id}`}>View Details</Link>
                   </div>
                 </section>
               ))}

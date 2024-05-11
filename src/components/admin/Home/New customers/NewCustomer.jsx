@@ -5,9 +5,11 @@ import { FaRotate } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 
 export const NewCustomer = () => {
-  const { user, status } = useSelector((state) => state.auth);
+  const { getAllUsers, status } = useSelector((state) => state.auth);
 
-  const customers = user?.user?.slice(0, 3) || null;
+  const customers = getAllUsers?.user?.slice(0, 3)
+
+
 
   return (
     <main className=" shadow p-3 rounded">

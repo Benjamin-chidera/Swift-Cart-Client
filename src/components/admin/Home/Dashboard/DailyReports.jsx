@@ -9,7 +9,7 @@ export const DailyReports = () => {
   const dispatch = useDispatch();
   const { payStack } = useSelector((state) => state.payStack);
   const { product } = useSelector((state) => state.product);
-  const { user } = useSelector((state) => state.auth);
+  const { getAllUsers } = useSelector((state) => state.auth);
   const { orders } = useSelector((state) => state.orders);
 
   // const pay = payStack?.data;
@@ -19,7 +19,7 @@ export const DailyReports = () => {
 
   const checkAmount = Math.round(payStack?.meta?.total_volume);
 
-  const TotalOrders = orders.order.length;
+  const TotalOrders = orders.order?.length;
 
   useEffect(() => {
     dispatch(payMent());
@@ -29,7 +29,7 @@ export const DailyReports = () => {
     <main className=" flex items-center justify-between">
       <section className="flex items-center gap-3 shadow py-1 px-3 rounded">
         <div>
-          <h2 className="font-semibold text-2xl">{user?.user?.length}</h2>
+          <h2 className="font-semibold text-2xl">{getAllUsers?.user?.length}</h2>
           <p className="text-xs">Total Registered Users</p>
         </div>
         <div className="bg-blue-300 py-2 w-[80px] h-[80px] mx-aut rounded-xl  flex justify-center items-center">

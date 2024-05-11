@@ -12,16 +12,20 @@ import {
 import { Button } from "@/components/ui/button";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Paginate from "@/components/paginate/Paginate";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaDotCircle } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
+import { fetchOrders, updateStatus } from "@/redux/features/orderSlice";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 const NewOrders = () => {
+  const { register, handleSubmit } = useForm();
   //Pagination
   const [pageNumber, setPageNumber] = useState(0);
   const postPerPage = 6;
   const { orders } = useSelector((state) => state.orders);
-  const [storeToken, setStoreToken] = useState("");
+  const dispatch = useDispatch();
 
   const pageVisited = pageNumber * postPerPage;
 
@@ -36,20 +40,24 @@ const NewOrders = () => {
     setPageNumber(selected);
   };
 
-  // console.log(displayOrders);
+  console.log(orders.order);
 
   useEffect(() => {
-    displayOrders.forEach((order) => {
-      setStoreToken(order.user);
-    });
-  }, [displayOrders]);
+    dispatch(fetchOrders());
+  }, [dispatch]);
 
-  console.log(storeToken);
+  const handleUpdateStatus = ({ data, statusId }) => {
+    try {
+      const formData = new FormData();
 
-  // let decode
+      formData.append("OrderStatus", data.OrderStatus);
 
-  //  decode = jwtDecode(storeToken);
-  // console.log(decode);
+      console.log(data, statusId);
+      dispatch(updateStatus({ formData, statusId: data._id }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <main>
@@ -70,9 +78,9 @@ const NewOrders = () => {
       </section>
 
       <section className="my-5">
-        {displayOrders.map((o) => (
-          <section key={o.id}>
-            {o.cart.map((c) => (
+        {displayOrders?.map((o) => (
+          <section key={o._id}>
+            {o?.cart?.map((c) => (
               <section
                 key={c._id}
                 className="grid grid-cols-9 place-items-center"
@@ -87,19 +95,17 @@ const NewOrders = () => {
                   />
                 </div>
                 <div>
-                  <p className="text-xs underline">{c.name}</p>
+                  <p className="text-xs underline ">{c.name}</p>
                   <p className="text-xs">Size: {c.size}</p>
                   <p className="text-xs whitespace-nowrap">Color: {c.color}</p>
                 </div>
-                <div className="text-xs">
-                  {/* <p>{decode.name}</p>
-                  <p>{decode.email}</p> */}
-                </div>
+
+                <p>{c.user || "ben"}</p>
                 <p>{c.quantity}</p>
-                <p>{formatCurrency(c.price)}</p>
+                <p>{formatCurrency(o.totalPrice)}</p>
                 <p className="font-bold">Paid</p>
                 <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
-                  <p>{o.status} </p>
+                  <p>{o.OrderStatus} </p>
                   <span>
                     <FaDotCircle size={5} />
                   </span>
@@ -115,16 +121,21 @@ const NewOrders = () => {
                     .toString()
                     .padStart(2, "0")}`}
                 </p>
-                <DropdownMenu>
-                  <DropdownMenuTrigger className=" outline-none uppercase">
-                    <BsThreeDotsVertical />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem>
-                      <Button>Delete Order</Button>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <form
+                  action=""
+                  onSubmit={() => handleSubmit(handleUpdateStatus(o._id))}
+                >
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className=" outline-none uppercase">
+                      <BsThreeDotsVertical />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem>
+                        <Link to={`/admin/new-order/${o._id}`}>View Order</Link>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </form>
               </section>
             ))}
           </section>

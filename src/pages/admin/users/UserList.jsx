@@ -17,7 +17,7 @@ import "jspdf-autotable";
 import { MdPictureAsPdf } from "react-icons/md";
 
 export const UserList = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { getAllUsers } = useSelector((state) => state.auth);
 
   //Pagination
   const [pageNumber, setPageNumber] = useState(0);
@@ -25,13 +25,14 @@ export const UserList = () => {
 
   const pageVisited = pageNumber * postPerPage;
 
-  const displayUsers = user.user?.slice(pageVisited, pageVisited + postPerPage);
+  const displayUsers = getAllUsers.user?.slice(pageVisited, pageVisited + postPerPage);
 
-  const pageCount = Math?.ceil(user.user?.length / postPerPage);
+  const pageCount = Math?.ceil(getAllUsers.user?.length / postPerPage);
 
   const ChangePage = ({ selected }) => {
     setPageNumber(selected);
   };
+  
 
   const handleDownloadPdf = () => {
     const doc = new jsPDF();

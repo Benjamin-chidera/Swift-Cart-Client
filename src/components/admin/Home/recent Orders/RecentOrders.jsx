@@ -53,7 +53,7 @@ export const RecentOrders = () => {
   const { orders } = useSelector((state) => state.orders);
   //  console.log(orders.order);
 
-  const recentOrder = orders.order.slice(0, 5);
+  const recentOrder = orders.order?.slice(0, 5);
   
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export const RecentOrders = () => {
           <SkeletonLoadingRecentOrder num={6} />
         ) : (
           recentOrder?.map((o) => (
-            <section key={o.id} className=" space-y-4">
+            <section key={o._id} className=" space-y-4">
               {o?.cart?.map((c) => (
                 <section key={c._id} className="grid grid-cols-6">
                   <div>
@@ -105,7 +105,7 @@ export const RecentOrders = () => {
                   </p>
                   <p>{formatCurrency(c.price)}</p>
                   <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
-                    <p>{o.status} </p>
+                    <p>{o.OrderStatus} </p>
                     <span>
                       <FaDotCircle size={5} />
                     </span>

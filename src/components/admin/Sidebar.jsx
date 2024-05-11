@@ -62,9 +62,6 @@ export const Sidebar = () => {
                     <DropdownMenuItem>
                       <Link to={"/admin/new-order"}>New Order</Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Link to={"/admin/order-history"}>Order History</Link>
-                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>

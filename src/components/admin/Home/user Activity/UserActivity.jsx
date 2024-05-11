@@ -11,12 +11,12 @@ export const UserActivity = () => {
     dispatch(getUser());
   }, [dispatch]);
 
-  const { user } = useSelector((state) => state.auth);
+  const { getAllUsers } = useSelector((state) => state.auth);
 
   const myChart = [
     {
       label: "Registered Users",
-      value: user?.user?.length,
+      value: getAllUsers?.user?.length,
     },
   ];
 

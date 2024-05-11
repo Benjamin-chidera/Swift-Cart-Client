@@ -102,8 +102,8 @@ export const resetUser = createAsyncThunk(
 
 const initialState = {
   user: null,
-
   status: "idle",
+  getAllUsers: []
 };
 
 const authSlice = createSlice({
@@ -166,7 +166,7 @@ const authSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, { payload }) => {
         state.status = "idle";
-        state.user = payload;
+        state.getAllUsers = payload;
       })
       .addCase(getUser.rejected, (state) => {
         state.status = "failed";

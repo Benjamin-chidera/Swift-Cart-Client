@@ -72,8 +72,8 @@ export const Checkout = () => {
         console.log(orderData);
 
         localStorage.setItem("orders", JSON.stringify(orderData));
-        dispatch(clearCart());
-        window.location.href = isPaying;
+        // dispatch(clearCart());
+        // window.location.href = isPaying;
       }
     } catch (error) {
       console.log("Error:", error);

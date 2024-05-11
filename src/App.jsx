@@ -24,7 +24,6 @@ import { UserProfile } from "./pages/admin/users/UserProfile";
 import AddProducts from "./pages/admin/products/AddProducts";
 import ProductList from "./pages/admin/products/ProductList";
 import NewOrders from "./pages/admin/orders/NewOrders";
-import OrderHistory from "./pages/admin/orders/OrderHistory";
 import Reviews from "./pages/admin/reviews/Reviews";
 import Signup from "./pages/auth/Signup";
 import Signin from "./pages/auth/Signin";
@@ -36,6 +35,8 @@ import { Women } from "./components/home/recent/Women";
 import AdminSignup from "./pages/admin/auth/Signup";
 import AdminSignin from "./pages/admin/auth/Signin";
 import UserError from "./pages/Error/user/UserError";
+import { SingleOrder } from "./pages/admin/orders/SingleOrder";
+import OrderDetails from "./pages/myOrders/orderDetails";
 
 const router = createBrowserRouter([
   // user
@@ -119,6 +120,10 @@ const router = createBrowserRouter([
         element: <Orders />,
       },
       {
+        path: "/order/:orderId",
+        element: <OrderDetails />,
+      },
+      {
         path: "/signup",
         element: <Signup />,
       },
@@ -172,8 +177,8 @@ const router = createBrowserRouter([
         element: <NewOrders />,
       },
       {
-        path: "order-history",
-        element: <OrderHistory />,
+        path: "new-order/:orderId",
+        element: <SingleOrder />,
       },
       {
         path: "reviews",

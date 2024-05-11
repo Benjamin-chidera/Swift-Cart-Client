@@ -1,6 +1,4 @@
 import { formatCurrency } from "@/lib/FormatCurrency";
-import React from "react";
-import { FaRotate } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 
 export const TopProducts = () => {
@@ -12,9 +10,6 @@ export const TopProducts = () => {
     <main className="shadow rounded p-3">
       <section className="flex items-center justify-between mb-3">
         <h2 className="text-sm font-bold ">Top Products</h2>
-        <button>
-          <FaRotate />
-        </button>
       </section>
 
       <section className=" space-y-5">
