@@ -27,7 +27,7 @@ export const Checkout = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.cart);
 
-  const userToken = Cookies.get("userToken");
+  const token = Cookies.get("userToken");
 
   const { payment, status } = useSelector((state) => state.payStack);
 
@@ -55,7 +55,7 @@ export const Checkout = () => {
       formData.append("phone", data.city);
 
       await dispatch(handlePayMent(formData));
-      await dispatch(createOrders(order));
+      await dispatch(createOrders({ order, token }));
 
       if (!isPaying) {
         console.log("error opening URL:");
@@ -64,16 +64,15 @@ export const Checkout = () => {
 
         const orderData = {
           cart,
-          shippingAddress: data,
-          user: userToken,
+          shippingAddress: {...data},
           totalPrice: grandTotal,
         };
 
-        console.log(orderData);
+        // console.log(orderData);
 
         localStorage.setItem("orders", JSON.stringify(orderData));
-        // dispatch(clearCart());
-        // window.location.href = isPaying;
+        dispatch(clearCart());
+        window.location.href = isPaying;
       }
     } catch (error) {
       console.log("Error:", error);

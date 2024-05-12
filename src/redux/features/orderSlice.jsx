@@ -4,16 +4,20 @@ import axios from "axios";
 const orderUrl = "http://localhost:3000/api/v1/orders/createOrder";
 const order = "http://localhost:3000/api/v1/orders";
 
-export const fetchOrders = createAsyncThunk("orders/fetchOrders", async () => {
-  const { data } = await axios(order);
+export const fetchOrders = createAsyncThunk("orders/fetchOrders", async (token) => {
+  const { data } = await axios(order, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   return data;
 });
 
 export const createOrders = createAsyncThunk(
   "orders/createOrders",
-  async (order, { rejectWithValue }) => {
+  async ({ order, token }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post(orderUrl, order);
+      const { data } = await axios.post(orderUrl, order, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       if (data.success) {
         return data;
@@ -29,11 +33,14 @@ export const createOrders = createAsyncThunk(
 
 export const updateStatus = createAsyncThunk(
   "status/updateStatus",
-  async ({ orderId, formData }, { rejectWithValue }) => {
+  async ({ orderId, formData, token }, { rejectWithValue }) => {
     try {
       const { data } = await axios.patch(
         `http://localhost:3000/api/v1/orders/singleOrder/${orderId}`,
-        formData
+        formData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       if (data.success) {
         return data;
@@ -49,9 +56,12 @@ export const updateStatus = createAsyncThunk(
 
 export const fetchSingleOrders = createAsyncThunk(
   "orders/fetchSingleOrders",
-  async (orderId) => {
+  async ({ orderId, token }) => {
     const { data } = await axios(
-      `http://localhost:3000/api/v1/orders/singleOrder/${orderId}`
+      `http://localhost:3000/api/v1/orders/singleOrder/${orderId}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
     );
     return data;
   }

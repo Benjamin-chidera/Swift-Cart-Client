@@ -15,6 +15,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import Cookies from "js-cookie";
 
 export const SingleOrder = () => {
   const { orderId } = useParams();
@@ -22,17 +23,18 @@ export const SingleOrder = () => {
   const { singleOrder, status } = useSelector((state) => state.orders);
   const { register, handleSubmit, setValue } = useForm();
   const [date, setDate] = useState("");
+  const token = Cookies.get("userToken");
 
   const handleUpdateStatus = (data) => {
     const formData = new FormData();
     formData.append("OrderStatus", data.OrderStatus);
     formData.append("deliveryDate", data.deliveryDate);
     console.log(data);
-    dispatch(updateStatus({ formData, orderId }));
+    dispatch(updateStatus({ formData, orderId, token }));
   };
 
   useEffect(() => {
-    dispatch(fetchSingleOrders(orderId));
+    dispatch(fetchSingleOrders({ orderId, token }));
   }, [dispatch, orderId]);
 
   useEffect(() => {
@@ -87,18 +89,24 @@ export const SingleOrder = () => {
 
               <p className="font-semibold text-sm">
                 <p>
-                  <span>{`${new Date(
-                    singleOrder.order.deliveryDate
-                  ).getFullYear()}-${(
-                    new Date(singleOrder.order.deliveryDate).getMonth() + 1
-                  )
-                    .toString()
-                    .padStart(2, "0")}-${new Date(
-                    singleOrder.order.deliveryDate
-                  )
-                    .getDate()
-                    .toString()
-                    .padStart(2, "0")}`}</span>
+                  <span>
+                    {" "}
+                    {singleOrder.order.deliveryDate
+                      ? `${new Date(
+                          singleOrder.order.deliveryDate
+                        ).getFullYear()}-${(
+                          new Date(singleOrder.order.deliveryDate).getMonth() +
+                          1
+                        )
+                          .toString()
+                          .padStart(2, "0")}-${new Date(
+                          singleOrder.order.deliveryDate
+                        )
+                          .getDate()
+                          .toString()
+                          .padStart(2, "0")}`
+                      : "Your have give a date..."}
+                  </span>
                 </p>
               </p>
 

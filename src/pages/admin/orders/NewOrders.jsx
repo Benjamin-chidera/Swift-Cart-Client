@@ -18,6 +18,7 @@ import { jwtDecode } from "jwt-decode";
 import { fetchOrders, updateStatus } from "@/redux/features/orderSlice";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const NewOrders = () => {
   const { register, handleSubmit } = useForm();
@@ -26,13 +27,18 @@ const NewOrders = () => {
   const postPerPage = 6;
   const { orders } = useSelector((state) => state.orders);
   const dispatch = useDispatch();
+   const token = Cookies.get("userToken");
 
   const pageVisited = pageNumber * postPerPage;
 
-  const displayOrders = orders?.order?.slice(
-    pageVisited,
-    pageVisited + postPerPage
-  );
+  // const displayOrders = orders?.order?.slice(
+  //   pageVisited,
+  //   pageVisited + postPerPage
+  // );
+
+   const displayOrders = Array.isArray(orders?.order)
+     ? orders?.order?.slice(pageVisited, pageVisited + postPerPage)
+     : [];
 
   const pageCount = Math.ceil(orders?.order?.length / postPerPage);
 
@@ -43,7 +49,7 @@ const NewOrders = () => {
   console.log(orders.order);
 
   useEffect(() => {
-    dispatch(fetchOrders());
+    dispatch(fetchOrders(token));
   }, [dispatch]);
 
   const handleUpdateStatus = ({ data, statusId }) => {

@@ -8,17 +8,19 @@ import "react-quill/dist/quill.snow.css";
 import { formatCurrency } from "@/lib/FormatCurrency";
 import "../myOrders/order.css";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Orders = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
   const myOrder = localStorage.getItem("orders");
   // const TotalOrders = orders.order.length;
+  const token = Cookies.get("userToken");
 
   const order = JSON.parse(myOrder);
 
   useEffect(() => {
-    dispatch(fetchOrders(order));
+    dispatch(fetchOrders(token));
   }, [dispatch]);
 
   return (
@@ -121,7 +123,16 @@ const Orders = () => {
                       .toString()
                       .padStart(2, "0")}`}
                   </p>
-                  <p>{o.deliveryDate || 0}</p>
+                  <p className="font-semibold">
+                    {`${new Date(o.deliveryDate).getFullYear()}-${(
+                      new Date(o.deliveryDate).getMonth() + 1
+                    )
+                      .toString()
+                      .padStart(2, "0")}-${new Date(o.deliveryDate)
+                      .getDate()
+                      .toString()
+                      .padStart(2, "0")}`}
+                  </p>
 
                   <div>
                     <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
@@ -131,7 +142,9 @@ const Orders = () => {
                       </span>
                     </div>
 
-                    <Link className="text-[11px]" to={`/order/${o._id}`}>View Details</Link>
+                    <Link className="text-[11px]" to={`/order/${o._id}`}>
+                      View Details
+                    </Link>
                   </div>
                 </section>
               ))}

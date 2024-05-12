@@ -70,9 +70,7 @@ export const SkinCareDetails = () => {
 
               <div>
                 {/* this is for color select */}
-                <p className="uppercase font-bold mt-5">
-                  Product Description: 
-                </p>
+                <p className="uppercase font-bold mt-5">Product Description:</p>
                 <div
                   dangerouslySetInnerHTML={{ __html: details?.description }}
                 ></div>
@@ -86,7 +84,7 @@ export const SkinCareDetails = () => {
 
       <SimilarProducts />
 
-      <CustomerDetailsReviews />
+      <CustomerDetailsReviews productId={details?._id} />
     </main>
   );
 };

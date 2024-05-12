@@ -7,53 +7,42 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { formatCurrency } from "@/lib/FormatCurrency";
 import { TbTruckReturn } from "react-icons/tb";
-import { useForm } from "react-hook-form";
 
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { format } from "date-fns";
-
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import Cookies from "js-cookie";
+import { OrderReviews } from "./orderReviews";
 
 const OrderDetails = () => {
   const { orderId } = useParams();
   const dispatch = useDispatch();
   const { singleOrder } = useSelector((state) => state.orders);
-  const { register, handleSubmit } = useForm();
-  const [date, setDate] = useState("");
 
-  const handleUpdateStatus = (data) => {
-    const formData = new FormData();
-    formData.append("OrderStatus", data.orderStatus);
-    formData.append("deliveryDate", data.deliveryDate);
-
-    console.log(data);
-  };
+  const token = Cookies.get("userToken");
 
   useEffect(() => {
-    dispatch(fetchSingleOrders(orderId));
+    dispatch(fetchSingleOrders({ orderId, token }));
   }, [dispatch, orderId]);
-
-  console.log(singleOrder.order);
 
   return (
     <main className=" my-5 mx-3 md:container md:mx-auto">
-      <div>
-        <Link to={-1} className="flex items-center gap-2">
-          <FaArrowLeft /> Back
-        </Link>
+      <section>
+        <div className="flex justify-between items-center">
+          <Link to={-1} className="flex items-center gap-2">
+            <FaArrowLeft /> Back
+          </Link>
+
+          {/* <div>
+            <OrderReviews />
+          </div> */}
+        </div>
         <hr className="my-2" />
-      </div>
+      </section>
 
       <section>
         {singleOrder?.order?.cart?.map((c) => (
           <section key={c._id}>
+            <div>
+              <OrderReviews id={c._id} />
+            </div>
             <p className="font-semibold">
               Order no: {singleOrder.order.orderNumber || 3223887623}
             </p>
@@ -88,18 +77,23 @@ const OrderDetails = () => {
 
               <p className="font-semibold text-sm">
                 <p>
-                  <span>{`${new Date(
-                    singleOrder.order.deliveryDate
-                  ).getFullYear()}-${(
-                    new Date(singleOrder.order.deliveryDate).getMonth() + 1
-                  )
-                    .toString()
-                    .padStart(2, "0")}-${new Date(
-                    singleOrder.order.deliveryDate
-                  )
-                    .getDate()
-                    .toString()
-                    .padStart(2, "0")}`}</span>
+                  <span>
+                    {singleOrder.order.deliveryDate
+                      ? `${new Date(
+                          singleOrder.order.deliveryDate
+                        ).getFullYear()}-${(
+                          new Date(singleOrder.order.deliveryDate).getMonth() +
+                          1
+                        )
+                          .toString()
+                          .padStart(2, "0")}-${new Date(
+                          singleOrder.order.deliveryDate
+                        )
+                          .getDate()
+                          .toString()
+                          .padStart(2, "0")}`
+                      : "Giving update soon..."}
+                  </span>
                 </p>
               </p>
 
