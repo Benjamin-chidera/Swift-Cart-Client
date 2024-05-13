@@ -24,12 +24,22 @@ export const SingleOrder = () => {
   const { register, handleSubmit, setValue } = useForm();
   const [date, setDate] = useState("");
   const token = Cookies.get("userToken");
+  const [a, setA] = useState("");
+  const [b, setB] = useState("");
 
   const handleUpdateStatus = (data) => {
     const formData = new FormData();
     formData.append("OrderStatus", data.OrderStatus);
     formData.append("deliveryDate", data.deliveryDate);
     console.log(data);
+    dispatch(updateStatus({ formData, orderId, token }));
+  };
+  const handleUpdate = (e) => {
+    e.preventDefault()
+    const formData = new FormData();
+    formData.append("OrderStatus", a);
+    formData.append("deliveryDate", b);
+    console.log(a, b);
     dispatch(updateStatus({ formData, orderId, token }));
   };
 
@@ -188,9 +198,11 @@ export const SingleOrder = () => {
                 <hr className="mb-2" />
 
                 <div>
-                  <form action="" onSubmit={handleSubmit(handleUpdateStatus)}>
+                  <form onSubmit={handleUpdate}>
                     <select
-                      {...register("OrderStatus")}
+                      // {...register("OrderStatus")}
+                      value={a}
+                      onChange={(e) => setA(e.target.value)}
                       name=""
                       id=""
                       className="w-full border p-1 outline-none text-xs"
@@ -205,7 +217,9 @@ export const SingleOrder = () => {
                         type="date"
                         name=""
                         id=""
-                        {...register("deliveryDate")}
+                        value={b}
+                        onChange={(e) => setB(e.target.value)}
+                        // {...register("deliveryDate")}
                       />
                     </div>
                     <Button className="w-full absolute bottom-0">Update</Button>

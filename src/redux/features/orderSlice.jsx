@@ -15,6 +15,7 @@ export const createOrders = createAsyncThunk(
   "orders/createOrders",
   async ({ order, token }, { rejectWithValue }) => {
     try {
+      // console.log(order, 'in the slice');
       const { data } = await axios.post(orderUrl, order, {
         headers: { Authorization: `Bearer ${token}` },
       });

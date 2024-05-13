@@ -11,7 +11,7 @@ export const Dashboard = () => {
   return (
     <main>
       <DailyReports />
-      <SalesReport />
+      {/* <SalesReport /> */}
       <section className="my-10 w-full flex  justify-between items-center">
         <div className="w-[48%]">
           <UserActivity />
@@ -20,8 +20,8 @@ export const Dashboard = () => {
           <ProductActivities />
         </div>
       </section>
-      <SoldItems />
-      <RecentOrders />
+      {/* <SoldItems /> */}
+      {/* <RecentOrders /> */}
 
       <section className="my-10 w-full flex  justify-between">
         <div className="w-[48%]">

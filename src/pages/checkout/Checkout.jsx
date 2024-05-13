@@ -43,7 +43,7 @@ export const Checkout = () => {
 
   const grandTotal = amount + totalPrice;
 
-  const handlePayment = async (data) => {
+  const handlePayment = (data) => {
     try {
       const formData = new FormData();
 
@@ -54,8 +54,8 @@ export const Checkout = () => {
       formData.append("city", data.city);
       formData.append("phone", data.city);
 
-      await dispatch(handlePayMent(formData));
-      await dispatch(createOrders({ order, token }));
+      dispatch(handlePayMent(formData));
+      dispatch(createOrders({ order, token }));
 
       if (!isPaying) {
         console.log("error opening URL:");
@@ -64,14 +64,14 @@ export const Checkout = () => {
 
         const orderData = {
           cart,
-          shippingAddress: {...data},
+          shippingAddress: data ,
           totalPrice: grandTotal,
         };
 
         // console.log(orderData);
 
         localStorage.setItem("orders", JSON.stringify(orderData));
-        dispatch(clearCart());
+        // dispatch(clearCart());
         window.location.href = isPaying;
       }
     } catch (error) {

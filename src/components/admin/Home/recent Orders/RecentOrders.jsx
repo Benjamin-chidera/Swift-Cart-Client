@@ -53,7 +53,7 @@ export const RecentOrders = () => {
   const { orders } = useSelector((state) => state.orders);
   //  console.log(orders.order);
 
-  const recentOrder = orders.order?.slice(0, 5);
+  // const recentOrder = orders.order?.slice(0, 5);
   
 
   useEffect(() => {
