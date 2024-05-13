@@ -34,7 +34,7 @@ export const Reviews = () => {
             {reviews?.review?.map((s) => (
               <CarouselItem
                 key={s.id}
-                className="basis-1/1 md:basis-1/3 lg:basis-1/4 cursor-grabbing"
+                className="basis-1/1 md:basis-1/3 lg:basis-1/5 cursor-grabbing"
               >
                 <div className=" text-start">
                   <div className="flex gap-2">
