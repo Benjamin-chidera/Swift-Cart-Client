@@ -53,6 +53,7 @@ const Orders = () => {
               Sign in to see or place order
             </p>
           ) : (
+            Array.isArray(orders?.order) ||
             orders?.order?.map((o) => (
               <section key={o?._id} className=" space-y-5">
                 {o?.cart?.map((c) => (
