@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const reviewUrl = "http://localhost:3000/api/v1/reviews";
+const reviewUrl = "https://swift-cart-server.onrender.com/api/v1/reviews";
 
 export const createReviews = createAsyncThunk(
   "reviews/createReview",
