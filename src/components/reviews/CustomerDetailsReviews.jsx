@@ -49,7 +49,7 @@ export const CustomerDetailsReviews = (productId) => {
 
         <div>
           <div className=" space-y-3">
-            {reviewsProduct.review.map((c) => (
+            {reviewsProduct?.review?.map((c) => (
               <div key={c._id} className=" space-y-3 text-sm">
                 <p>
                   <GetRating rating={c.rating} />
