@@ -10,6 +10,7 @@ import "../myOrders/order.css";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import Paginate from "@/components/paginate/Paginate";
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -18,23 +19,33 @@ const Orders = () => {
   const TotalOrders = orders?.order?.length;
   const token = Cookies.get("userToken");
   const [decodedToken, setDecodedToken] = useState(null);
-
+  const [pageNumber, setPageNumber] = useState(0);
+  const postPerPage = 6;
   const order = JSON.parse(myOrder);
+
+  const pageVisited = pageNumber * postPerPage;
+
+  // const displayOrders = orders?.order?.slice(
+  //   pageVisited,
+  //   pageVisited + postPerPage
+  // );
+
+  const displayOrders = Array.isArray(orders?.order)
+    ? orders?.order?.slice(pageVisited, pageVisited + postPerPage)
+    : [];
+  
+
+  const pageCount = Math.ceil(orders?.order?.length / postPerPage);
+
+  const ChangePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
 
   useEffect(() => {
     dispatch(fetchOrders(token));
   }, [dispatch, token]);
 
-  useEffect(() => {
-    try {
-      if (token) {
-        const decoded = jwtDecode(token);
-        setDecodedToken(decoded);
-      }
-    } catch (error) {
-      console.error("Error decoding token:", error);
-    }
-  }, [token]);
+  console.log(displayOrders);
 
   return (
     <main className=" my-5 mx-3 md:container md:mx-auto">
@@ -53,8 +64,7 @@ const Orders = () => {
               Sign in to see or place order
             </p>
           ) : (
-            Array.isArray(orders?.order) ||
-            orders?.order?.map((o) => (
+            displayOrders?.map((o) => (
               <section key={o?._id} className=" space-y-5">
                 {o?.cart?.map((c) => (
                   <section key={c?._id} className="">
@@ -182,6 +192,9 @@ const Orders = () => {
             ))
           )}
         </section>
+
+        {/* pagination */}
+        <Paginate pageCount={pageCount} ChangePage={ChangePage} />
       </section>
     </main>
   );
