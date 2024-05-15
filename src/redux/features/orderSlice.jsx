@@ -37,7 +37,7 @@ export const updateStatus = createAsyncThunk(
   async ({ orderId, formData, token }, { rejectWithValue }) => {
     try {
       const { data } = await axios.patch(
-        `http://localhost:3000/api/v1/orders/singleOrder/${orderId}`,
+        `https://swift-cart-server.onrender.com/api/v1/orders/singleOrder/${orderId}`,
         formData,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -59,7 +59,7 @@ export const fetchSingleOrders = createAsyncThunk(
   "orders/fetchSingleOrders",
   async ({ orderId, token }) => {
     const { data } = await axios(
-      `http://localhost:3000/api/v1/orders/singleOrder/${orderId}`,
+      `https://swift-cart-server.onrender.com/api/v1/orders/singleOrder/${orderId}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }

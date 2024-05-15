@@ -64,14 +64,14 @@ export const Checkout = () => {
 
         const orderData = {
           cart,
-          shippingAddress: data ,
+          shippingAddress: data,
           totalPrice: grandTotal,
         };
 
         // console.log(orderData);
 
         localStorage.setItem("orders", JSON.stringify(orderData));
-        // dispatch(clearCart());
+        dispatch(clearCart());
         window.location.href = isPaying;
       }
     } catch (error) {
