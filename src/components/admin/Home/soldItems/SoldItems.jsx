@@ -34,7 +34,7 @@ export const SoldItems = () => {
           soldItem?.map((s) => (
             <section key={s?._id}>
               {s?.cart?.map((c) => (
-                <section key={c?.id} className="grid grid-cols-3 space-y-2">
+                <section key={c?._id} className="grid grid-cols-3 space-y-2">
                   <h4>{c?.name}</h4>
                   <p className="ms-5">{c?.quantity}</p>
                   <p>{formatCurrency(c?.price)}</p>
