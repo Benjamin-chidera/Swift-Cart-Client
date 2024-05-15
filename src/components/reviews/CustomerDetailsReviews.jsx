@@ -19,7 +19,7 @@ export const CustomerDetailsReviews = (productId) => {
     dispatch(fetchReviewsProduct({ token, productId: productId.productId }));
   }, [dispatch, productId.productId]);
 
-  const calculateRating = reviewsProduct.review.find((r) => r.rating);
+  const calculateRating = reviewsProduct?.review?.find((r) => r?.rating);
   
 
   
