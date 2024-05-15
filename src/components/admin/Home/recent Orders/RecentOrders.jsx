@@ -9,52 +9,13 @@ import { FaDotCircle } from "react-icons/fa";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useSelector } from "react-redux";
 
-const recent = [
-  {
-    id: crypto.randomUUID(),
-    name: "	Coach Swagger",
-    units: "2",
-    date: "	Oct 20, 2018",
-    totalPrice: 20000,
-    status: "in progress",
-    orderId: 24583,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Toddler Shoes, Gucci Watch",
-    units: "5",
-    date: "	Oct 20, 2018",
-    totalPrice: 20000,
-    status: "delivered",
-    orderId: 24583,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "	Hat Black Suits",
-    units: "4",
-    date: "	Oct 20, 2018",
-    totalPrice: 20000,
-    status: "delivered",
-    orderId: 24583,
-  },
-  {
-    id: crypto.randomUUID(),
-    name: "Backpack Gents, Swimming Cap Slin",
-    units: "4",
-    date: "	Oct 20, 2018",
-    totalPrice: 20000,
-    status: "in progress",
-    orderId: 24583,
-  },
-];
-
 export const RecentOrders = () => {
   const [loading, setLoading] = useState(true);
   const { orders } = useSelector((state) => state?.orders);
   //  console.log(orders.order);
 
-  const recentOrder = orders?.order?.slice(0, 5);
-  
+  // const recentOrder = orders?.order?.slice(0, 5);
+  const recentOrder = Array.isArray(orders?.order) ? orders?.order.slice(0, 5) : [];
 
   useEffect(() => {
     const load = setInterval(() => {

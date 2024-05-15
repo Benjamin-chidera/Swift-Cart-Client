@@ -6,7 +6,10 @@ import { useSelector } from "react-redux";
 export const SoldItems = () => {
   const [loading, setLoading] = useState(true);
   const { orders } = useSelector((state) => state?.orders);
-  const soldItem = orders?.order?.slice(0, 4);
+  const soldItem = Array.isArray(orders?.order)
+    ? orders?.order.slice(0, 4)
+    : [];
+
 
   useEffect(() => {
     const load = setInterval(() => {

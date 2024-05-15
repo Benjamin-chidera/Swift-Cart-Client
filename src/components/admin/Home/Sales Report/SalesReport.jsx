@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 export const SalesReport = () => {
   const { orders } = useSelector((state) => state.orders);
 
-  const check = orders?.order?.flatMap((c) => c.cart);
+const check = Array.isArray(orders?.order)
+  ? orders?.order.flatMap((c) => c?.cart)
+  : [];
+
 
   const skin = check?.filter((c) => c?.category === "skin");
   const clothes = check?.filter((c) => c?.category === "clothes");

@@ -17,7 +17,7 @@ export const Dashboard = () => {
           <UserActivity />
         </div>
         <div className="w-[48%]">
-          {/* <ProductActivities /> */}
+          <ProductActivities />
         </div>
       </section>
       <SoldItems />
@@ -28,7 +28,7 @@ export const Dashboard = () => {
           <NewCustomer />
         </div>
         <div className="w-[48%]">
-          {/* <TopProducts /> */}
+          <TopProducts />
         </div>
       </section>
     </main>

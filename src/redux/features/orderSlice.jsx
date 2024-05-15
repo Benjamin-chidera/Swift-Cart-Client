@@ -1,15 +1,19 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const orderUrl = "https://swift-cart-server.onrender.com/api/v1/orders/createOrder";
+const orderUrl =
+  "https://swift-cart-server.onrender.com/api/v1/orders/createOrder";
 const order = "https://swift-cart-server.onrender.com/api/v1/orders";
 
-export const fetchOrders = createAsyncThunk("orders/fetchOrders", async (token) => {
-  const { data } = await axios(order, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return data;
-});
+export const fetchOrders = createAsyncThunk(
+  "orders/fetchOrders",
+  async (token) => {
+    const { data } = await axios(order, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return data;
+  }
+);
 
 export const createOrders = createAsyncThunk(
   "orders/createOrders",
@@ -44,6 +48,7 @@ export const updateStatus = createAsyncThunk(
         }
       );
       if (data.success) {
+        window.location.reload();
         return data;
       } else {
         return rejectWithValue("Couldn't update order status");

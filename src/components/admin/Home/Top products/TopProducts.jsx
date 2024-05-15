@@ -4,7 +4,11 @@ import { useSelector } from "react-redux";
 export const TopProducts = () => {
   const { product } = useSelector((state) => state?.product);
 
-  const products = product?.product?.slice(0, 3) || null;
+  // const products = product?.product?.slice(0, 3) || null;
+
+  const products = Array.isArray(product?.product)
+    ? product.product.slice(0, 3)
+    : [];
 
   return (
     <main className="shadow rounded p-3">

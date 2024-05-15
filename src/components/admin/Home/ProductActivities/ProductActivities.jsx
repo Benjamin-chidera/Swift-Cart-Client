@@ -9,11 +9,27 @@ export const ProductActivities = () => {
   const dispatch = useDispatch();
   const products = product?.product;
 
-  const skin = products?.filter((c) => c.category === "skin");
-  const clothes = products?.filter((c) => c.category === "clothes");
-  const shoes = products?.filter((c) => c.category === "shoes");
-  const bodysuits = products?.filter((c) => c.category === "bodysuits");
-  const lounge = products?.filter((c) => c.category === "lounge");
+  // const skin = products?.filter((c) => c?.category === "skin");
+  // const clothes = products?.filter((c) => c?.category === "clothes");
+  // const shoes = products?.filter((c) => c?.category === "shoes");
+  // const bodysuits = products?.filter((c) => c?.category === "bodysuits");
+  // const lounge = products?.filter((c) => c?.category === "lounge");
+
+  const skin = Array.isArray(products)
+    ? products.filter((c) => c?.category === "skin")
+    : [];
+  const clothes = Array.isArray(products)
+    ? products.filter((c) => c?.category === "clothes")
+    : [];
+  const shoes = Array.isArray(products)
+    ? products.filter((c) => c?.category === "shoes")
+    : [];
+  const bodysuits = Array.isArray(products)
+    ? products.filter((c) => c?.category === "bodysuits")
+    : [];
+  const lounge = Array.isArray(products)
+    ? products.filter((c) => c?.category === "lounge")
+    : [];
 
   useEffect(() => {
     dispatch(getProduct());
