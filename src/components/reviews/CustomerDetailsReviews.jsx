@@ -42,7 +42,7 @@ export const CustomerDetailsReviews = (productId) => {
               <GetRating rating={calculateRating?.rating} />
             </p>
             <p className="text-lg max-w-[100px] text-yellow-500 font-semibold">
-              {reviewsProduct.review.length} verified ratings
+              {reviewsProduct?.review?.length} verified ratings
             </p>
           </div>
         </div>
