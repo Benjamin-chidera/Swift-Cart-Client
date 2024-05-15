@@ -14,7 +14,7 @@ import { OrderReviews } from "./orderReviews";
 const OrderDetails = () => {
   const { orderId } = useParams();
   const dispatch = useDispatch();
-  const { singleOrder } = useSelector((state) => state.orders);
+  const { singleOrder } = useSelector((state) => state?.orders);
 
   const token = Cookies.get("userToken");
 
@@ -44,32 +44,32 @@ const OrderDetails = () => {
               <OrderReviews id={c._id} />
             </div>
             <p className="font-semibold">
-              Order no: {singleOrder.order.orderNumber || 3223887623}
+              Order no: {singleOrder?.order?.orderNumber || 3223887623}
             </p>
             <div className="text-sm text-gray-500">
               <p>
-                {c.quantity} {c.quantity < 2 ? "Item" : "Items"}
+                {c?.quantity} {c?.quantity < 2 ? "Item" : "Items"}
               </p>
               <p>
                 {" "}
                 Placed On
                 <span className="ms-2">{`${new Date(
-                  c.updatedAt
-                ).getFullYear()}-${(new Date(c.updatedAt).getMonth() + 1)
+                  c?.updatedAt
+                ).getFullYear()}-${(new Date(c?.updatedAt).getMonth() + 1)
                   .toString()
-                  .padStart(2, "0")}-${new Date(c.updatedAt)
+                  .padStart(2, "0")}-${new Date(c?.updatedAt)
                   .getDate()
                   .toString()
                   .padStart(2, "0")}`}</span>
               </p>
-              <p>Total: {singleOrder.order.totalPrice}</p>
+              <p>Total: {singleOrder?.order?.totalPrice}</p>
               <hr className="my-5" />
             </div>
             <p className="font-semibold">ITEMS IN YOUR ORDER</p>
 
             <section className="border p-2">
               <div className="flex items-center gap-2 text-yellow-400 underline text-xs mb-2">
-                <p>{singleOrder.order.OrderStatus} </p>
+                <p>{singleOrder?.order?.OrderStatus} </p>
                 <span>
                   <FaDotCircle size={5} />
                 </span>
@@ -78,16 +78,16 @@ const OrderDetails = () => {
               <p className="font-semibold text-sm">
                 <p>
                   <span>
-                    {singleOrder.order.deliveryDate
+                    {singleOrder?.order?.deliveryDate
                       ? `${new Date(
-                          singleOrder.order.deliveryDate
+                          singleOrder?.order?.deliveryDate
                         ).getFullYear()}-${(
-                          new Date(singleOrder.order.deliveryDate).getMonth() +
+                          new Date(singleOrder?.order?.deliveryDate).getMonth() +
                           1
                         )
                           .toString()
                           .padStart(2, "0")}-${new Date(
-                          singleOrder.order.deliveryDate
+                          singleOrder?.order?.deliveryDate
                         )
                           .getDate()
                           .toString()
@@ -101,22 +101,22 @@ const OrderDetails = () => {
                 <LazyLoadImage
                   effect="blur"
                   loading="lazy"
-                  src={c.image}
+                  src={c?.image}
                   alt=""
                   className="w-24 h-20"
                 />
 
                 <div className="flex flex-col gap-2">
-                  <p className="text-sm">{c.name}</p>
-                  <p className="text-xs text-gray-500">QTY: {c.quantity}</p>
+                  <p className="text-sm">{c?.name}</p>
+                  <p className="text-xs text-gray-500">QTY: {c?.quantity}</p>
                   <p className="text-sm font-semibold">
-                    {formatCurrency(c.price)}
+                    {formatCurrency(c?.price)}
                   </p>
                 </div>
               </div>
               <p className="text-sm my-3 text-gray-500 flex item-center gap-2">
                 <TbTruckReturn size={20} /> The return period ends in{" "}
-                {c.returns.replace("in", "").replace("return", "")}
+                {c?.returns.replace("in", "").replace("return", "")}
               </p>
             </section>
 
@@ -130,13 +130,13 @@ const OrderDetails = () => {
                 <div className="p-2 flex gap-3 flex-col">
                   <p className="text-sm font-semibold">PAYMENT Details</p>
                   <p className="text-sm text-gray-500">
-                    Items total: {formatCurrency(c.price)}
+                    Items total: {formatCurrency(c?.price)}
                   </p>
                   <p className="text-sm text-gray-500">
-                    Delivery Fees: {formatCurrency(c.price)}
+                    Delivery Fees: {formatCurrency(c?.price)}
                   </p>
                   <p className="text-sm text-gray-500">
-                    Total: {singleOrder.order.totalPrice}
+                    Total: {singleOrder?.order?.totalPrice}
                   </p>
                 </div>
               </div>
@@ -150,11 +150,11 @@ const OrderDetails = () => {
                 <div className="p-2 flex gap-3 flex-col">
                   <p className="text-sm font-semibold">Shipping Address</p>
                   <p className="text-sm text-gray-500">
-                    {singleOrder.order.shippingAddress.name ||
+                    {singleOrder?.order?.shippingAddress.name ||
                       "Benjamin Chidera"}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {singleOrder.order.shippingAddress.address}
+                    {singleOrder?.order?.shippingAddress.address}
                   </p>
                 </div>
 
@@ -163,13 +163,13 @@ const OrderDetails = () => {
                   <p className="text-sm text-gray-500">
                     Delivery on{" "}
                     <span>{`${new Date(
-                      singleOrder.order.deliveryDate
+                      singleOrder?.order?.deliveryDate
                     ).getFullYear()}-${(
-                      new Date(singleOrder.order.deliveryDate).getMonth() + 1
+                      new Date(singleOrder?.order?.deliveryDate).getMonth() + 1
                     )
                       .toString()
                       .padStart(2, "0")}-${new Date(
-                      singleOrder.order.deliveryDate
+                      singleOrder?.order?.deliveryDate
                     )
                       .getDate()
                       .toString()
