@@ -23,29 +23,23 @@ const Orders = () => {
   const postPerPage = 6;
   const order = JSON.parse(myOrder);
 
-  const pageVisited = pageNumber * postPerPage;
+    const pageVisited = pageNumber * postPerPage;
 
-  // const displayOrders = orders?.order?.slice(
-  //   pageVisited,
-  //   pageVisited + postPerPage
-  // );
+    const displayOrders = Array.isArray(orders?.order)
+      ? orders?.order?.slice(pageVisited, pageVisited + postPerPage)
+      : [];
 
-  const displayOrders = Array.isArray(orders?.order)
-    ? orders?.order?.slice(pageVisited, pageVisited + postPerPage)
-    : [];
-  
+    const pageCount = Math.ceil(orders?.order?.length / postPerPage);
 
-  const pageCount = Math.ceil(orders?.order?.length / postPerPage);
+    const ChangePage = ({ selected }) => {
+      setPageNumber(selected);
+    };
 
-  const ChangePage = ({ selected }) => {
-    setPageNumber(selected);
-  };
+    useEffect(() => {
+      dispatch(fetchOrders(token));
+    }, [dispatch, token]);
 
-  useEffect(() => {
-    dispatch(fetchOrders(token));
-  }, [dispatch, token]);
-
-  console.log(displayOrders);
+    console.log(displayOrders);
 
   return (
     <main className=" my-5 mx-3 md:container md:mx-auto">
@@ -120,7 +114,7 @@ const Orders = () => {
               Sign in to see or place order
             </p>
           ) : (
-            orders?.order?.map((o) => (
+            displayOrders?.map((o) => (
               <section key={o?._id} className="">
                 {o?.cart?.map((c) => (
                   <section
