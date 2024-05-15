@@ -25,7 +25,7 @@ export const UserList = () => {
 
   const pageVisited = pageNumber * postPerPage;
 
-  const displayUsers = getAllUsers.user?.slice(pageVisited, pageVisited + postPerPage);
+  const displayUsers = getAllUsers?.user?.slice(pageVisited, pageVisited + postPerPage);
 
   const pageCount = Math?.ceil(getAllUsers.user?.length / postPerPage);
 
@@ -56,7 +56,7 @@ export const UserList = () => {
     ];
 
     // add table data
-    const tableData = user?.user.map((datas, i) => [
+    const tableData = getAllUsers?.user.map((datas, i) => [
       i + 1,
       datas.image,
       datas.name,

@@ -29,6 +29,9 @@ export const Reviews = () => {
       </h1>
 
       <section>
+        {reviews?.review?.length < 1 && (
+          <p className=" text-center">No Review Yet</p>
+        )}
         <Carousel>
           <CarouselContent>
             {reviews?.review?.map((s) => (

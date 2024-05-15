@@ -47,7 +47,7 @@ export const SkinCare = () => {
     ? sortedProducts?.filter((product) => product.color === selectedColor)
     : sortedProducts;
 
-  const colorOptions = ["Red", "Blue", "Green", "Yellow", "qwdqwdqwdqwd"];
+  const colorOptions = ["red", "blue", "green", "yellow", "white", "black", "brown"];
 
   const handleSizeChange = (size) => {
     setSelectedSize(size);
@@ -57,7 +57,7 @@ export const SkinCare = () => {
     ? filteredByColor?.filter((product) => product.size === selectedSize)
     : filteredByColor;
 
-  const sizeOptions = ["s", "md", "l", "xl", "xxl", "2xl"];
+  const sizeOptions = ["s", "m", "l", "xl", "xxl", "2xl"];
 
   return (
     <main className=" md:my-5  md:container md:mx-auto lg:flex gap-3">
@@ -78,7 +78,7 @@ export const SkinCare = () => {
           <section className="my-3">
             <p>Filter by Color:</p>
             {colorOptions.map((color) => (
-              <label key={color} className="flex gap-2 text-sm">
+              <label key={color} className="flex gap-2 text-sm capitalize">
                 <input
                   type="radio"
                   name="colorFilter"
@@ -95,7 +95,7 @@ export const SkinCare = () => {
           <section className="my-3">
             <p>Filter by Size:</p>
             {sizeOptions.map((size) => (
-              <label key={size} className="flex gap-2 text-sm">
+              <label key={size} className="flex gap-2 text-sm capitalize">
                 <input
                   type="radio"
                   name="sizeFilter"

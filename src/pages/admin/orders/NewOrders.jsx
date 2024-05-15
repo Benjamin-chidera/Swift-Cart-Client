@@ -37,9 +37,11 @@ const NewOrders = () => {
   //   pageVisited + postPerPage
   // );
 
+  
   const displayOrders = Array.isArray(orders?.order)
-    ? orders?.order?.slice(pageVisited, pageVisited + postPerPage)
-    : [];
+  ? orders?.order?.slice(pageVisited, pageVisited + postPerPage)
+  : [];
+  console.log(displayOrders);
 
   const pageCount = Math.ceil(orders?.order?.length / postPerPage);
 
