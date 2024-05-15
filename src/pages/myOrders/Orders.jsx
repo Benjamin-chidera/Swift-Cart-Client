@@ -53,8 +53,7 @@ const Orders = () => {
               Sign in to see or place order
             </p>
           ) : (
-            Array.isArray(orders?.order) &&
-            orders?.order.map((o) => (
+            orders?.order?.map((o) => (
               <section key={o?._id} className=" space-y-5">
                 {o?.cart?.map((c) => (
                   <section key={c?._id} className="">
@@ -112,73 +111,72 @@ const Orders = () => {
           ) : (
             orders?.order?.map((o) => (
               <section key={o?._id} className="">
-                {Array.isArray(orders?.order) &&
-                  orders?.order.map((c) => (
-                    <section
-                      key={c?._id}
-                      className="grid grid-cols-7 place-items-center"
-                    >
-                      <div className=" grid grid-cols-2 place-items-center gap-5 space-y-4">
-                        <div>
-                          <LazyLoadImage
-                            effect="blur"
-                            loading="lazy"
-                            src={c?.image}
-                            alt=""
-                            className="w-20"
-                          />
-                        </div>
-
-                        <div className="">
-                          <p className="text-xs underline">{c?.name}</p>
-                          <p className="text-xs">Size: {c?.size}</p>
-                          <p className="text-xs whitespace-nowrap">
-                            Color: {c?.color}
-                          </p>
-                        </div>
-                      </div>
-                      <p>{c?.quantity}</p>
-                      <p>{formatCurrency(o?.totalPrice)}</p>
-                      <p>{o?.orderNumber || 0}</p>
-                      <p>
-                        {" "}
-                        {`${new Date(o?.updatedAt).getFullYear()}-${(
-                          new Date(o?.updatedAt).getMonth() + 1
-                        )
-                          .toString()
-                          .padStart(2, "0")}-${new Date(o?.updatedAt)
-                          .getDate()
-                          .toString()
-                          .padStart(2, "0")}`}
-                      </p>
-
-                      <p className="font-semibold">
-                        {o.deliveryDate
-                          ? `${new Date(o?.deliveryDate).getFullYear()}-${(
-                              new Date(o?.deliveryDate).getMonth() + 1
-                            )
-                              .toString()
-                              .padStart(2, "0")}-${new Date(o?.deliveryDate)
-                              .getDate()
-                              .toString()
-                              .padStart(2, "0")}`
-                          : "No Date Yet"}
-                      </p>
-
+                {o?.cart?.map((c) => (
+                  <section
+                    key={c?._id}
+                    className="grid grid-cols-7 place-items-center"
+                  >
+                    <div className=" grid grid-cols-2 place-items-center gap-5 space-y-4">
                       <div>
-                        <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
-                          <p>{o?.OrderStatus} </p>
-                          <span>
-                            <FaDotCircle size={5} />
-                          </span>
-                        </div>
-
-                        <Link className="text-[11px]" to={`/order/${o?._id}`}>
-                          View Details
-                        </Link>
+                        <LazyLoadImage
+                          effect="blur"
+                          loading="lazy"
+                          src={c?.image}
+                          alt=""
+                          className="w-20"
+                        />
                       </div>
-                    </section>
-                  ))}
+
+                      <div className="">
+                        <p className="text-xs underline">{c?.name}</p>
+                        <p className="text-xs">Size: {c?.size}</p>
+                        <p className="text-xs whitespace-nowrap">
+                          Color: {c?.color}
+                        </p>
+                      </div>
+                    </div>
+                    <p>{c?.quantity}</p>
+                    <p>{formatCurrency(o?.totalPrice)}</p>
+                    <p>{o?.orderNumber || 0}</p>
+                    <p>
+                      {" "}
+                      {`${new Date(o?.updatedAt).getFullYear()}-${(
+                        new Date(o?.updatedAt).getMonth() + 1
+                      )
+                        .toString()
+                        .padStart(2, "0")}-${new Date(o?.updatedAt)
+                        .getDate()
+                        .toString()
+                        .padStart(2, "0")}`}
+                    </p>
+
+                    <p className="font-semibold">
+                      {o.deliveryDate
+                        ? `${new Date(o?.deliveryDate).getFullYear()}-${(
+                            new Date(o?.deliveryDate).getMonth() + 1
+                          )
+                            .toString()
+                            .padStart(2, "0")}-${new Date(o?.deliveryDate)
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0")}`
+                        : "No Date Yet"}
+                    </p>
+
+                    <div>
+                      <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
+                        <p>{o?.OrderStatus} </p>
+                        <span>
+                          <FaDotCircle size={5} />
+                        </span>
+                      </div>
+
+                      <Link className="text-[11px]" to={`/order/${o?._id}`}>
+                        View Details
+                      </Link>
+                    </div>
+                  </section>
+                ))}
               </section>
             ))
           )}
