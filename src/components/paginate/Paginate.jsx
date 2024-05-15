@@ -10,7 +10,7 @@ const Paginate = ({ pageCount, ChangePage }) => {
         nextLabel={<IoIosArrowForward size={20} />}
         pageCount={pageCount}
         onPageChange={ChangePage}
-        containerClassName="grid grid-cols-6 gap-7 w-[30%] place-items-center mx-auto mt-7 bg-gray-50 py-1 px-5 rounded-md"
+        containerClassName="flex gap-10 item-center mx-auto mt-7 bg-gray-50 py-1 px-5 rounded-md"
         previousClassName="bg-gray-200 text-black-700 px-3 py-2 rounded-l-md hover:bg-gray-300"
         nextClassName="bg-gray-200 text-black-700 px-3 py-2 rounded-r-md hover:bg-gray-300"
         disabledClassName="text-gray-400 cursor-not-allowed"

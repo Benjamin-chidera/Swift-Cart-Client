@@ -9,7 +9,6 @@ const comfortimg = [
   {
     id: crypto.randomUUID(),
     img: comfortman,
-    // title: "men",
     category: "bodysuits",
     gender: "male",
   },
@@ -19,7 +18,6 @@ const joyimg = [
   {
     id: crypto.randomUUID(),
     img: manjoy,
-    // title: "men",
     category: "lounge",
     gender: "male",
   },
@@ -53,6 +51,7 @@ export const MadeForMen = () => {
           </Link>
         ))}
       </section>
+
       <section>
         {joyimg.map((s) => (
           <Link

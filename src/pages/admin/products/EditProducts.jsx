@@ -213,7 +213,9 @@ const EditProducts = () => {
               <option value="sunprotection">Sun Protection</option>
               <option value="makeup">Make Up</option>
               <option value="men">Men</option>
+              <option value="boy">Boy</option>
               <option value="women">Women</option>
+              <option value="girl">Girl</option>
               <option value="scentfree">Scent Free</option>
               <option value="toothpaste">Tooth Paste</option>
             </select>

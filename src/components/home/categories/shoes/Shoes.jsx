@@ -11,29 +11,29 @@ const shoeCat = [
   {
     id: crypto.randomUUID(),
     img: men,
-    // title: "men",
+ 
     tags: "men",
     category: "shoes",
   },
   {
     id: crypto.randomUUID(),
     img: women,
-    // title: "women",
-    tags: "womenMen",
+  
+    tags: "women",
     category: "shoes",
   },
   {
     id: crypto.randomUUID(),
     img: boy,
-    // title: "boy's",
-    tags: "men",
+
+    tags: "boy",
     category: "shoes",
   },
   {
     id: crypto.randomUUID(),
     img: girl,
-    // title: "girl's",
-    tags: "womenMen",
+   
+    tags: "girl",
     category: "shoes",
   },
 ];
