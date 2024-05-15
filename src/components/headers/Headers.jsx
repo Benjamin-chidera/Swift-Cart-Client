@@ -34,6 +34,7 @@ import {
 import { Button } from "../ui/button";
 import { SkeletonLoadingSearchBar } from "../Loader-Skeleton/SkeletonLoadingSearchBar";
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 export const Headers = () => {
   const [open, setOpen] = useState(false);
@@ -41,6 +42,20 @@ export const Headers = () => {
   const { token } = useParams();
 
   const userToken = Cookies.get("userToken");
+
+  let decode = null;
+
+  console.log(decode);
+
+  try {
+    // Ensure token exists before attempting to decode
+    if (userToken) {
+      decode = jwtDecode(userToken);
+    }
+  } catch (error) {
+    // Handle decoding errors (e.g., invalid userToken format)
+    console.error("Error decoding userToken:", error);
+  }
 
   const handleLogout = () => {
     Cookies.remove("userToken");
@@ -206,7 +221,7 @@ export const Headers = () => {
                             </Link>
                           </MenubarItem>
                           <MenubarSeparator />
-                          {userToken && (
+                          {userToken && decode && decode.role === "user" && (
                             <MenubarItem>
                               <Button
                                 className={"text-xs w-full"}

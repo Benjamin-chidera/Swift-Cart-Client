@@ -9,11 +9,26 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 export const Navbar = () => {
   const location = useLocation();
 
   const userToken = Cookies.get("userToken");
+
+  let decode = null;
+
+  console.log(decode);
+
+  try {
+    // Ensure token exists before attempting to decode
+    if (userToken) {
+      decode = jwtDecode(userToken);
+    }
+  } catch (error) {
+    // Handle decoding errors (e.g., invalid userToken format)
+    console.error("Error decoding userToken:", error);
+  }
 
   const handleLogout = () => {
     Cookies.remove("userToken");
@@ -35,7 +50,7 @@ export const Navbar = () => {
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                {userToken && (
+                {userToken && decode && decode.role === "admin" && (
                   <DropdownMenuItem>
                     <Button className=" w-full" onClick={handleLogout}>
                       Logout
