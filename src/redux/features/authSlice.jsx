@@ -26,7 +26,7 @@ export const registerUser = createAsyncThunk(
         Cookies.set("userToken", data.user.token);
 
         const decode = jwtDecode(data.user.token);
-        console.log(decode.role);
+       
         if (decode.role === "user") {
           window.location.href = "/";
         } else {
@@ -62,7 +62,7 @@ export const loginUser = createAsyncThunk(
         Cookies.set("userToken", data.user.token);
 
         const decode = jwtDecode(data.user.token);
-        console.log(decode.role);
+       
         if (decode.role === "user") {
           window.location.href = "/";
         } else {

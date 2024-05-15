@@ -9,63 +9,84 @@ import { formatCurrency } from "@/lib/FormatCurrency";
 import "../myOrders/order.css";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 const Orders = () => {
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.orders);
   const myOrder = localStorage.getItem("orders");
-  // const TotalOrders = orders.order.length;
+  const TotalOrders = orders.order.length;
   const token = Cookies.get("userToken");
+  const [decodedToken, setDecodedToken] = useState(null);
 
   const order = JSON.parse(myOrder);
 
   useEffect(() => {
     dispatch(fetchOrders(token));
-  }, [dispatch]);
+  }, [dispatch, token]);
+
+  useEffect(() => {
+    try {
+      if (token) {
+        const decoded = jwtDecode(token);
+        setDecodedToken(decoded);
+      }
+    } catch (error) {
+      console.error("Error decoding token:", error);
+    }
+  }, [token]);
 
   return (
     <main className=" my-5 mx-3 md:container md:mx-auto">
       <section className="w-full p-3 mx-auto shadow-xl space-y-4 max-w-full">
-        {/* <h1 className="text-2xl font-bold uppercase underline text-gray-600">
-          Orders {TotalOrders}
-        </h1> */}
+        {decodedToken?.role === "user" && (
+          <h1 className="text-2xl font-bold uppercase underline text-gray-600">
+            Orders {TotalOrders}
+          </h1>
+        )}
 
         {/* small devices */}
 
         <section className="w-full lg:hidden space-y-5  border p-2">
-          {orders?.order?.map((o) => (
-            <section key={o._id} className=" space-y-5">
-              {o.cart.map((c) => (
-                <section key={c._id} className="">
-                  <div className="flex gap-5">
-                    <LazyLoadImage
-                      effect="blur"
-                      loading="lazy"
-                      src={c.image}
-                      alt=""
-                      className="w-20 h-20"
-                    />
-                    <div>
-                      <p className="text-xs underline">{c.name}</p>
-                      <p className="text-xs text-gray-600">
-                        {o.orderNumber || 12748939}
-                      </p>
+          {!decodedToken?.role === "user" || !orders?.order ? (
+            <p className="text-center my-10 font-bold text-xl">
+              Sign in to see or place order
+            </p>
+          ) : (
+            orders?.order?.map((o) => (
+              <section key={o._id} className=" space-y-5">
+                {o.cart.map((c) => (
+                  <section key={c._id} className="">
+                    <div className="flex gap-5">
+                      <LazyLoadImage
+                        effect="blur"
+                        loading="lazy"
+                        src={c.image}
+                        alt=""
+                        className="w-20 h-20"
+                      />
+                      <div>
+                        <p className="text-xs underline">{c.name}</p>
+                        <p className="text-xs text-gray-600">
+                          {o.orderNumber || 12748939}
+                        </p>
 
-                      <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
-                        <p>{o.OrderStatus} </p>
-                        <span>
-                          <FaDotCircle size={5} />
-                        </span>
+                        <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
+                          <p>{o.OrderStatus} </p>
+                          <span>
+                            <FaDotCircle size={5} />
+                          </span>
+                        </div>
+                        <p className="text-xs font-bold mt-1">
+                          On {o.deliveryDate || "02-04-24"}
+                        </p>
                       </div>
-                      <p className="text-xs font-bold mt-1">
-                        On {o.deliveryDate || "02-04-24"}
-                      </p>
                     </div>
-                  </div>
-                </section>
-              ))}
-            </section>
-          ))}
+                  </section>
+                ))}
+              </section>
+            ))
+          )}
         </section>
 
         {/* small devices */}
@@ -83,73 +104,82 @@ const Orders = () => {
             <th className="w-32">Status</th>
           </div>
 
-          {orders?.order?.map((o) => (
-            <section key={o._id} className="">
-              {o.cart.map((c) => (
-                <section
-                  key={c._id}
-                  className="grid grid-cols-7 place-items-center"
-                >
-                  <div className=" grid grid-cols-2 place-items-center gap-5 space-y-4">
+          {!decodedToken?.role === "user" || !orders?.order ? (
+            <p className="text-center my-10 font-bold text-xl hidden lg:block">
+              Sign in to see or place order
+            </p>
+          ) : (
+            orders?.order?.map((o) => (
+              <section key={o._id} className="">
+                {o.cart.map((c) => (
+                  <section
+                    key={c._id}
+                    className="grid grid-cols-7 place-items-center"
+                  >
+                    <div className=" grid grid-cols-2 place-items-center gap-5 space-y-4">
+                      <div>
+                        <LazyLoadImage
+                          effect="blur"
+                          loading="lazy"
+                          src={c.image}
+                          alt=""
+                          className="w-20"
+                        />
+                      </div>
+
+                      <div className="">
+                        <p className="text-xs underline">{c.name}</p>
+                        <p className="text-xs">Size: {c.size}</p>
+                        <p className="text-xs whitespace-nowrap">
+                          Color: {c.color}
+                        </p>
+                      </div>
+                    </div>
+                    <p>{c.quantity}</p>
+                    <p>{formatCurrency(o.totalPrice)}</p>
+                    <p>{o.orderNumber || 0}</p>
+                    <p>
+                      {" "}
+                      {`${new Date(o.updatedAt).getFullYear()}-${(
+                        new Date(o.updatedAt).getMonth() + 1
+                      )
+                        .toString()
+                        .padStart(2, "0")}-${new Date(o.updatedAt)
+                        .getDate()
+                        .toString()
+                        .padStart(2, "0")}`}
+                    </p>
+
+                    <p className="font-semibold">
+                      {o.deliveryDate
+                        ? `${new Date(o.deliveryDate).getFullYear()}-${(
+                            new Date(o.deliveryDate).getMonth() + 1
+                          )
+                            .toString()
+                            .padStart(2, "0")}-${new Date(o.deliveryDate)
+                            .getDate()
+                            .toString()
+                            .padStart(2, "0")}`
+                        : "No Date Yet"}
+                    </p>
+
                     <div>
-                      <LazyLoadImage
-                        effect="blur"
-                        loading="lazy"
-                        src={c.image}
-                        alt=""
-                        className="w-20"
-                      />
-                    </div>
+                      <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
+                        <p>{o.OrderStatus} </p>
+                        <span>
+                          <FaDotCircle size={5} />
+                        </span>
+                      </div>
 
-                    <div className="">
-                      <p className="text-xs underline">{c.name}</p>
-                      <p className="text-xs">Size: {c.size}</p>
-                      <p className="text-xs whitespace-nowrap">
-                        Color: {c.color}
-                      </p>
+                      <Link className="text-[11px]" to={`/order/${o._id}`}>
+                        View Details
+                      </Link>
                     </div>
-                  </div>
-                  <p>{c.quantity}</p>
-                  <p>{formatCurrency(o.totalPrice)}</p>
-                  <p>{o.orderNumber || 0}</p>
-                  <p>
-                    {" "}
-                    {`${new Date(o.updatedAt).getFullYear()}-${(
-                      new Date(o.updatedAt).getMonth() + 1
-                    )
-                      .toString()
-                      .padStart(2, "0")}-${new Date(o.updatedAt)
-                      .getDate()
-                      .toString()
-                      .padStart(2, "0")}`}
-                  </p>
-                  <p className="font-semibold">
-                    {`${new Date(o.deliveryDate).getFullYear()}-${(
-                      new Date(o.deliveryDate).getMonth() + 1
-                    )
-                      .toString()
-                      .padStart(2, "0")}-${new Date(o.deliveryDate)
-                      .getDate()
-                      .toString()
-                      .padStart(2, "0")}`}
-                  </p>
-
-                  <div>
-                    <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
-                      <p>{o.OrderStatus} </p>
-                      <span>
-                        <FaDotCircle size={5} />
-                      </span>
-                    </div>
-
-                    <Link className="text-[11px]" to={`/order/${o._id}`}>
-                      View Details
-                    </Link>
-                  </div>
-                </section>
-              ))}
-            </section>
-          ))}
+                  </section>
+                ))}
+              </section>
+            ))
+          )}
         </section>
       </section>
     </main>

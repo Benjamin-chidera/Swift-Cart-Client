@@ -123,7 +123,7 @@ export const Headers = () => {
               >
                 {/* <section className=" "> */}
                 <div>
-                  <Link className="font-bold md:text-2xl">SwiftCart</Link>{" "}
+                  <Link className="font-bold md:text-2xl" to={"/"}>SwiftCart</Link>{" "}
                 </div>
                 <section className="flex items-center gap-5 ms-5">
                   <form action="" onSubmit={(e) => e.preventDefault()}>

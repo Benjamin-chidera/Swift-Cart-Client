@@ -27,7 +27,8 @@ const NewOrders = () => {
   const postPerPage = 6;
   const { orders } = useSelector((state) => state.orders);
   const dispatch = useDispatch();
-   const token = Cookies.get("userToken");
+  const token = Cookies.get("userToken");
+  const [decodedToken, setDecodedToken] = useState(null);
 
   const pageVisited = pageNumber * postPerPage;
 
@@ -36,9 +37,9 @@ const NewOrders = () => {
   //   pageVisited + postPerPage
   // );
 
-   const displayOrders = Array.isArray(orders?.order)
-     ? orders?.order?.slice(pageVisited, pageVisited + postPerPage)
-     : [];
+  const displayOrders = Array.isArray(orders?.order)
+    ? orders?.order?.slice(pageVisited, pageVisited + postPerPage)
+    : [];
 
   const pageCount = Math.ceil(orders?.order?.length / postPerPage);
 
@@ -46,11 +47,9 @@ const NewOrders = () => {
     setPageNumber(selected);
   };
 
-  console.log(orders.order);
-
   useEffect(() => {
     dispatch(fetchOrders(token));
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   const handleUpdateStatus = ({ data, statusId }) => {
     try {
@@ -64,6 +63,18 @@ const NewOrders = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    try {
+      if (token) {
+        const decoded = jwtDecode(token);
+        setDecodedToken(decoded);
+      }
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      // Handle invalid token or decoding error
+    }
+  }, [token]);
 
   return (
     <main>
@@ -84,68 +95,76 @@ const NewOrders = () => {
       </section>
 
       <section className="my-5">
-        {displayOrders?.map((o) => (
-          <section key={o._id}>
-            {o?.cart?.map((c) => (
-              <section
-                key={c._id}
-                className="grid grid-cols-9 place-items-center"
-              >
-                <div>
-                  <LazyLoadImage
-                    effect="blur"
-                    loading="lazy"
-                    src={c.image}
-                    alt=""
-                    className="w-20"
-                  />
-                </div>
-                <div>
-                  <p className="text-xs underline ">{c.name}</p>
-                  <p className="text-xs">Size: {c.size}</p>
-                  <p className="text-xs whitespace-nowrap">Color: {c.color}</p>
-                </div>
-
-                <p>{c.user || "ben"}</p>
-                <p>{c.quantity}</p>
-                <p>{formatCurrency(o.totalPrice)}</p>
-                <p className="font-bold">Paid</p>
-                <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
-                  <p>{o.OrderStatus} </p>
-                  <span>
-                    <FaDotCircle size={5} />
-                  </span>
-                </div>
-                <p>
-                  {" "}
-                  {`${new Date(o.updatedAt).getFullYear()}-${(
-                    new Date(o.updatedAt).getMonth() + 1
-                  )
-                    .toString()
-                    .padStart(2, "0")}-${new Date(o.updatedAt)
-                    .getDate()
-                    .toString()
-                    .padStart(2, "0")}`}
-                </p>
-                <form
-                  action=""
-                  onSubmit={() => handleSubmit(handleUpdateStatus(o._id))}
+        {decodedToken?.role === "admin" ? (
+          displayOrders?.map((o) => (
+            <section key={o._id}>
+              {o?.cart?.map((c) => (
+                <section
+                  key={c._id}
+                  className="grid grid-cols-9 place-items-center"
                 >
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className=" outline-none uppercase">
-                      <BsThreeDotsVertical />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem>
-                        <Link to={`/admin/new-order/${o._id}`}>View Order</Link>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </form>
-              </section>
-            ))}
-          </section>
-        ))}
+                  <div>
+                    <LazyLoadImage
+                      effect="blur"
+                      loading="lazy"
+                      src={c.image}
+                      alt=""
+                      className="w-20"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-xs underline ">{c.name}</p>
+                    <p className="text-xs">Size: {c.size}</p>
+                    <p className="text-xs whitespace-nowrap">
+                      Color: {c.color}
+                    </p>
+                  </div>
+
+                  <p>{c.user || "ben"}</p>
+                  <p>{c.quantity}</p>
+                  <p>{formatCurrency(o.totalPrice)}</p>
+                  <p className="font-bold">Paid</p>
+                  <div className="flex items-center gap-2 text-yellow-400 underline text-xs">
+                    <p>{o.OrderStatus} </p>
+                    <span>
+                      <FaDotCircle size={5} />
+                    </span>
+                  </div>
+                  <p>
+                    {" "}
+                    {`${new Date(o.updatedAt).getFullYear()}-${(
+                      new Date(o.updatedAt).getMonth() + 1
+                    )
+                      .toString()
+                      .padStart(2, "0")}-${new Date(o.updatedAt)
+                      .getDate()
+                      .toString()
+                      .padStart(2, "0")}`}
+                  </p>
+                  <form
+                    action=""
+                    onSubmit={() => handleSubmit(handleUpdateStatus(o._id))}
+                  >
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className=" outline-none uppercase">
+                        <BsThreeDotsVertical />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem>
+                          <Link to={`/admin/new-order/${o._id}`}>
+                            View Order
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </form>
+                </section>
+              ))}
+            </section>
+          ))
+        ) : (
+          <p className=" text-center font-bold">Sign In Admin</p>
+        )}
       </section>
 
       {/* pagination */}

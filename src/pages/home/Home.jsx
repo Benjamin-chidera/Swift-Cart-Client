@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Hero from "../../components/home/Hero/Hero";
 import { OurFav } from "../../components/home/OurFavorites/OurFav";
 import { Skin } from "../../components/home/categories/Skin/Skin";
