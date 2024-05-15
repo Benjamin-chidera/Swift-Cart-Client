@@ -19,16 +19,16 @@ export const NewCustomer = () => {
 
       <section className=" space-y-5">
         {status === "loading" ? (
-          <SkeletonLoadingNewUsers num={customers.length} />
+          <SkeletonLoadingNewUsers num={customers?.length} />
         ) : (
           customers?.map((c) => (
             <div
               key={c?._id}
               className="  text-sm grid grid-cols-4 place-items-start"
             >
-              <img src={c.image} alt="" className="w-10 h-10" />
+              <img src={c?.image} alt="" className="w-10 h-10" />
               <div className="">
-                <h3>{c.name}</h3>
+                <h3>{c?.name}</h3>
                 <p className=" text-xs">{c?.email}</p>
               </div>
 
