@@ -5,7 +5,7 @@ import { FaRotate } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 
 export const NewCustomer = () => {
-  const { getAllUsers, status } = useSelector((state) => state.auth);
+  const { getAllUsers, status } = useSelector((state) => state?.auth);
 
   const customers = getAllUsers?.user?.slice(0, 3)
 
@@ -23,17 +23,17 @@ export const NewCustomer = () => {
         ) : (
           customers?.map((c) => (
             <div
-              key={c._id}
+              key={c?._id}
               className="  text-sm grid grid-cols-4 place-items-start"
             >
               <img src={c.image} alt="" className="w-10 h-10" />
               <div className="">
                 <h3>{c.name}</h3>
-                <p className=" text-xs">{c.email}</p>
+                <p className=" text-xs">{c?.email}</p>
               </div>
 
-              <p className="ms-5">{c.orders || "100"} orders</p>
-              <p>{formatCurrency(c.totalSale || "2000")}</p>
+              <p className="ms-5">{c?.orders || "100"} orders</p>
+              <p>{formatCurrency(c?.totalSale || "2000")}</p>
             </div>
           ))
         )}

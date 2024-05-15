@@ -8,11 +8,11 @@ export const SalesReport = () => {
 
   const check = orders.order?.flatMap((c) => c.cart);
 
-  const skin = check?.filter((c) => c.category === "skin");
-  const clothes = check?.filter((c) => c.category === "clothes");
-  const shoes = check?.filter((c) => c.category === "shoes");
-  const bodysuits = check?.filter((c) => c.category === "bodysuits");
-  const lounge = check?.filter((c) => c.category === "lounge");
+  const skin = check?.filter((c) => c?.category === "skin");
+  const clothes = check?.filter((c) => c?.category === "clothes");
+  const shoes = check?.filter((c) => c?.category === "shoes");
+  const bodysuits = check?.filter((c) => c?.category === "bodysuits");
+  const lounge = check?.filter((c) => c?.category === "lounge");
 
   const myChart = [
     {
@@ -45,11 +45,11 @@ export const SalesReport = () => {
         <section className=" h-[300px] w-full">
           <Line
             data={{
-              labels: myChart.map((data) => data.label),
+              labels: myChart?.map((data) => data?.label),
               datasets: [
                 {
                   label: "Sold Items",
-                  data: myChart.map((data) => data.value),
+                  data: myChart?.map((data) => data?.value),
                   backgroundColor: ["rgb(255, 99, 132)"],
                   hoverOffset: 4,
                 },

@@ -50,11 +50,11 @@ export const ProductActivities = () => {
         <section className=" h-[300px] w-full">
           <Doughnut
             data={{
-              labels: myChart.map((data) => data.label),
+              labels: myChart?.map((data) => data?.label),
               datasets: [
                 {
                   label: "Product Activities",
-                  data: myChart.map((data) => data.value),
+                  data: myChart?.map((data) => data?.value),
                   backgroundColor: ["black", "blue", "green", "yellow", "grey"],
                   hoverOffset: 4,
                 },

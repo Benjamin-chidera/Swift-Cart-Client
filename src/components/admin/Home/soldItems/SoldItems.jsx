@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 export const SoldItems = () => {
   const [loading, setLoading] = useState(true);
-  const { orders } = useSelector((state) => state.orders);
+  const { orders } = useSelector((state) => state?.orders);
   const soldItem = orders?.order?.slice(0, 4);
 
   useEffect(() => {
@@ -32,12 +32,12 @@ export const SoldItems = () => {
           <SkeletonLoadingSoldItem num={3} />
         ) : (
           soldItem?.map((s) => (
-            <section key={s._id}>
-              {s.cart.map((c) => (
-                <section key={c.id} className="grid grid-cols-3 space-y-2">
-                  <h4>{c.name}</h4>
-                  <p className="ms-5">{c.quantity}</p>
-                  <p>{formatCurrency(c.price)}</p>
+            <section key={s?._id}>
+              {s?.cart?.map((c) => (
+                <section key={c?.id} className="grid grid-cols-3 space-y-2">
+                  <h4>{c?.name}</h4>
+                  <p className="ms-5">{c?.quantity}</p>
+                  <p>{formatCurrency(c?.price)}</p>
                 </section>
               ))}
             </section>

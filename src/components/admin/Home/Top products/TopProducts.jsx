@@ -2,7 +2,7 @@ import { formatCurrency } from "@/lib/FormatCurrency";
 import { useSelector } from "react-redux";
 
 export const TopProducts = () => {
-  const { product } = useSelector((state) => state.product);
+  const { product } = useSelector((state) => state?.product);
 
   const products = product?.product?.slice(0, 3) || null;
 
@@ -14,19 +14,19 @@ export const TopProducts = () => {
 
       <section className=" space-y-5">
         {products?.map((p) => (
-          <div key={p._id} className="grid grid-cols-3 gap-10">
-            <img src={p.image} alt="" className="w-20 h-20" />
+          <div key={p?._id} className="grid grid-cols-3 gap-10">
+            <img src={p?.image} alt="" className="w-20 h-20" />
 
             <div>
               <h2 className="font-semibold text-sm">
-                {p.name.substring(0, 20)}
+                {p?.name?.substring(0, 20)}
               </h2>
               <p className="text-xs max-w-[230px]">
-                {p.details.substring(0, 20)}
+                {p?.details?.substring(0, 20)}
               </p>
-              <p className=" text-xs">{formatCurrency(p.price)}</p>
+              <p className=" text-xs">{formatCurrency(p?.price)}</p>
             </div>
-            <p className=" text-xs">{p.quantity} Sales</p>
+            <p className=" text-xs">{p?.quantity} Sales</p>
           </div>
         ))}
       </section>

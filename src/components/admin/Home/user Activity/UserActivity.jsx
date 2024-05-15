@@ -11,7 +11,7 @@ export const UserActivity = () => {
     dispatch(getUser());
   }, [dispatch]);
 
-  const { getAllUsers } = useSelector((state) => state.auth);
+  const { getAllUsers } = useSelector((state) => state?.auth);
 
   const myChart = [
     {
@@ -28,11 +28,11 @@ export const UserActivity = () => {
         <section className=" h-[300px] w-full">
           <Line
             data={{
-              labels: myChart.map((data) => data.label),
+              labels: myChart?.map((data) => data?.label),
               datasets: [
                 {
                   label: "User Activity",
-                  data: myChart.map((data) => data.value),
+                  data: myChart?.map((data) => data?.value),
                   backgroundColor: ["rgb(255, 99, 132)"],
                   hoverOffset: 4,
                 },
