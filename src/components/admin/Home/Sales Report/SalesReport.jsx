@@ -14,6 +14,8 @@ export const SalesReport = () => {
   const bodysuits = check?.filter((c) => c?.category === "bodysuits");
   const lounge = check?.filter((c) => c?.category === "lounge");
 
+  console.log(orders);
+
   const myChart = [
     {
       label: "skin",

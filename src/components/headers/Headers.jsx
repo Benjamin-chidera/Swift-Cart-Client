@@ -33,11 +33,19 @@ import {
 } from "@/components/ui/menubar";
 import { Button } from "../ui/button";
 import { SkeletonLoadingSearchBar } from "../Loader-Skeleton/SkeletonLoadingSearchBar";
+import Cookies from "js-cookie";
 
 export const Headers = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const { token } = useParams();
+
+  const userToken = Cookies.get("userToken");
+
+  const handleLogout = () => {
+    Cookies.remove("userToken");
+    window.location.href = "/";
+  };
 
   // for search functionality
 
@@ -123,7 +131,9 @@ export const Headers = () => {
               >
                 {/* <section className=" "> */}
                 <div>
-                  <Link className="font-bold md:text-2xl" to={"/"}>SwiftCart</Link>{" "}
+                  <Link className="font-bold md:text-2xl" to={"/"}>
+                    SwiftCart
+                  </Link>{" "}
                 </div>
                 <section className="flex items-center gap-5 ms-5">
                   <form action="" onSubmit={(e) => e.preventDefault()}>
@@ -196,9 +206,16 @@ export const Headers = () => {
                             </Link>
                           </MenubarItem>
                           <MenubarSeparator />
-                          <MenubarItem>
-                            <Button className={"text-xs w-full"}>LOGOUT</Button>
-                          </MenubarItem>
+                          {userToken && (
+                            <MenubarItem>
+                              <Button
+                                className={"text-xs w-full"}
+                                onClick={handleLogout}
+                              >
+                                LOGOUT
+                              </Button>
+                            </MenubarItem>
+                          )}
                         </MenubarContent>
                       </MenubarMenu>
                     </Menubar>
@@ -259,8 +276,8 @@ export const Headers = () => {
                         {/* {loading && <SkeletonLoadingSearchBar/>} */}
                         {name && loading ? (
                           <SkeletonLoadingSearchBar num={saved.length} />
-                          // <p>Loading</p>
                         ) : (
+                          // <p>Loading</p>
                           saved.map((s) => (
                             <SearchedItem
                               {...s}

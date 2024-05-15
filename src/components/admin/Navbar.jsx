@@ -8,9 +8,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "../ui/button";
+import Cookies from "js-cookie";
 
 export const Navbar = () => {
   const location = useLocation();
+
+  const userToken = Cookies.get("userToken");
+
+  const handleLogout = () => {
+    Cookies.remove("userToken");
+    window.location.href = "/admin/signin";
+  };
 
   return (
     <main className="py-3 relative z-10">
@@ -27,9 +35,13 @@ export const Navbar = () => {
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <Button className=" w-full">Logout</Button>
-                </DropdownMenuItem>
+                {userToken && (
+                  <DropdownMenuItem>
+                    <Button className=" w-full" onClick={handleLogout}>
+                      Logout
+                    </Button>
+                  </DropdownMenuItem>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </section>
