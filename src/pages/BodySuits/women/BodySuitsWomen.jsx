@@ -56,7 +56,15 @@ const BodySuitsWomen = () => {
      ? sortedProducts?.filter((product) => product.color === selectedColor)
      : sortedProducts;
 
-   const colorOptions = ["Red", "Blue", "Green", "Yellow", "qwdqwdqwdqwd"];
+    const colorOptions = [
+      "red",
+      "blue",
+      "green",
+      "yellow",
+      "white",
+      "black",
+      "brown",
+    ];
 
    const handleSizeChange = (size) => {
      setSelectedSize(size);
@@ -66,7 +74,7 @@ const BodySuitsWomen = () => {
      ? filteredByColor?.filter((product) => product.size === selectedSize)
      : filteredByColor;
 
-   const sizeOptions = ["s", "md", "l", "xl", "xxl", "2xl"];
+   const sizeOptions = ["s", "m", "l", "xl", "xxl", "2xl"];
 
   return (
     <main className=" md:my-5  md:container md:mx-auto lg:flex gap-3">
@@ -87,7 +95,7 @@ const BodySuitsWomen = () => {
           <section className="my-3">
             <p>Filter by Color:</p>
             {colorOptions.map((color) => (
-              <label key={color} className="flex gap-2 text-sm">
+              <label key={color} className="flex gap-2 text-sm capitalize">
                 <input
                   type="radio"
                   name="colorFilter"
@@ -104,7 +112,7 @@ const BodySuitsWomen = () => {
           <section className="my-3">
             <p>Filter by Size:</p>
             {sizeOptions.map((size) => (
-              <label key={size} className="flex gap-2 text-sm">
+              <label key={size} className="flex gap-2 text-sm capitalize">
                 <input
                   type="radio"
                   name="sizeFilter"
@@ -144,7 +152,7 @@ const BodySuitsWomen = () => {
               <h3 className="my-1 text-xs md:text-sm  ">
                 {s.name.substring(0, 20)}
               </h3>
-              <p className="text-xs mb-1">{s.description.substring(0, 30)}</p>
+              <p className="text-xs mb-1">{s.details.substring(0, 30)}</p>
               <p className="font-bold text-sm">{formatCurrency(s.price)}</p>
 
               <CartBtn s={s} />

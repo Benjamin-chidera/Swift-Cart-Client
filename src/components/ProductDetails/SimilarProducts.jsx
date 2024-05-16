@@ -60,7 +60,7 @@ export const SimilarProducts = () => {
                       <p>{formatCurrency(Math.round(s.price))}</p>
 
                       <span className=" text-xs">
-                        {/* <GetRating rating={s.rating.rate} /> */} rating
+                        {/* <GetRating rating={s.rating.rate} /> */} 
                       </span>
                     </div>
 
