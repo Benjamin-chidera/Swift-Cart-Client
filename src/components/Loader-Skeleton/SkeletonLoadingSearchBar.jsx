@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -33,16 +34,16 @@ export const SkeletonLoadingRecentProduct = ({ num }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 justify-center ">
+    <div className=" gap-12 justify-center basis-1/1 md:basis-1/3 lg:basis-1/5 flex">
       {l.map((i, index) => {
         return (
           <div className="" key={index}>
-            <Skeleton className="rounded-lg  w-[120px] h-[120px] md:w-[150px] md:h-[180px] object-cover lg:w-[300px] " />
+            <Skeleton className="rounded-lg w-full h-[120px] md:w-[150px] md:h-[150px] object-cover lg:w-[300px] " />
             <div className="w-40">
               <Skeleton height={"20px"} width={"100px"} highlightColor="#444" />
-              <Skeleton height={"20px"} width={"200px"} highlightColor="#444" />
-              <Skeleton height={"20px"} width={"120px"} highlightColor="#444" />
-              <Skeleton className="w-[120px] h-[40px] md:w-[150px]  object-cover lg:w-[300px] " />
+              <Skeleton height={"20px"} width={"100%"} highlightColor="#444" />
+              <Skeleton height={"20px"} width={"100%"} highlightColor="#444" />
+              <Skeleton className="w-full h-[40px] md:w-[150px]  object-cover lg:w-[300px] " />
             </div>
           </div>
         );

@@ -11,16 +11,19 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import ReactStars from "react-rating-stars-component";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createReviews } from "@/redux/features/reviewsSlice";
 import Cookies from "js-cookie";
 
 export const OrderReviews = (id) => {
   const [rating, setRating] = useState(0);
+  const { status } = useSelector((state) => state.reviews);
+  console.log(status);
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitted },
   } = useForm();
   const dispatch = useDispatch();
   const token = Cookies.get("userToken");
@@ -36,6 +39,10 @@ export const OrderReviews = (id) => {
   const ratingChanged = (selectedRating) => {
     setRating(selectedRating);
   };
+  if (isSubmitted) {
+    reset();
+    setRating(0);
+  }
 
   return (
     <main>
@@ -65,8 +72,14 @@ export const OrderReviews = (id) => {
                     activeColor="#ffd700"
                   />
                 </div>
-                <Button className="mt-3" type="submit">
-                  Submit Review
+                <Button
+                  className={`w-full uppercase mt-4 ${
+                    status === "loading" && "opacity-90 cursor-default"
+                  }`}
+                  type="submit"
+                  disabled={status === "loading"}
+                >
+                  {status === "loading" ? "Submitting...." : "Submit Review"}
                 </Button>
               </form>
             </DialogDescription>

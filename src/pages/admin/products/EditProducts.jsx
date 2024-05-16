@@ -27,9 +27,16 @@ const EditProducts = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitted , isSubmitSuccessful},
   } = useForm();
   const dispatch = useDispatch();
+
+  // if (isSubmitSuccessful) {
+  //   //  reset();
+  //   //  setImages(null);
+  //   window.location.reload();
+  // }
 
   // RICH TEXT
 
@@ -433,8 +440,14 @@ const EditProducts = () => {
         </section>
 
         <section>
-          <Button className="w-full mt-16" type="submit">
-            Edit Product
+          <Button
+            className={`w-full uppercase mt-14 ${
+              status === "loading" && "opacity-90 cursor-default"
+            }`}
+            type="submit"
+            disabled={status === "loading"}
+          >
+            {status === "loading" ? "  Editing Product" : "  Edit Product"}
           </Button>
         </section>
       </form>

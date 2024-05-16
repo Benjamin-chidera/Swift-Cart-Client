@@ -17,6 +17,7 @@ const AddProducts = () => {
   const [images, setImages] = useState(null);
   const [description, setDescription] = useState("");
   const token = Cookies.get("userToken");
+  const { status } = useSelector((state) => state.product);
 
   console.log(description, token);
 
@@ -58,15 +59,16 @@ const AddProducts = () => {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitted },
   } = useForm();
 
   const dispatch = useDispatch();
 
-  // if (isSubmitted) {
-  //   reset();
-  //   setImages(null);
-  // }
+  if (isSubmitted) {
+    reset();
+    setImages(null);
+  }
 
   const handleCreateProduct = (data) => {
     const formData = new FormData();
@@ -372,10 +374,16 @@ const AddProducts = () => {
           />
         </section>
         {errors.description && <p>Please select the product description</p>}
-     
+
         <section className="">
-          <Button className="w-full mt-14" type="submit">
-            Create Product
+          <Button
+            className={`w-full uppercase mt-14 ${
+              status === "loading" && "opacity-90 cursor-default"
+            }`}
+            type="submit"
+            disabled={status === "loading"}
+          >
+            {status === "loading" ? "Creating Product" : "Create Product"}
           </Button>
         </section>
       </form>

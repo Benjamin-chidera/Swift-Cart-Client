@@ -20,6 +20,7 @@ import { WishBtn } from "@/components/wishList/wishListBtn/WishBtn";
 import { CartBtn } from "@/components/cart/CartBtn";
 import { useParams } from "react-router-dom";
 import { SkeletonLoadingRecentProduct } from "@/components/Loader-Skeleton/SkeletonLoadingSearchBar";
+import { BeatLoader } from "react-spinners";
 
 export const Women = () => {
   const { products, status } = useSelector((state) => state.cart);
@@ -33,12 +34,16 @@ export const Women = () => {
 
   return (
     <section>
-      {/* {status === "loading" && <SkeletonLoadingRecentProduct />} */}
+      {/* {status === "loading" && (
+        <div className="lg:hidden text-center">
+          <BeatLoader color="#36d7b7" />
+        </div>
+      )} */}
       <section>
         <Carousel>
           <CarouselContent>
             {status === "loading" ? (
-              <SkeletonLoadingRecentProduct num={4} />
+              <SkeletonLoadingRecentProduct num={myCart?.length} />
             ) : (
               myCart?.map((s) => (
                 <CarouselItem
@@ -54,9 +59,7 @@ export const Women = () => {
 
                   <p className=" text-sm">{s.name.substring(0, 20)}...</p>
 
-                  <p className=" text-sm mt-3">
-                    {s.details.substring(0, 20)}
-                  </p>
+                  <p className=" text-sm mt-3">{s.details.substring(0, 20)}</p>
 
                   <section className="">
                     <div className="flex justify-between items-center">

@@ -8,7 +8,7 @@ export const createReviews = createAsyncThunk(
   async ({ productId, comment, rating, token }, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(
-        `http://localhost:3000/api/v1/reviews/${productId}/reviews`,
+        `https://swift-cart-server.onrender.com/api/v1/reviews/${productId}/reviews`,
         {
           comment,
           rating,
@@ -43,7 +43,7 @@ export const fetchReviewsProduct = createAsyncThunk(
   "reviews/fetchReviewsProduct",
   async ({ token, productId }) => {
     const { data } = await axios(
-      `http://localhost:3000/api/v1/reviews/${productId}`,
+      `https://swift-cart-server.onrender.com/api/v1/reviews/${productId}`
       // {
       //   headers: { Authorization: `Bearer ${token}` },
       // }
