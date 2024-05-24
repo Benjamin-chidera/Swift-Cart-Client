@@ -202,7 +202,7 @@ export const Headers = () => {
                           {" "}
                           <FaRegUser size={18} />{" "}
                           <span className=" text-xs whitespace-nowrap ms-1">
-                            {decode.role === "user" ? `Hi, ${userName}` : "Welcome"}
+                            {decode?.role === "user" ? `Hi, ${userName}` : "Welcome"}
                           </span>
                         </MenubarTrigger>
                         <MenubarContent>
