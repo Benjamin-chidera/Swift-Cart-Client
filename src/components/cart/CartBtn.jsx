@@ -27,7 +27,7 @@ export const CartBtn = ({ s }) => {
         ADD TO BAG
       </Button> :
       <Button
-        className="border-2 py-1 w-full border-red-600 text-xs rounded-md"
+        className="border-2 py-1 w-full border-red-600 text-xs rounded-md uppercase"
         onClick={() => handleRemoveFromCart(s._id)}
       >
         Remove FROM BAG

@@ -14,11 +14,12 @@ export const SearchedItem = ({
   category,
   tags,
   handleClose,
+  details
 }) => {
   return (
     <div>
       <Link
-        className="flex gap-2"
+        className="md:flex gap-2"
         to={`/${category}/${tags}/${_id}`}
         onClick={handleClose}
       >
@@ -31,7 +32,7 @@ export const SearchedItem = ({
         <div>
           <h1 className="text-[11px] md:text-xs">{name}</h1>
           <p className="text-[11px] md:text-xs">{formatCurrency(price)}</p>
-          <p className="text-[11px] md:text-xs">{description.substring(0, 60)}</p>
+          <p className="text-[11px] md:text-xs">{details.substring(0, 60)}</p>
         </div>
       </Link>
     </div>

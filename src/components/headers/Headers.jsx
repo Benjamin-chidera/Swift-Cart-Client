@@ -45,8 +45,6 @@ export const Headers = () => {
 
   let decode = null;
 
-  console.log(decode);
-
   try {
     // Ensure token exists before attempting to decode
     if (userToken) {
@@ -131,6 +129,9 @@ export const Headers = () => {
     };
   }, [scrolled]);
 
+  const userName = decode?.name?.split(" ")[0];
+  console.log(userName);
+
   return (
     <main>
       {location.pathname !== "/signup" &&
@@ -171,7 +172,7 @@ export const Headers = () => {
                           {error}
                         </div>
                       )}
-                      <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 place-items-center mt-5 gap-5">
+                      <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 place-items-center mt-5 gap-5 h-96 overflow-y-scroll">
                         {/* {loading && <SkeletonLoadingSearchBar/>} */}
                         {name && loading ? (
                           <SkeletonLoadingSearchBar num={saved.length} />
@@ -201,7 +202,7 @@ export const Headers = () => {
                           {" "}
                           <FaRegUser size={18} />{" "}
                           <span className=" text-xs whitespace-nowrap ms-1">
-                            Hi, Benjamin
+                            {decode.role === "user" ? `Hi, ${userName}` : "Welcome"}
                           </span>
                         </MenubarTrigger>
                         <MenubarContent>
@@ -287,7 +288,7 @@ export const Headers = () => {
                           {error}
                         </div>
                       )}
-                      <section className="grid grid-cols-2 place-items-center mt-3 gap-2 pe-2">
+                      <section className="grid grid-cols-2 place-items-center mt-3 gap-2 pe-2 h-96 overflow-y-scroll">
                         {/* {loading && <SkeletonLoadingSearchBar/>} */}
                         {name && loading ? (
                           <SkeletonLoadingSearchBar num={saved.length} />

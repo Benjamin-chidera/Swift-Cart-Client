@@ -61,9 +61,9 @@ export const SkinCareDetails = () => {
                 {/* this is for size select */}
                 <p className=" font-bold uppercase">Size: {details?.size} </p>
 
-                <button className="border-red-600 border-2 font-semibold mt-5 px-10 text-sm py-1 rounded-full">
+                {/* <button className="border-red-600 border-2 font-semibold mt-5 px-10 text-sm py-1 rounded-full">
                   SELECT A SIZE
-                </button>
+                </button> */}
               </div>
 
               <CartBtn s={details} />

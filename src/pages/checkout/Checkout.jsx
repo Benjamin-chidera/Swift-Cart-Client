@@ -68,7 +68,7 @@ export const Checkout = () => {
           totalPrice: grandTotal,
         };
 
-        // console.log(orderData);
+        console.log(orderData);
 
         localStorage.setItem("orders", JSON.stringify(orderData));
         dispatch(clearCart());

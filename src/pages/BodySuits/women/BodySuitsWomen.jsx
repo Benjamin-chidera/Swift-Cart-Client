@@ -146,7 +146,7 @@ const BodySuitsWomen = () => {
               <Link to={`/${category}/${gender}/${s._id}`}>
                 <LazyLoadImage
                   src={s.image}
-                  className="w-full mx-auto h-[100px] lg:w-full lg:h-[120px] object-cover"
+                  className="w-full mx-auto h-[100px] md:h-[150px] lg:w-full lg:h-[200px] object-cover object-top"
                 />
               </Link>
               <h3 className="my-1 text-xs md:text-sm  ">
