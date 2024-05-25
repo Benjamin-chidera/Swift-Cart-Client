@@ -91,7 +91,7 @@ export const Headers = () => {
         console.log(error.response.data);
         setLoading(false);
         setSaved([]);
-        setError(error.response.data.msg);
+        setError(error.response.data.errMsg || error.response.data.msg);
       }
     }
   };
@@ -130,7 +130,6 @@ export const Headers = () => {
   }, [scrolled]);
 
   const userName = decode?.name?.split(" ")[0];
-  console.log(userName);
 
   return (
     <main>
@@ -172,7 +171,7 @@ export const Headers = () => {
                           {error}
                         </div>
                       )}
-                      <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 place-items-center mt-5 gap-5 h-96 overflow-y-scroll">
+                      <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 place-items-center mt-5 gap-5 h-96 overflow-y-scroll scrollbox ">
                         {/* {loading && <SkeletonLoadingSearchBar/>} */}
                         {name && loading ? (
                           <SkeletonLoadingSearchBar num={saved.length} />
@@ -202,18 +201,25 @@ export const Headers = () => {
                           {" "}
                           <FaRegUser size={18} />{" "}
                           <span className=" text-xs whitespace-nowrap ms-1">
-                            {decode?.role === "user" ? `Hi, ${userName}` : "Welcome"}
+                            {decode?.role === "user"
+                              ? `Hi, ${userName}`
+                              : "Welcome"}
                           </span>
                         </MenubarTrigger>
                         <MenubarContent>
-                          <MenubarItem>
-                            <Link to={"/signup"} className="flex items-center">
-                              <FaRegUser size={18} />
-                              <span className=" text-xs whitespace-nowrap ms-1">
-                                My Account
-                              </span>
-                            </Link>
-                          </MenubarItem>{" "}
+                          {!decode && (
+                            <MenubarItem>
+                              <Link
+                                to={"/signup"}
+                                className="flex items-center"
+                              >
+                                <FaRegUser size={18} />
+                                <span className=" text-xs whitespace-nowrap ms-1">
+                                  My Account
+                                </span>
+                              </Link>
+                            </MenubarItem>
+                          )}
                           <MenubarSeparator />
                           <MenubarItem>
                             <FaBox size={18} />

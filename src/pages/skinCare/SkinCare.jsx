@@ -15,9 +15,7 @@ export const SkinCare = () => {
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
 
-  const { categories, status } = useSelector(
-    (state) => state.categories
-  );
+  const { categories, status } = useSelector((state) => state.categories);
 
   const skinCare = categories?.payload?.product;
 
@@ -47,7 +45,15 @@ export const SkinCare = () => {
     ? sortedProducts?.filter((product) => product.color === selectedColor)
     : sortedProducts;
 
-  const colorOptions = ["red", "blue", "green", "yellow", "white", "black", "brown"];
+  const colorOptions = [
+    "red",
+    "blue",
+    "green",
+    "yellow",
+    "white",
+    "black",
+    "brown",
+  ];
 
   const handleSizeChange = (size) => {
     setSelectedSize(size);
@@ -109,11 +115,17 @@ export const SkinCare = () => {
           </section>
         </section>
       </div>
+
       <section
         className={`shadow-2xl w-[950px] max-w-full md:px-3 md:py-5 gap-5 rounded-xl ${
           status === "idle" && "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
         } `}
       >
+        {status === "rejected" && (
+          <p className="flex justify-center items-center font-bold text-2xl mt-20">
+            Error Please check your internet connection
+          </p>
+        )}
         {filteredBySize?.length < 1 ? (
           <p className=" font-bold text-xl whitespace-nowrap p-2 text-center flex justify-center">
             No Product Found

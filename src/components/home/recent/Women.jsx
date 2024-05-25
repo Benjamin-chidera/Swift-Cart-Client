@@ -34,11 +34,12 @@ export const Women = () => {
 
   return (
     <section>
-      {/* {status === "loading" && (
+      {status === "rejected" && (
         <div className="lg:hidden text-center">
-          <BeatLoader color="#36d7b7" />
+          Please Check Your Internet Connection
         </div>
-      )} */}
+      )}
+
       <section>
         <Carousel>
           <CarouselContent>
@@ -47,7 +48,7 @@ export const Women = () => {
             ) : (
               myCart?.map((s) => (
                 <CarouselItem
-                  key={s.id}
+                  key={s._id}
                   className="basis-1/1 md:basis-1/3 lg:basis-1/5 cursor-grabbing relative"
                 >
                   <LazyLoadImage

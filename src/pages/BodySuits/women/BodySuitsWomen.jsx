@@ -131,6 +131,11 @@ const BodySuitsWomen = () => {
           status === "idle" && "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
         } `}
       >
+        {status === "rejected" && (
+          <p className="flex justify-center items-center font-bold text-2xl mt-20">
+            Error Please check your internet connection
+          </p>
+        )}
         {filteredBySize?.length < 1 ? (
           <p className=" font-bold text-xl whitespace-nowrap p-2 text-center flex justify-center">
             No Product Found

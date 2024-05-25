@@ -1,3 +1,15 @@
 .no-scroll {
   overflow: hidden;
 }
+
+.scrollbox::-webkit-scrollbar {
+  width: 3px; /* Set the width of the scrollbar */
+}
+
+.scrollbox::-webkit-scrollbar-track {
+  background: #eee; /* Set the background color of the track */
+}
+
+.scrollbox::-webkit-scrollbar-thumb {
+  background: #888; /* Set the background color of the thumb */
+}

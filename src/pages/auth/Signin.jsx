@@ -8,6 +8,8 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signin = () => {
   const dispatch = useDispatch();
@@ -39,6 +41,7 @@ const Signin = () => {
 
   return (
     <main className=" flex w-full h-screen absolute top-0">
+      <ToastContainer/>
       <section className="w-[50%] bg-green-400 hidden md:block">
         <div className=" flex justify-center items-center h-screen flex-col font-bold md:text-5xl lg:text-7xl">
           <Link to={-1}>SWIFTCART</Link>

@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { ToastContainer, toast } from "react-toastify";
 
 const registerAUser =
   "https://swift-cart-server.onrender.com/api/v1/auth/register";
@@ -23,15 +24,22 @@ export const registerUser = createAsyncThunk(
     try {
       const { data } = await axios.post(registerAUser, formData);
 
+      // console.log(data);
       if (data) {
-        Cookies.set("userToken", data.user.token);
+        Cookies.set("userToken", data.registerUser.token);
 
-        const decode = jwtDecode(data.user.token);
-       
+        const decode = jwtDecode(data.registerUser.token);
+
         if (decode.role === "user") {
-          window.location.href = "/";
+          toast.success("Registration Successful");
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 3000);
         } else {
-          window.location.href = "/admin";
+          toast.success("Registration Successful");
+          setTimeout(() => {
+            window.location.href = "/admin";
+          }, 3000);
         }
 
         return data;
@@ -40,7 +48,7 @@ export const registerUser = createAsyncThunk(
       }
     } catch (error) {
       console.log(error);
-      return rejectWithValue("Login failed");
+      return rejectWithValue("Registration failed");
     }
   }
 );
@@ -63,18 +71,28 @@ export const loginUser = createAsyncThunk(
         Cookies.set("userToken", data.user.token);
 
         const decode = jwtDecode(data.user.token);
-       
+
         if (decode.role === "user") {
-          window.location.href = "/";
+          toast.success("Login Successful");
+
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 3000);
         } else {
-          window.location.href = "/admin";
+          toast.success("Login Successful");
+
+          setTimeout(() => {
+            window.location.href = "/admin";
+          }, 3000);
         }
 
         return data;
       } else {
+        toast.error("Invalid credentials");
         return rejectWithValue("Invalid credentials");
       }
     } catch (error) {
+      toast.error("Invalid credentials");
       console.log(error);
       return rejectWithValue("Login failed");
     }
@@ -85,9 +103,17 @@ export const loginUser = createAsyncThunk(
 export const forgottenUser = createAsyncThunk(
   "user/forgottenUser",
   async (formData) => {
-    const { data } = await axios.post(forgottenAUser, formData);
+    try {
+      const { data } = await axios.post(forgottenAUser, formData);
 
-    return data;
+      if (data) {
+        toast.success("An Email Has Been Sent To You");
+        return data;
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Invalid credentials");
+    }
   }
 );
 
@@ -95,16 +121,28 @@ export const forgottenUser = createAsyncThunk(
 export const resetUser = createAsyncThunk(
   "user/resetUser",
   async ({ formData, token }) => {
-    const { data } = await axios.patch(`${resetAUser}/${token}`, formData);
+   try {
+     const { data } = await axios.patch(`${resetAUser}/${token}`, formData);
 
-    return data;
+      if (data) {
+        toast.success("Password Successfully Changed");
+
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 3000);
+      } 
+     return data;
+   } catch (error) {
+    console.log(error);
+    toast.error("Error Resetting Password");
+   }
   }
 );
 
 const initialState = {
   user: null,
   status: "idle",
-  getAllUsers: []
+  getAllUsers: [],
 };
 
 const authSlice = createSlice({

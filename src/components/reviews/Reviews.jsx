@@ -36,7 +36,7 @@ export const Reviews = () => {
           <CarouselContent>
             {reviews?.review?.map((s) => (
               <CarouselItem
-                key={s.id}
+                key={s._id}
                 className="basis-1/1 md:basis-1/3 lg:basis-1/5 cursor-grabbing"
               >
                 <div className=" text-start">

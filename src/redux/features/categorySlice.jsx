@@ -3,41 +3,56 @@ import axios from "axios";
 
 export const featchCategories = createAsyncThunk(
   "categories/featchCategories",
-  async ({ category, tags }) => {
+  async ({ category, tags }, { rejectWithValue }) => {
     try {
       const { data } = await axios(
         `https://swift-cart-server.onrender.com/api/v1/products/category/${category}/tags/${tags}`
       );
-      return data;
+      if (data) {
+        return data;
+      } else {
+        return rejectWithValue("Error Loading Data");
+      }
     } catch (error) {
       console.log(error);
+      return rejectWithValue("Error Loading Data");
     }
   }
 );
 
 export const featchCategoriesAndGender = createAsyncThunk(
   "categoriesGender/featchCategoriesAndGender",
-  async ({ category, gender }) => {
+  async ({ category, gender }, { rejectWithValue }) => {
     try {
       const { data } = await axios(
         `https://swift-cart-server.onrender.com/api/v1/products/category/${category}/gender/${gender}`
       );
 
-      return data;
+      if (data) {
+        return data;
+      } else {
+        return rejectWithValue("Error Loading Data");
+      }
     } catch (error) {
       console.log(error);
+      return rejectWithValue("Error Loading Data");
     }
   }
 );
 
 export const featchCategoriesDetails = createAsyncThunk(
   "categories/featchCategoriesDetails",
-  async (productId) => {
-    const { data } = await axios(
-      `https://swift-cart-server.onrender.com/api/v1/products/${productId}`
-    );
+  async (productId, {rejectWithValue}) => {
+    try {
+      const { data } = await axios(
+        `https://swift-cart-server.onrender.com/api/v1/products/${productId}`
+      );
 
-    return data;
+      return data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue("Error Loading Data");
+    }
   }
 );
 

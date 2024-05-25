@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/redux/features/authSlice";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminSignin = () => {
   const dispatch = useDispatch();
@@ -33,6 +35,7 @@ const AdminSignin = () => {
 
   return (
     <main className=" flex w-full h-screen absolute left-0 top-0">
+      <ToastContainer />
       <section className="w-[50%] bg-green-400 hidden md:block">
         <div className=" flex justify-center items-center h-screen flex-col font-bold md:text-5xl lg:text-7xl">
           <Link to={-1}>SWIFTCART</Link>
