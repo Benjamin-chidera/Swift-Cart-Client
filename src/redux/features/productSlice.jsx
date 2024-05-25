@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const createAProducts =
   "https://swift-cart-server.onrender.com/api/v1/products";
@@ -17,9 +18,16 @@ export const createProducts = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      return data;
+      if (data) {
+        toast.success("Product has been created successfully");
+        window.location.href = "/admin/product-list";
+        return data;
+      } else {
+        toast.error("Error creating product");
+      }
     } catch (error) {
       console.log(error);
+      toast.error("Error creating product");
     }
   }
 );
@@ -42,9 +50,18 @@ export const deleteProduct = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      return data;
+      if (data) {
+        toast.success("Product has been deleted successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+        return data;
+      } else {
+        toast.error("Error deleting product");
+      }
     } catch (error) {
       console.log(error);
+      toast.error("Error deleting product");
     }
   }
 );
@@ -73,9 +90,18 @@ export const editAProducts = createAsyncThunk(
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(data);
-      return data;
+      if (data) {
+        toast.success("Product has been edited successfully");
+        // window.location.href = "/admin/product-list";
+        setTimeout(() => {
+          window.location.href = "/admin/product-list";
+        }, 2000);
+        return data;
+      } else {
+        toast.error("Error editing product");
+      }
     } catch (error) {
+      toast.error("Error editing product");
       console.log(error);
     }
   }

@@ -8,6 +8,8 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { formatCurrency } from "@/lib/FormatCurrency";
 import { TbTruckReturn } from "react-icons/tb";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
@@ -39,7 +41,7 @@ export const SingleOrder = () => {
     const formData = new FormData();
     formData.append("OrderStatus", a);
     formData.append("deliveryDate", b);
-    console.log(a, b);
+    // console.log(a, b);
     dispatch(updateStatus({ formData, orderId, token }));
   };
 
@@ -55,6 +57,7 @@ export const SingleOrder = () => {
 
   return (
     <main>
+      <ToastContainer />
       <div>
         <Link to={-1} className="flex items-center gap-2">
           <FaArrowLeft /> Back
@@ -105,8 +108,9 @@ export const SingleOrder = () => {
                       ? `${new Date(
                           singleOrder?.order?.deliveryDate
                         ).getFullYear()}-${(
-                          new Date(singleOrder?.order?.deliveryDate).getMonth() +
-                          1
+                          new Date(
+                            singleOrder?.order?.deliveryDate
+                          ).getMonth() + 1
                         )
                           .toString()
                           .padStart(2, "0")}-${new Date(

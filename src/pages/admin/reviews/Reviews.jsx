@@ -45,7 +45,7 @@ const Reviews = () => {
         <thead className="w-full text-left table-auto">
           <tr>
             <th className="w-32">Product</th>
-            <th className="w-44">Name</th>
+            <th className="w-52">Name</th>
             <th className="w-32">Profile</th>
             <th className="w-40">User Name</th>
             <th className="w-40">Rating</th>
@@ -59,7 +59,7 @@ const Reviews = () => {
               <td className="pt-2">
                 <LazyLoadImage src={o?.product?.image} className="w-14 h-14" />
               </td>
-              <td>{o?.product?.name}</td>
+              <td className="text-sm">{o?.product?.name}</td>
 
               <td>
                 <LazyLoadImage

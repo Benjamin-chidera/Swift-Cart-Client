@@ -1,10 +1,13 @@
-.check{
-    max-width: 100%;
-    height: auto;
-    display: block;
-    vertical-align: middle;
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap");
+
+.check {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  vertical-align: middle;
 }
 
-body{
-    overflow-x: hidden !important;
+body {
+  overflow-x: hidden !important;
+  font-family: "Merriweather", serif;
 }

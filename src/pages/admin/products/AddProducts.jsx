@@ -1,6 +1,8 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-menubar";
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -100,6 +102,7 @@ const AddProducts = () => {
 
   return (
     <main>
+      <ToastContainer />
       <form onSubmit={handleSubmit(handleCreateProduct)}>
         <section>
           <div className="flex flex-wrap gap-4">

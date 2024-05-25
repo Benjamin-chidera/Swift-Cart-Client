@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const reviewUrl = "https://swift-cart-server.onrender.com/api/v1/reviews";
 
@@ -18,12 +19,15 @@ export const createReviews = createAsyncThunk(
         }
       );
       if (data.success) {
+        toast.success("Review has been made 👍");
         return data;
       } else {
+        toast.error("Unable to make review 😢");
         return rejectWithValue("Unable to make a review");
       }
     } catch (error) {
-      console.log(error?.response?.data?.error);
+      // console.log(error?.response?.data?.error);
+      toast.error(error?.response?.data?.error);
       return rejectWithValue("Unable to make a review");
     }
   }

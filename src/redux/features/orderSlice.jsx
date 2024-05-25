@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const orderUrl =
   "https://swift-cart-server.onrender.com/api/v1/orders/createOrder";
@@ -30,7 +31,8 @@ export const createOrders = createAsyncThunk(
         return rejectWithValue("Unable to create order");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+
       return rejectWithValue("Unable to create order");
     }
   }
@@ -48,13 +50,18 @@ export const updateStatus = createAsyncThunk(
         }
       );
       if (data.success) {
-        window.location.reload();
+        toast.success("Order Status has been successfully updated");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
         return data;
       } else {
+        toast.error("Error updating status");
         return rejectWithValue("Couldn't update order status");
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      toast.error("Error updating status");
       return rejectWithValue("Couldn't update order status");
     }
   }

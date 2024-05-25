@@ -14,6 +14,8 @@ import ReactStars from "react-rating-stars-component";
 import { useDispatch, useSelector } from "react-redux";
 import { createReviews } from "@/redux/features/reviewsSlice";
 import Cookies from "js-cookie";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const OrderReviews = (id) => {
   const [rating, setRating] = useState(0);
@@ -46,6 +48,7 @@ export const OrderReviews = (id) => {
 
   return (
     <main>
+      <ToastContainer />
       <Dialog>
         <DialogTrigger className="text-xs">
           Click to Leave a review

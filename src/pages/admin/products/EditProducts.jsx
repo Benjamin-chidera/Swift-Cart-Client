@@ -14,6 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import ReactQuill from "react-quill";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EditProducts = () => {
   const [profileImage, setProfileImage] = useState("");
@@ -103,12 +105,13 @@ const EditProducts = () => {
     dispatch(editAProducts({ formData, productId, token }));
   };
 
-  if (status === "loading" || !singleProduct) {
-    return <p>Loading....</p>;
-  }
+  // if (status === "loading") {
+  //   return <p>Loading....</p>;
+  // }
 
   return (
     <main>
+      <ToastContainer />
       <form onSubmit={handleSubmit(handleEditProduct)}>
         <section>
           <div className="flex flex-wrap gap-4">
