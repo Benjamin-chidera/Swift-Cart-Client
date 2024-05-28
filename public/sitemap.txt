@@ -1,0 +1,8 @@
+https://swift-cart-one.vercel.app/
+https://swift-cart-one.vercel.app/signup
+https://swift-cart-one.vercel.app/signin
+https://swift-cart-one.vercel.app/skin/skincare
+https://swift-cart-one.vercel.app/clothes/men
+https://swift-cart-one.vercel.app/clothes/women
+https://swift-cart-one.vercel.app/clothes/boy
+https://swift-cart-one.vercel.app/clothes/girl

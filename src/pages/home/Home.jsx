@@ -10,10 +10,19 @@ import { Recent } from "@/components/home/recent/Recent";
 import { MadeFor } from "@/components/home/MadeFor/MadeFor";
 import { MadeForMen } from "@/components/home/MadeForMen/MadeForMen";
 import { Top } from "@/components/BackToTop/Top";
+import { Helmet } from "react-helmet-async";
 
 const Home = () => {
   return (
     <main className="">
+      <Helmet>
+        <title>Swift Cart Home</title>
+        <meta
+          name="description"
+          content="Dive into a rich catalog, indulge in secure transactions, effortlessly see your orders, and enjoy tailored recommendations."
+        />
+        <link rel="canonical" href="/" />
+      </Helmet>
       <Hero />
       <Top />
       <Recent />
