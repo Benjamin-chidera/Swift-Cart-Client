@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://swift-cart-one.vercel.app/</loc>
+  </url>
+  <url>
+    <loc>https://swift-cart-one.vercel.app/signup</loc>
+  </url>
+  <url>
+    <loc>https://swift-cart-one.vercel.app/signin</loc>
+  </url>
+  <url>
+    <loc>https://swift-cart-one.vercel.app/skin/skincare</loc>
+  </url>
+  <url>
+    <loc>https://swift-cart-one.vercel.app/clothes/men</loc>
+  </url>
+  <url>
+    <loc>https://swift-cart-one.vercel.app/clothes/women</loc>
+  </url>
+  <url>
+    <loc>https://swift-cart-one.vercel.app/clothes/boy</loc>
+  </url>
+  <url>
+    <loc>https://swift-cart-one.vercel.app/clothes/girl</loc>
+  </url>
+</urlset>
