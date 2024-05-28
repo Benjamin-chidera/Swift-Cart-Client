@@ -1,27 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://swift-cart-one.vercel.app/</loc>
-  </url>
-  <url>
-    <loc>https://swift-cart-one.vercel.app/signup</loc>
-  </url>
-  <url>
-    <loc>https://swift-cart-one.vercel.app/signin</loc>
-  </url>
-  <url>
-    <loc>https://swift-cart-one.vercel.app/skin/skincare</loc>
-  </url>
-  <url>
-    <loc>https://swift-cart-one.vercel.app/clothes/men</loc>
-  </url>
-  <url>
-    <loc>https://swift-cart-one.vercel.app/clothes/women</loc>
-  </url>
-  <url>
-    <loc>https://swift-cart-one.vercel.app/clothes/boy</loc>
-  </url>
-  <url>
-    <loc>https://swift-cart-one.vercel.app/clothes/girl</loc>
-  </url>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://swift-cart-one.vercel.app/</loc>
+  <lastmod>2024-05-28T20:11:11+00:00</lastmod>
+</url>
+
+
 </urlset>
