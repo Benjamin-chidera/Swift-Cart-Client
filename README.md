@@ -68,8 +68,8 @@ To get started with the Swift-Cart application, follow these steps:
 ## Usage
 
 1. **Running the app**:
-    - Open your browser and navigate to `http://localhost:3000` to access the frontend.
-    - The backend server will be running on `http://localhost:5000`.
+    - Open your browser and navigate to `http://localhost:5173` to access the frontend.
+    - The backend server will be running on `http://localhost:3000`.
 
 2. **Browsing Products**:
     - Explore various product categories and view product details.
